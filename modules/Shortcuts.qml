@@ -21,7 +21,7 @@ Scope {
     CustomShortcut {
         name: "welcome"
         description: "Open Welcome"
-        onPressed: WelcomeWindow.create()
+        onPressed: WelcomeWindowFactory.create()
     }
 
     CustomShortcut {
@@ -108,7 +108,7 @@ Scope {
         target: "welcome"
 
         function open(): void {
-            WelcomeWindow.create();
+            WelcomeWindowFactory.create();
         }
     }
 
