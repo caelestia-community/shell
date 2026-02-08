@@ -25,7 +25,7 @@ Scope {
         // qmllint enable unresolved-type
         name: "welcome"
         description: "Open Welcome"
-        onPressed: WelcomeWindow.create()
+        onPressed: WelcomeWindowFactory.create()
     }
 
     // qmllint disable unresolved-type
@@ -148,7 +148,7 @@ Scope {
         target: "welcome"
 
         function open(): void {
-            WelcomeWindow.create();
+            WelcomeWindowFactory.create();
         }
     }
 
