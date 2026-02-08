@@ -4,6 +4,7 @@ import Caelestia
 import qs.components.misc
 import qs.services
 import qs.modules.controlcenter
+import qs.modules.welcome
 
 Scope {
     id: root
@@ -17,6 +18,14 @@ Scope {
         name: "controlCenter"
         description: "Open control center"
         onPressed: WindowFactory.create()
+    }
+
+    // qmllint disable unresolved-type
+    CustomShortcut {
+        // qmllint enable unresolved-type
+        name: "welcome"
+        description: "Open Welcome"
+        onPressed: WelcomeWindow.create()
     }
 
     // qmllint disable unresolved-type
@@ -136,6 +145,16 @@ Scope {
     }
 
     IpcHandler {
+        target: "welcome"
+
+        function open(): void {
+            WelcomeWindow.create();
+        }
+    }
+
+    IpcHandler {
+        target: "toaster"
+
         function info(title: string, message: string, icon: string): void {
             Toaster.toast(title, message, icon, Toast.Info);
         }
