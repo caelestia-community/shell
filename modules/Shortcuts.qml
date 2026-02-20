@@ -4,7 +4,7 @@ import Caelestia
 import qs.components.misc
 import qs.services
 import qs.modules.controlcenter
-import qs.modules.welcome
+import qs.modules.live.welcome
 
 Scope {
     id: root
