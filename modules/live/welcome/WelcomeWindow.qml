@@ -7,6 +7,7 @@ import qs.components
 import qs.components.controls
 import qs.config
 import qs.services
+import "components"
 import "pages"
 
 StyledRect {
@@ -31,6 +32,12 @@ StyledRect {
             component: gettingStartedComponent
         },
         {
+            id: "tour",
+            name: qsTr("Tour"),
+            icon: "planet",
+            component: tourComponent
+        },
+        {
             id: "configuration",
             name: qsTr("Configuration"),
             icon: "settings",
@@ -48,6 +55,12 @@ StyledRect {
             icon: "people",
             component: communityComponent
         },
+        //{
+            //id: "install",
+            //name: "Install",
+            //icon: qsTr("install_desktop"),
+            //component: installComponent
+        //},
     ]
 
     readonly property var currentPageData: pages.find(p => p.id === currentPage) ?? pages[0]
@@ -58,7 +71,7 @@ StyledRect {
         anchors.fill: parent
         spacing: 0
 
-        // Top navigation bar
+        
         StyledRect {
             id: topNav
 
@@ -78,7 +91,7 @@ StyledRect {
                 anchors.bottomMargin: Appearance.padding.normal
                 spacing: Appearance.spacing.normal
 
-                // Logo
+                
                 RowLayout {
                     id: logo
                     spacing: Appearance.spacing.small
@@ -201,7 +214,7 @@ StyledRect {
             }
         }
 
-        // Main content area
+        
         Item {
             id: contentArea
 
@@ -319,6 +332,11 @@ StyledRect {
     }
 
     Component {
+        id:tourComponent
+        Tour{}
+    }
+
+    Component {
         id: configurationComponent
         Configuration {}
     }
@@ -332,4 +350,8 @@ StyledRect {
         id: communityComponent
         Community {}
     }
+    //Component {
+        //id: installComponent
+        //Install {}
+    //}
 }

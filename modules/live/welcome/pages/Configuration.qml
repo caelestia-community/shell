@@ -1,10 +1,12 @@
 import QtQuick
 import QtQuick.Layouts
 import qs.services
+import QtQuick.VectorImage
 import qs.components
-import qs.components.containers
 import qs.modules.live.components
+import qs.components.containers
 import qs.config
+import "../../components"
 
 Item {
     id: root
@@ -48,23 +50,26 @@ Item {
 
     onCurrentSubsectionChanged: scrollToSubsection(currentSubsection)
 
-    RowLayout {
-        anchors.fill: parent
-        spacing: Appearance.spacing.large
+        RowLayout {
+            anchors.fill: parent
+            spacing: Appearance.spacing.large
 
-        // Vertical navigation
+       
         VerticalNav {
             id: verticalNav
-
-            Layout.fillHeight: true
+            Layout.alignment: Qt.AlignTop
+            Layout.preferredHeight: 175
             Layout.preferredWidth: 200
 
             sections: root.subsections
             activeSection: root.currentSubsection
             onSectionChanged: sectionId => root.currentSubsection = sectionId
         }
+        Item {
+            Layout.fillHeight: true
+            }
 
-        // Content area
+       
         StyledFlickable {
             id: contentFlickable
 
@@ -87,50 +92,88 @@ Item {
                 width: parent.width
                 spacing: 0
 
-                ColumnLayout {
-                    id: settingsSection
+            ColumnLayout {
+                id: settingsSection
 
+                Layout.fillWidth: true
+                Layout.minimumHeight: contentFlickable.height
+                Layout.leftMargin: Appearance.padding.larger
+                Layout.rightMargin: Appearance.padding.larger
+                Layout.topMargin: Appearance.padding.larger
+                spacing: Appearance.padding.large
+
+            StyledText {
+                text: "Settings App"
+                font.pointSize: Appearance.font.size.extraLarge
+                font.bold: true
+                color: Colours.palette.m3onBackground
+            }
+
+            StyledText {
+                Layout.fillWidth: true
+                text: "Quick configuration for the most common shell options."
+                font.pointSize: Appearance.font.size.normal
+                color: Colours.palette.m3onSurfaceVariant
+                wrapMode: Text.WordWrap
+            }
+
+            StyledRect {
+                Layout.fillWidth: true
+                Layout.preferredHeight: taskbarContent.implicitHeight + 80
+                color: Colours.palette.m3surfaceContainerLow
+                radius: Appearance.rounding.normal
+                border.color: Colours.palette.m3outlineVariant
+
+           ColumnLayout {
+                id: taskbarContent
+                anchors.fill: parent
+                anchors.margins: appearance.padding.larger + 60
+                spacing: appearance.spacing.large + 20
+
+            Repeater {
+                model: [
+                    { title: "Network", desc: "This page is dedicated to setting up your network access and VPN." },
+                    { title: "Bluetooth", desc: "Configure and look for bluetooth devices here." },
+                    { title: "Audio", desc: "Plugged in speakers or headphones? set up app specific volume limits." },
+                    { title: "Appearance", desc: "Adjust transparency, fonts, and color variants." },
+                    { title: "Taskbar", desc: "Infinitely configurable system statuses (WiFi, Battery) with expanded hover menus. Or hidden completely" },
+                    { title: "Launcher", desc: "Make sure your favorite apps stay at the top! Or hide apps you dont need visible." },
+                    { title: "Dashboard", desc: "Choose to disable or adjust sensitivity. Can also change what is displayed." },
+                ]
+
+                delegate: ColumnLayout {
+                    spacing: 4
                     Layout.fillWidth: true
-                    Layout.minimumHeight: contentFlickable.height
-                    Layout.leftMargin: Appearance.padding.larger
-                    Layout.rightMargin: Appearance.padding.larger
-                    Layout.topMargin: Appearance.padding.larger
-                    spacing: Appearance.padding.large
 
-                    StyledText {
-                        text: "Settings App"
-                        font.pointSize: Appearance.font.size.extraLarge
-                        font.bold: true
-                        color: Colours.palette.m3onBackground
-                    }
+                StyledText {
+                    text: "     " + modelData.title
+                    font.bold: true
+                    font.pointSize: appearance.font.size.large
+                    color: Colours.palette.m3primary
+                }
 
-                    StyledText {
-                        Layout.fillWidth: true
-                        text: "Quick configuration for the most common shell options."
-                        font.pointSize: Appearance.font.size.normal
-                        color: Colours.palette.m3onSurfaceVariant
-                        wrapMode: Text.WordWrap
-                    }
+                StyledText {
+                    Layout.fillWidth: true
+                    text: "     " + modelData.desc
+                    font.pointSize: appearance.font.size.normal
+                    color: Colours.palette.m3onSurface
+                    wrapMode: Text.WordWrap
+                    opacity: 0.8
+                }
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 1
+                    color: Colours.palette.m3outlineVariant
+                    opacity: 0.3
+                    visible: index < 6
+                }
+                }
+            }
+        }
+    }
 
-                    StyledRect {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: settingsSection1.height + Appearance.padding.large * 2
-                        Layout.topMargin: Appearance.padding.normal
-                        color: Colours.layer(Colours.palette.m3surfaceContainer, 1)
-                        radius: Appearance.rounding.normal
-
-                        StyledText {
-                            id: settingsSection1
-                            anchors.centerIn: parent
-                            text: "Content coming soon:\n• System requirements\n• Installation steps\n• Dependencies"
-                            font.pointSize: Appearance.font.size.normal
-                            color: Colours.palette.m3onSurfaceVariant
-                            horizontalAlignment: Text.AlignHCenter
-                        }
-                    }
-
-                    Item {
-                        Layout.fillHeight: true
+                Item {
+                    Layout.fillHeight: true
                     }
                 }
 
@@ -143,41 +186,41 @@ Item {
                     Layout.rightMargin: Appearance.padding.larger
                     spacing: Appearance.padding.large
 
-                    StyledText {
-                        text: "CLI Configuration"
-                        font.pointSize: Appearance.font.size.extraLarge
-                        font.bold: true
-                        color: Colours.palette.m3onBackground
-                    }
+                StyledText {
+                    text: "CLI Configuration"
+                    font.pointSize: Appearance.font.size.extraLarge
+                    font.bold: true
+                    color: Colours.palette.m3onBackground
+                }
 
-                    StyledText {
-                        Layout.fillWidth: true
-                        text: "Customize the behavior of the caelestia CLI app."
-                        font.pointSize: Appearance.font.size.normal
-                        color: Colours.palette.m3onSurfaceVariant
-                        wrapMode: Text.WordWrap
-                    }
+                StyledText {
+                    Layout.fillWidth: true
+                    text: "Customize the behavior of the caelestia CLI app."
+                    font.pointSize: Appearance.font.size.normal
+                    color: Colours.palette.m3onSurfaceVariant
+                    wrapMode: Text.WordWrap
+                }
 
-                    StyledRect {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: cliSection1.height + Appearance.padding.large * 2
-                        Layout.topMargin: Appearance.padding.normal
-                        color: Colours.layer(Colours.palette.m3surfaceContainer, 1)
-                        radius: Appearance.rounding.normal
+                StyledRect {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: cliSection1.height + Appearance.padding.large * 2
+                    Layout.topMargin: Appearance.padding.normal
+                    color: Colours.layer(Colours.palette.m3surfaceContainer, 1)
+                    radius: Appearance.rounding.normal
 
-                        StyledText {
-                            id: cliSection1
-                            anchors.centerIn: parent
-                            text: "Content coming soon:\n• Configuration files\n• CLI usage\n• Theme customization"
-                            font.pointSize: Appearance.font.size.normal
-                            color: Colours.palette.m3onSurfaceVariant
-                            horizontalAlignment: Text.AlignHCenter
+                StyledText {
+                    id: cliSection1
+                    anchors.centerIn: parent
+                    text: "Content coming soon:\n• Configuration files\n• CLI usage\n• Theme customization"
+                    font.pointSize: Appearance.font.size.normal
+                    color: Colours.palette.m3onSurfaceVariant
+                    horizontalAlignment: Text.AlignHCenter
                         }
-                    }
+                }
 
-                    Item {
-                        Layout.fillHeight: true
-                    }
+                Item {
+                    Layout.fillHeight: true
+                }
                 }
 
                 ColumnLayout {
@@ -189,41 +232,41 @@ Item {
                     Layout.rightMargin: Appearance.padding.larger
                     spacing: Appearance.padding.large
 
-                    StyledText {
-                        text: "Shell Configuration"
-                        font.pointSize: Appearance.font.size.extraLarge
-                        font.bold: true
-                        color: Colours.palette.m3onBackground
-                    }
+                StyledText {
+                    text: "Shell Configuration"
+                    font.pointSize: Appearance.font.size.extraLarge
+                    font.bold: true
+                    color: Colours.palette.m3onBackground
+                }
 
-                    StyledText {
-                        Layout.fillWidth: true
-                        text: "Take your rice further with in-depth customization of the shell."
-                        font.pointSize: Appearance.font.size.normal
-                        color: Colours.palette.m3onSurfaceVariant
-                        wrapMode: Text.WordWrap
-                    }
+                StyledText {
+                    Layout.fillWidth: true
+                    text: "Take your rice further with in-depth customization of the shell."
+                    font.pointSize: Appearance.font.size.normal
+                    color: Colours.palette.m3onSurfaceVariant
+                    wrapMode: Text.WordWrap
+                }
 
-                    StyledRect {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: shellSection1.height + Appearance.padding.large * 2
-                        Layout.topMargin: Appearance.padding.normal
-                        color: Colours.layer(Colours.palette.m3surfaceContainer, 1)
-                        radius: Appearance.rounding.normal
+                StyledRect {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: shellSection1.height + Appearance.padding.large * 2
+                    Layout.topMargin: Appearance.padding.normal
+                    color: Colours.layer(Colours.palette.m3surfaceContainer, 1)
+                    radius: Appearance.rounding.normal
 
-                        StyledText {
-                            id: shellSection1
-                            anchors.centerIn: parent
-                            text: "Content coming soon:\n• Basic navigation\n• Keyboard shortcuts\n• Quick tips"
-                            font.pointSize: Appearance.font.size.normal
-                            color: Colours.palette.m3onSurfaceVariant
-                            horizontalAlignment: Text.AlignHCenter
+                StyledText {
+                    id: shellSection1
+                    anchors.centerIn: parent
+                    text: "Content coming soon:\n• Basic navigation\n• Keyboard shortcuts\n• Quick tips"
+                    font.pointSize: Appearance.font.size.normal
+                    color: Colours.palette.m3onSurfaceVariant
+                    horizontalAlignment: Text.AlignHCenter
                         }
-                    }
+                }
 
-                    Item {
-                        Layout.fillHeight: true
-                    }
+                Item {
+                    Layout.fillHeight: true
+                }
                 }
 
                 ColumnLayout {
@@ -235,41 +278,41 @@ Item {
                     Layout.rightMargin: Appearance.padding.larger
                     spacing: Appearance.padding.large
 
-                    StyledText {
-                        text: "Hyprland Configuration"
-                        font.pointSize: Appearance.font.size.extraLarge
-                        font.bold: true
-                        color: Colours.palette.m3onBackground
+                StyledText {
+                    text: "Hyprland Configuration"
+                    font.pointSize: Appearance.font.size.extraLarge
+                    font.bold: true
+                    color: Colours.palette.m3onBackground
+                }
+
+                StyledText {
+                    Layout.fillWidth: true
+                    text: "Tweak the underlying Hyprland configuration to suit your needs."
+                    font.pointSize: Appearance.font.size.normal
+                    color: Colours.palette.m3onSurfaceVariant
+                    wrapMode: Text.WordWrap
+                }
+
+                StyledRect {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: hyprlandSection1.height + Appearance.padding.large * 2
+                    Layout.topMargin: Appearance.padding.normal
+                    color: Colours.layer(Colours.palette.m3surfaceContainer, 1)
+                    radius: Appearance.rounding.normal
+
+                StyledText {
+                    id: hyprlandSection1
+                    anchors.centerIn: parent
+                    text: "Content coming soon:\n• Basic navigation\n• Keyboard shortcuts\n• Quick tips"
+                    font.pointSize: Appearance.font.size.normal
+                    color: Colours.palette.m3onSurfaceVariant
+                    horizontalAlignment: Text.AlignHCenter
+                }
                     }
 
-                    StyledText {
-                        Layout.fillWidth: true
-                        text: "Tweak the underlying Hyprland configuration to suit your needs."
-                        font.pointSize: Appearance.font.size.normal
-                        color: Colours.palette.m3onSurfaceVariant
-                        wrapMode: Text.WordWrap
-                    }
-
-                    StyledRect {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: hyprlandSection1.height + Appearance.padding.large * 2
-                        Layout.topMargin: Appearance.padding.normal
-                        color: Colours.layer(Colours.palette.m3surfaceContainer, 1)
-                        radius: Appearance.rounding.normal
-
-                        StyledText {
-                            id: hyprlandSection1
-                            anchors.centerIn: parent
-                            text: "Content coming soon:\n• Basic navigation\n• Keyboard shortcuts\n• Quick tips"
-                            font.pointSize: Appearance.font.size.normal
-                            color: Colours.palette.m3onSurfaceVariant
-                            horizontalAlignment: Text.AlignHCenter
-                        }
-                    }
-
-                    Item {
-                        Layout.fillHeight: true
-                    }
+                Item {
+                    Layout.fillHeight: true
+                }
                 }
             }
         }
