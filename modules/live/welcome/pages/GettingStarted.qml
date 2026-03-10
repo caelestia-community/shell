@@ -218,8 +218,16 @@ ScrollablePage {
                                 keys: [qsTr("Super")]
                             },
                             {
+                                label: qsTr("Toggle floating for active window"),
+                                keys: [qsTr("Super"), qsTr("Alt"), qsTr("Space")]
+                            },
+                            {
                                 label: qsTr("Close active window"),
                                 keys: [qsTr("Super"), "Q"]
+                            },
+                            {
+                                label: qsTr("Lock desktop"),
+                                keys: [qsTr("Super"), "L"]
                             },
                             {
                                 label: qsTr("Open session menu"),
@@ -245,6 +253,11 @@ ScrollablePage {
                                 label: qsTr("Open web browser"),
                                 desc: qsTr("Zen"),
                                 keys: [qsTr("Super"), "W"]
+                            },
+                            {
+                                label: qsTr("Open default editor"),
+                                desc: qsTr("Codium"),
+                                keys: [qsTr("Super"), "C"]
                             },
                             {
                                 label: qsTr("Open system monitor"),
