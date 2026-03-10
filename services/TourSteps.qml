@@ -64,7 +64,7 @@ Singleton {
     readonly property var launcherCommands: ({
         elementId: "launcher-apps",
         drawer: "launcher",
-        action: ["quickshell", "ipc", "-c", "caelestia", "call", "tour", "showCommands"],
+        action: function() { Tour.openLauncherWithText(">"); },
         title: qsTr("Launcher Commands"),
         tooltip: qsTr("In command mode, the launcher allows you to set your wallpaper and colorscheme, toggle dark mode, access the Settings panel, and interact with the session."),
         tooltipPosition: "left"
