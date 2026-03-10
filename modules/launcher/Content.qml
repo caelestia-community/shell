@@ -18,6 +18,8 @@ Item {
 
     readonly property int padding: Appearance.padding.large
     readonly property int rounding: Appearance.rounding.large
+    
+    property alias search: search
 
     implicitWidth: listWrapper.width + padding * 2
     implicitHeight: searchWrapper.height + listWrapper.height + padding * 2

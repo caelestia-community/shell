@@ -18,7 +18,7 @@ Singleton {
     property int currentStepIndex: -1
     property var currentTour: null
     property var currentStep: null
-    property list<string> currentStepAction: []
+    property var currentStepAction: null
     property bool tourActive: false
 
     property Timer highlightTimer: Timer {
@@ -82,6 +82,17 @@ Singleton {
         }
     }
 
+    function openLauncherWithText(text: string): void {
+        const visibilities = Visibilities.getForActive();
+        visibilities.launcher = true;
+        
+        const launcher = LauncherIpc.getForActive();
+        if (launcher) {
+            launcher.search.text = text;
+            launcher.search.forceActiveFocus();
+        }
+    }
+
     function startTour(tourId: string): void {
         const tour = TourSteps.getTour(tourId);
         if (!tour) {
@@ -103,7 +114,7 @@ Singleton {
 
         currentStep = currentTour.steps[currentStepIndex];
         const step = currentStep;
-        currentStepAction = step.action || [];
+        currentStepAction = step.action || null;
 
         if (step.drawer && step.drawer !== "null") {
             openDrawerAndHighlight(step.drawer, step.elementId);
@@ -111,8 +122,12 @@ Singleton {
             highlightElement(step.elementId);
         }
 
-        if (currentStepAction.length > 0) {
-            Quickshell.execDetached(currentStepAction);
+        if (currentStepAction) {
+            if (typeof currentStepAction === 'function') {
+                currentStepAction();
+            } else if (Array.isArray(currentStepAction) && currentStepAction.length > 0) {
+                Quickshell.execDetached(currentStepAction);
+            }
         }
     }
 
@@ -183,16 +198,6 @@ Singleton {
             return root.spotlightActive
                 ? `Active - highlighting: ${root.currentTarget}`
                 : "Inactive";
-        }
-
-        function showCommands(): void {
-            const visibilities = Visibilities.getForActive();
-            visibilities.launcher = true;
-            const launcher = LauncherIpc.getForActive();
-            if (launcher) {
-                launcher.search.text = ">";
-                launcher.search.forceActiveFocus();
-            }
         }
     }
 }
