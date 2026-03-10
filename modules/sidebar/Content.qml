@@ -7,6 +7,9 @@ import qs.config
 Item {
     id: root
 
+    Component.onCompleted: Tour.register("sidebar-notifications", layout.children[0].children[0])
+    Component.onDestruction: Tour.unregister("sidebar-notifications")
+
     required property Props props
     required property DrawerVisibilities visibilities
 
