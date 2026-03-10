@@ -289,7 +289,7 @@ ScrollablePage {
 
             SectionHeader {
                 title: qsTr("Applications")
-                subtitle: qsTr("CaelestiaLive includes a number of default applications to help you get started on your journey.")
+                subtitle: qsTr("Caelestia Live includes a number of default applications to help you get started on your journey.")
                 fontSize: Appearance.font.size.large
                 Layout.topMargin: Appearance.padding.large
             }
@@ -450,7 +450,7 @@ ScrollablePage {
                                     cat: qsTr("Arch Powered"),
                                     title: qsTr("The options are endless!"),
                                     icon: Qt.resolvedUrl(`${root.shellDir}/modules/live/assets/icons/archlinux.svg`),
-                                    desc: qsTr("CaelestiaLive is built on ArchLinux, and users have access to all of the applications included in both the official Arch repositories and the AUR. We bundle yay by default for package management, but you're free to switch to paru or whatever other package manager you want!"),
+                                    desc: qsTr("Caelestia Live is built on ArchLinux, and users have access to all of the applications included in both the official Arch repositories and the AUR. We bundle yay by default for package management, but you're free to switch to paru or whatever other package manager you want!"),
                                     links: [
                                         {
                                             title: qsTr("Arch Packages"),
