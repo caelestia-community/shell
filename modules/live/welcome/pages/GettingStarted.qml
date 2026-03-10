@@ -205,52 +205,101 @@ ScrollablePage {
         sectionHeader.subtitle: qsTr("Master the Caelestia shell with these essential hotkeys.")
 
         ColumnLayout {
-            SectionContentArea {
-                content: Component {
-                    ColumnLayout {
-                        spacing: Appearance.spacing.normal
+            KeybindingSection {
+                targetColumns: 2
+                responsiveBreakpoint: 1000
 
-                        KeybindingRow {
-                            keys: [qsTr("Super")]
-                            label: qsTr("Open app launcher")
-                        }
-
-                        KeybindingRow {
-                            keys: [qsTr("Super"), "T"]
-                            label: qsTr("Open default terminal")
-                            desc: qsTr("Foot")
-                        }
-
-                        KeybindingRow {
-                            keys: [qsTr("Super"), "E"]
-                            label: qsTr("Open file explorer")
-                            desc: qsTr("Thunar")
-                        }
-
-                        KeybindingRow {
-                            keys: [qsTr("Super"), "W"]
-                            label: qsTr("Open web browser")
-                            desc: qsTr("Zen")
-                        }
-
-                        KeybindingRow {
-                            keys: [qsTr("Ctrl"), qsTr("Shift"), qsTr("Escape")]
-                            label: qsTr("Open system monitor")
-                            desc: qsTr("btop")
-                        }
-
-                        KeybindingRow {
-                            keys: [qsTr("Super"), "Q"]
-                            label: qsTr("Close active window")
-                        }
-
-                        KeybindingRow {
-                            keys: [qsTr("Ctrl"), qsTr("Alt"), qsTr("Delete")]
-                            label: qsTr("Open session menu")
-                            desc: qsTr("Logout/Shutdown/Hibernate/Reboot")
-                        }
+                groups: [
+                    {
+                        title: qsTr("Interacting with the Shell"),
+                        bindings: [
+                            {
+                                label: qsTr("Open app launcher"),
+                                keys: [qsTr("Super")]
+                            },
+                            {
+                                label: qsTr("Close active window"),
+                                keys: [qsTr("Super"), "Q"]
+                            },
+                            {
+                                label: qsTr("Open session menu"),
+                                desc: qsTr("Logout/Shutdown/Hibernate/Reboot"),
+                                keys: [qsTr("Ctrl"), qsTr("Alt"), qsTr("Delete")]
+                            }
+                        ]
+                    },
+                    {
+                        title: qsTr("Launching Default Applications"),
+                        bindings: [
+                            {
+                                label: qsTr("Open default terminal"),
+                                desc: qsTr("Foot"),
+                                keys: [qsTr("Super"), "T"]
+                            },
+                            {
+                                label: qsTr("Open file explorer"),
+                                desc: qsTr("Thunar"),
+                                keys: [qsTr("Super"), "E"]
+                            },
+                            {
+                                label: qsTr("Open web browser"),
+                                desc: qsTr("Zen"),
+                                keys: [qsTr("Super"), "W"]
+                            },
+                            {
+                                label: qsTr("Open system monitor"),
+                                desc: qsTr("btop"),
+                                keys: [qsTr("Ctrl"), qsTr("Shift"), qsTr("Escape")]
+                            }
+                        ]
+                    },
+                    {
+                        title: qsTr("Standard Workspaces"),
+                        bindings: [
+                            {
+                                label: qsTr("Switch to workspace"),
+                                keys: [qsTr("Super"), "#"]
+                            },
+                            {
+                                label: qsTr("Move window to workspace"),
+                                keys: [qsTr("Super"), qsTr("Alt"), "#"]
+                            },
+                            {
+                                label: qsTr("Move window directionally"),
+                                keys: [qsTr("Super"), qsTr("Alt"), "icon:arrow_back icon:arrow_upward icon:arrow_forward icon:arrow_downward"]
+                            },
+                            {
+                                label: qsTr("Toggle fullscreen"),
+                                keys: [qsTr("Super"), "F"]
+                            }
+                        ]
+                    },
+                    {
+                        title: qsTr("Special Workspaces"),
+                        bindings: [
+                            {
+                                label: qsTr("Communications Hub"),
+                                desc: qsTr("Discord"),
+                                keys: [qsTr("Super"), "D"]
+                            },
+                            {
+                                label: qsTr("Music & Media"),
+                                desc: qsTr("Spotify"),
+                                keys: [qsTr("Super"), "M"]
+                            },
+                            {
+                                label: qsTr("ToDo List"),
+                                desc: qsTr("Todoist"),
+                                keys: [qsTr("Super"), "R"]
+                            },
+                            {
+                                label: qsTr("Special"),
+                                desc: qsTr("Scratchpad Workspace"),
+                                keys: [qsTr("Super"), "S"]
+                            }
+                        ]
                     }
-                }
+                ]
             }
 
             SectionHeader {
