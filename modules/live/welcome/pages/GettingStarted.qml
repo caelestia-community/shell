@@ -174,7 +174,7 @@ ScrollablePage {
         sectionIcon: "bolt"
 
         sectionHeader.title: qsTr("First Steps")
-        sectionHeader.subtitle: qsTr("Master the Caelestia shell with these essential hotkeys.")
+        sectionHeader.subtitle: qsTr("Master Caelestia shell with these essential keybindings.")
 
         ColumnLayout {
             KeybindingSection {
