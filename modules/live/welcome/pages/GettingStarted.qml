@@ -165,34 +165,6 @@ ScrollablePage {
         }
     }
 
-    // Installation
-    PageSection {
-        id: installationSection
-
-        sectionId: "installation"
-        sectionName: qsTr("Installation")
-        sectionIcon: "download"
-
-        sectionHeader.title: qsTr("Installation")
-        sectionHeader.subtitle: qsTr("Taking your computer from raw to riced!")
-
-        SectionContentArea {
-            title: qsTr("Installing Caelestia")
-
-            content: Component {
-                ColumnLayout {
-                    StyledText {
-                        Layout.fillWidth: true
-                        font.pointSize: Appearance.font.size.normal
-                        color: Colours.palette.m3onSurfaceVariant
-                        wrapMode: Text.WordWrap
-                        text: qsTr("Content coming soon.")
-                    }
-                }
-            }
-        }
-    }
-
     // First Steps
     PageSection {
         id: firstStepsSection
@@ -492,6 +464,34 @@ ScrollablePage {
                                 }
                             ]
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    // Installation
+    PageSection {
+        id: installationSection
+
+        sectionId: "installation"
+        sectionName: qsTr("Installation")
+        sectionIcon: "download"
+
+        sectionHeader.title: qsTr("Installation")
+        sectionHeader.subtitle: qsTr("Taking your computer from raw to riced!")
+
+        SectionContentArea {
+            title: qsTr("Installing Caelestia")
+
+            content: Component {
+                ColumnLayout {
+                    StyledText {
+                        Layout.fillWidth: true
+                        font.pointSize: Appearance.font.size.normal
+                        color: Colours.palette.m3onSurfaceVariant
+                        wrapMode: Text.WordWrap
+                        text: qsTr("Content coming soon.")
                     }
                 }
             }
