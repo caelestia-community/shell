@@ -283,6 +283,19 @@ ScrollablePage {
                                 keys: [qsTr("Super"), "S"]
                             }
                         ]
+                    },
+                    {
+                        title: qsTr("Other Useful Keybindings"),
+                        bindings: [
+                            {
+                                label: qsTr("Clipboard Viewer"),
+                                keys: [qsTr("Super"), "V"]
+                            },
+                            {
+                                label: qsTr("Emoji Picker"),
+                                keys: [qsTr("Super"), "."]
+                            }
+                        ]
                     }
                 ]
             }
