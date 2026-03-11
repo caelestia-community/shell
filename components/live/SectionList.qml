@@ -33,7 +33,7 @@ ColumnLayout {
                 ColumnLayout {
                     StyledText {
                         font.bold: true
-                        font.pointSize: Appearance.font.size.small
+                        font.pointSize: Appearance.font.size.larger
                         color: Colours.palette.m3primary
                         text: listItem.modelData.title
                     }

@@ -29,7 +29,7 @@ StyledRect {
 
         StyledText {
             visible: root.title
-            font.pointSize: Appearance.font.size.normal
+            font.pointSize: Appearance.font.size.larger
             font.bold: true
             color: Colours.palette.m3primary
             text: root.title
