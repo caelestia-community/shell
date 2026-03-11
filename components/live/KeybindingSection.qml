@@ -11,7 +11,7 @@ SectionContentArea {
 
     property int targetColumns: 2
     property real responsiveBreakpoint: 800
-    
+
     property list<var> groups: []
 
     content: Component {
@@ -24,6 +24,8 @@ SectionContentArea {
                 model: root.groups
 
                 delegate: SectionContentArea {
+                    id: keybindingContentArea
+
                     required property var modelData
 
                     Layout.fillWidth: true
@@ -36,7 +38,7 @@ SectionContentArea {
                             spacing: Appearance.spacing.normal
 
                             Repeater {
-                                model: modelData.bindings
+                                model: keybindingContentArea.modelData.bindings
 
                                 delegate: KeybindingRow {
                                     required property var modelData
