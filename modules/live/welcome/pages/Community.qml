@@ -295,7 +295,7 @@ ScrollablePage {
                                 verticalPadding: Appearance.padding.small
                                 inactiveColour: Colours.palette.m3primary
                                 inactiveOnColour: Colours.palette.m3onPrimary
-                                onClicked: Qt.openUrlExternally("https://quickshell.org")
+                                onClicked: Qt.openUrlExternally("https://outfoxxed.me/")
                             }
 
                             IconTextButton {
