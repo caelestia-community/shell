@@ -186,7 +186,7 @@ ScrollablePage {
         }
 
         SectionContentArea {
-            title: qsTr("Caelestia Live")
+            title: qsTr("CaelestiaLive")
             Layout.topMargin: Appearance.padding.large
 
             content: Component {
@@ -194,14 +194,14 @@ ScrollablePage {
                     RowLayout {
                         StyledText {
                             Layout.fillWidth: true
-                            text: qsTr("Caelestia Live is the unofficial community project to build a Caelestia-based live image. If you're reading this, congratulations! You're running Caelestia Live! Caelestia Live was built by Evertiro, and at this time, he provides all live-image specific support.")
+                            text: qsTr("CaelestiaLive is the unofficial community project to build a Caelestia-based live image. If you're reading this, congratulations! You're running CaelestiaLive! CaelestiaLive was built by Evertiro, and at this time, he provides all live-image specific support.")
                             font.pointSize: Appearance.font.size.normal
                             color: Colours.palette.m3onSurfaceVariant
                             wrapMode: Text.WordWrap
                         }
 
                         IconTextButton {
-                            text: qsTr("Caelestia Live")
+                            text: qsTr("CaelestiaLive")
                             icon: "open_in_new"
                             radius: Appearance.rounding.small
                             verticalPadding: Appearance.padding.small
@@ -367,7 +367,7 @@ ScrollablePage {
             SectionContentArea {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignTop
-                title: qsTr("Evertiro - Developer for Caelestia Live")
+                title: qsTr("Evertiro - Developer for CaelestiaLive")
 
                 content: Component {
                     ColumnLayout {
@@ -421,7 +421,7 @@ ScrollablePage {
                     ColumnLayout {
                         StyledText {
                             Layout.fillWidth: true
-                            text: qsTr("So many people in so many places! Making pull requests on GitHub, brainstorming ideas on Discord, teaching one another and thriving in a pretty small community. Too many to name, but too few to forget. Thank you to every last one of you who will give Caelestia Live a shot!")
+                            text: qsTr("So many people in so many places! Making pull requests on GitHub, brainstorming ideas on Discord, teaching one another and thriving in a pretty small community. Too many to name, but too few to forget. Thank you to every last one of you who will give CaelestiaLive a shot!")
                             font.pointSize: Appearance.font.size.normal
                             color: Colours.palette.m3onSurfaceVariant
                             wrapMode: Text.WordWrap

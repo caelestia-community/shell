@@ -80,7 +80,7 @@ ScrollablePage {
                     items: [
                         {
                             title: qsTr("OS Icon"),
-                            desc: qsTr("The OS icon shows the Caelestia logo by default in Caelestia Live, and the distro logo by default on a normal install. The icon can be changed through your shell.json file, and acts as a trigger for the application launcher."),
+                            desc: qsTr("The OS icon shows the Caelestia logo by default in CaelestiaLive, and the distro logo by default on a normal install. The icon can be changed through your shell.json file, and acts as a trigger for the application launcher."),
                             tourId: "taskbar-launcher"
                         },
                         {
