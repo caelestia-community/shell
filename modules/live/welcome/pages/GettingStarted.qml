@@ -471,30 +471,30 @@ ScrollablePage {
     }
 
     // Installation
-    PageSection {
-        id: installationSection
+    // PageSection {
+    //     id: installationSection
 
-        sectionId: "installation"
-        sectionName: qsTr("Installation")
-        sectionIcon: "download"
+    //     sectionId: "installation"
+    //     sectionName: qsTr("Installation")
+    //     sectionIcon: "download"
 
-        sectionHeader.title: qsTr("Installation")
-        sectionHeader.subtitle: qsTr("Taking your computer from raw to riced!")
+    //     sectionHeader.title: qsTr("Installation")
+    //     sectionHeader.subtitle: qsTr("Taking your computer from raw to riced!")
 
-        SectionContentArea {
-            title: qsTr("Installing Caelestia")
+    //     SectionContentArea {
+    //         title: qsTr("Installing Caelestia")
 
-            content: Component {
-                ColumnLayout {
-                    StyledText {
-                        Layout.fillWidth: true
-                        font.pointSize: Appearance.font.size.normal
-                        color: Colours.palette.m3onSurfaceVariant
-                        wrapMode: Text.WordWrap
-                        text: qsTr("Content coming soon.")
-                    }
-                }
-            }
-        }
-    }
+    //         content: Component {
+    //             ColumnLayout {
+    //                 StyledText {
+    //                     Layout.fillWidth: true
+    //                     font.pointSize: Appearance.font.size.normal
+    //                     color: Colours.palette.m3onSurfaceVariant
+    //                     wrapMode: Text.WordWrap
+    //                     text: qsTr("Content coming soon.")
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 }
