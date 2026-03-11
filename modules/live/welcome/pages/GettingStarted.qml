@@ -179,7 +179,7 @@ ScrollablePage {
         ColumnLayout {
             KeybindingSection {
                 targetColumns: 2
-                responsiveBreakpoint: 800
+                responsiveBreakpoint: 900
 
                 groups: [
                     {
@@ -294,7 +294,7 @@ ScrollablePage {
 
                 content: Component {
                     GridLayout {
-                        columns: parent.width > 800 ? 2 : 1
+                        columns: parent.width > 900 ? 2 : 1
                         columnSpacing: Appearance.spacing.large
                         rowSpacing: Appearance.spacing.normal
 
