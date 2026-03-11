@@ -179,7 +179,7 @@ ScrollablePage {
         ColumnLayout {
             KeybindingSection {
                 targetColumns: 2
-                responsiveBreakpoint: 1000
+                responsiveBreakpoint: 800
 
                 groups: [
                     {
@@ -283,21 +283,46 @@ ScrollablePage {
                                 keys: [qsTr("Super"), "S"]
                             }
                         ]
-                    },
-                    {
-                        title: qsTr("Other Useful Keybindings"),
-                        bindings: [
-                            {
-                                label: qsTr("Clipboard Viewer"),
-                                keys: [qsTr("Super"), "V"]
-                            },
-                            {
-                                label: qsTr("Emoji Picker"),
-                                keys: [qsTr("Super"), "."]
-                            }
-                        ]
                     }
                 ]
+            }
+
+            SectionContentArea {
+                Layout.topMargin: Appearance.padding.large
+                Layout.columnSpan: 2
+                title: qsTr("Other Useful Keybindings")
+
+                content: Component {
+                    GridLayout {
+                        columns: parent.width > 800 ? 2 : 1
+                        columnSpacing: Appearance.spacing.large
+                        rowSpacing: Appearance.spacing.normal
+
+                        KeybindingRow {
+                            Layout.fillWidth: true
+                            label: qsTr("Toggle fullscreen")
+                            keys: [qsTr("Super"), "F"]
+                        }
+
+                        KeybindingRow {
+                            Layout.fillWidth: true
+                            label: qsTr("Toggle maximize")
+                            keys: [qsTr("Super"), qsTr("Alt"), "F"]
+                        }
+
+                        KeybindingRow {
+                            Layout.fillWidth: true
+                            label: qsTr("Clipboard Viewer")
+                            keys: [qsTr("Super"), "V"]
+                        }
+
+                        KeybindingRow {
+                            Layout.fillWidth: true
+                            label: qsTr("Emoji Picker")
+                            keys: [qsTr("Super"), "."]
+                        }
+                    }
+                }
             }
         }
     }
