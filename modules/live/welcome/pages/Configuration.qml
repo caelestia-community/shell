@@ -4,6 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 import qs.services
 import qs.components
+import qs.components.controls
 import qs.components.live
 import qs.config
 
@@ -57,82 +58,258 @@ ScrollablePage {
             }
         }
     }
-
-    // CLI
+    // Configuration
     PageSection {
-        id: cliSection
+        id: configSection
 
-        sectionId: "cli"
-        sectionName: qsTr("CLI")
-        sectionIcon: "terminal"
-
-        sectionHeader.title: qsTr("CLI Configuration")
-        sectionHeader.subtitle: qsTr("Customize the behavior of the caelestia CLI app.")
+        sectionId: "configuation"
+        sectionName: qsTr("Configuration")
+        sectionIcon: "handyman"
+        sectionHeader.title: qsTr("Configuration")
+        sectionHeader.subtitle: qsTr("Your ability to make make changes is only limited by your imagination!")
 
         SectionContentArea {
+            title: qsTr("Intro to config changes TITLE")
+            Layout.topMargin: Appearance.padding.large
+
             content: Component {
                 ColumnLayout {
-                    StyledText {
+                        spacing: Appearance.spacing.normal
+                        StyledText {
+                            Layout.fillWidth: true
+                            text: qsTr("Like anything open source, you can change everything. tailor this system to you however you need!")
+                            font.pointSize: Appearance.font.size.normal
+                            color: Colours.palette.m3onSurfaceVariant
+                            wrapMode: Text.WordWrap
+                        }
+                        Item { Layout.fillWidth: true }
+                        StyledRect {
                         Layout.fillWidth: true
-                        font.pointSize: Appearance.font.size.normal
-                        color: Colours.palette.m3onSurfaceVariant
-                        wrapMode: Text.WordWrap
-                        text: qsTr("Content coming soon.")
+                        Layout.preferredHeight: requirementsNote.implicitHeight + Appearance.padding.larger * 2
+                        color: Colours.layer(Colours.palette.m3surfaceContainerHigh, 1)
+                        radius: Appearance.rounding.small
+                        Layout.topMargin: Appearance.padding.small
+
+                        StyledText {
+                            id: requirementsNote
+
+                            anchors.centerIn: parent
+                            width: parent.width - 24
+                            text: qsTr("Adjusting these files will take some knowledge. Please enjoy exploring and making changes but use caution!")
+                            font.pointSize: Appearance.font.size.small
+                            font.italic: true
+                            color: Colours.palette.m3error
+                            horizontalAlignment: Text.AlignHCenter
+                            wrapMode: Text.WordWrap
+                        }
+
                     }
+
                 }
+
             }
+
         }
+
+        SectionGrid {
+            targetColumns: 2
+            minColumns: 1
+            maxColumns: 2
+            responsiveBreakpoint: 900
+            columnSpacing: Appearance.padding.large
+            rowSpacing: Appearance.padding.large
+            Layout.topMargin: Appearance.padding.large
+
+            SectionContentArea {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignTop
+                title: qsTr("Caelestia CLI")
+
+                content: Component {
+                    ColumnLayout {
+                        spacing: Appearance.spacing.normal
+
+                        StyledRect {
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            color: Colours.palette.m3primary
+                        }
+
+                        StyledText {
+                            Layout.fillWidth: true
+                            text: qsTr("Caelestia Command Line Inteface that allows direct commands")
+                            font.pointSize: Appearance.font.size.normal
+                            color: Colours.palette.m3onSurfaceVariant
+                            wrapMode: Text.WordWrap
+                        }
+
+                        RowLayout {
+                            spacing: Appearance.spacing.normal
+
+                            IconTextButton {
+                                text: qsTr("Button")
+                                icon: "info"
+                                radius: Appearance.rounding.small
+                                verticalPadding: Appearance.padding.small
+                                inactiveColour: Colours.palette.m3primary
+                                inactiveOnColour: Colours.palette.m3onPrimary
+                                onClicked: Qt.openUrlExternally("www.google.com")
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            SectionContentArea {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignTop
+                title: qsTr("Caelestia Shell")
+
+                content: Component {
+                    ColumnLayout {
+                        spacing: Appearance.spacing.normal
+
+                        StyledText {
+                            Layout.fillWidth: true
+                            text: qsTr("Modules, drawers, .qml, Qt(Quick), etc")
+                            font.pointSize: Appearance.font.size.normal
+                            color: Colours.palette.m3onSurfaceVariant
+                            wrapMode: Text.WordWrap
+                        }
+
+                        RowLayout {
+                            spacing: Appearance.spacing.normal
+
+                            IconTextButton {
+                                text: qsTr("resource link?")
+                                icon: "info"
+                                radius: Appearance.rounding.small
+                                verticalPadding: Appearance.padding.small
+                                inactiveColour: Colours.palette.m3primary
+                                inactiveOnColour: Colours.palette.m3onPrimary
+                                onClicked: Qt.openUrlExternally("www.google.com")
+                            }
+
+                            IconTextButton {
+                                text: qsTr("qml or quickshell link maybe?")
+                                icon: "help"
+                                radius: Appearance.rounding.small
+                                verticalPadding: Appearance.padding.small
+                                inactiveColour: Colours.palette.m3primary
+                                inactiveOnColour: Colours.palette.m3onPrimary
+                                onClicked: Qt.openUrlExternally("www.google.com")
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            SectionContentArea {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignTop
+                title: qsTr("Hyprland")
+
+                content: Component {
+                    ColumnLayout {
+                        spacing: Appearance.spacing.normal
+
+                        StyledText {
+                            Layout.fillWidth: true
+                            text: qsTr("window rules, workspaces, gaps, etc")
+                            font.pointSize: Appearance.font.size.normal
+                            color: Colours.palette.m3onSurfaceVariant
+                            wrapMode: Text.WordWrap
+                        }
+
+                        RowLayout {
+                            spacing: Appearance.spacing.normal
+
+                            IconTextButton {
+                                text: qsTr("resource link")
+                                icon: "info"
+                                radius: Appearance.rounding.small
+                                verticalPadding: Appearance.padding.small
+                                inactiveColour: Colours.palette.m3primary
+                                inactiveOnColour: Colours.palette.m3onPrimary
+                                onClicked: Qt.openUrlExternally("www.google.com")
+                            }
+
+                            IconTextButton {
+                                text: qsTr("another resource link")
+                                icon: "help"
+                                radius: Appearance.rounding.small
+                                verticalPadding: Appearance.padding.small
+                                inactiveColour: Colours.palette.m3primary
+                                inactiveOnColour: Colours.palette.m3onPrimary
+                                onClicked: Qt.openUrlExternally("www.google.com")
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            SectionContentArea {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignTop
+                title: qsTr("Settings configurations")
+
+                content: Component {
+                    ColumnLayout {
+                        spacing: Appearance.spacing.normal
+
+                        StyledText {
+                            Layout.fillWidth: true
+                            text: qsTr("making changes in setting menu effects shell.json, but you can expand on that by going direct to that file and making changes...")
+                            font.pointSize: Appearance.font.size.normal
+                            color: Colours.palette.m3onSurfaceVariant
+                            wrapMode: Text.WordWrap
+                        }
+
+                        RowLayout {
+                            spacing: Appearance.spacing.normal
+
+                            IconTextButton {
+                                text: qsTr("shell.json in folder?")
+                                icon: "info"
+                                radius: Appearance.rounding.small
+                                verticalPadding: Appearance.padding.small
+                                inactiveColour: Colours.palette.m3primary
+                                inactiveOnColour: Colours.palette.m3onPrimary
+                                onClicked: Qt.openUrlExternally("www.google.com")
+                            }
+
+                            IconTextButton {
+                                text: qsTr("maybe link to example file?")
+                                icon: "help"
+                                radius: Appearance.rounding.small
+                                verticalPadding: Appearance.padding.small
+                                inactiveColour: Colours.palette.m3primary
+                                inactiveOnColour: Colours.palette.m3onPrimary
+                                onClicked: Qt.openUrlExternally("www.google.com")
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
     }
 
-    // Shell
-    PageSection {
-        id: shellSection
-
-        sectionId: "shell"
-        sectionName: qsTr("Shell")
-        sectionIcon: "desktop_windows"
-
-        sectionHeader.title: qsTr("Shell Configuration")
-        sectionHeader.subtitle: qsTr("Take your rice further with in-depth customization of the shell.")
-
-        SectionContentArea {
-            content: Component {
-                ColumnLayout {
-                    StyledText {
-                        Layout.fillWidth: true
-                        font.pointSize: Appearance.font.size.normal
-                        color: Colours.palette.m3onSurfaceVariant
-                        wrapMode: Text.WordWrap
-                        text: qsTr("Content coming soon.")
-                    }
-                }
-            }
-        }
-    }
-
-    // Hyprland
-    PageSection {
-        id: hyprlandSection
-
-        sectionId: "hyprland"
-        sectionName: qsTr("Hyprland")
-        sectionIcon: "select_window"
-
-        sectionHeader.title: qsTr("Hyprland Configuration")
-        sectionHeader.subtitle: qsTr("Tweak the underlying Hyprland configuration to suit your needs.")
-
-        SectionContentArea {
-            content: Component {
-                ColumnLayout {
-                    StyledText {
-                        Layout.fillWidth: true
-                        font.pointSize: Appearance.font.size.normal
-                        color: Colours.palette.m3onSurfaceVariant
-                        wrapMode: Text.WordWrap
-                        text: qsTr("Content coming soon.")
-                    }
-                }
-            }
-        }
-    }
 }
