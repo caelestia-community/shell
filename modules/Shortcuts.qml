@@ -4,6 +4,7 @@ import Caelestia
 import qs.components.misc
 import qs.services
 import qs.modules.controlcenter
+import qs.modules.live.help
 import qs.modules.live.welcome
 
 Scope {
@@ -116,6 +117,12 @@ Scope {
         }
     }
 
+    CustomShortcut {
+        name: "help"
+        description: "Open Help"
+        onPressed: HelpWindowFactory.create()
+    }
+
     IpcHandler {
         function toggle(drawer: string): void {
             if (list().split("\n").includes(drawer)) {
@@ -169,6 +176,14 @@ Scope {
 
         function open(): void {
             WelcomeWindowFactory.create();
+        }
+    }
+
+    IpcHandler {
+        target: "help"
+
+        function open(): void {
+            HelpWindowFactory.create();
         }
     }
 
