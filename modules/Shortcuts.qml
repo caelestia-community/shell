@@ -1,6 +1,7 @@
 import qs.components.misc
 import qs.modules.controlcenter
 import qs.modules.live.welcome
+import qs.modules.live.help
 import qs.services
 import Caelestia
 import Quickshell
@@ -99,6 +100,12 @@ Scope {
         }
     }
 
+    CustomShortcut {
+        name: "help"
+        description: "Open Help"
+        onPressed: HelpWindowFactory.create()
+    }
+
     IpcHandler {
         target: "drawers"
 
@@ -152,6 +159,14 @@ Scope {
 
         function open(): void {
             WelcomeWindowFactory.create();
+        }
+    }
+
+    IpcHandler {
+        target: "help"
+
+        function open(): void {
+            HelpWindowFactory.create();
         }
     }
 

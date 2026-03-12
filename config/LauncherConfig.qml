@@ -150,6 +150,14 @@ JsonObject {
             command: ["caelestia", "shell", "controlCenter", "open"],
             enabled: true,
             dangerous: false
+        },
+        {
+            name: "Help",
+            icon: "help",
+            description: "Help",
+            command: ["caelestia", "shell", "help", "open"],
+            enabled: true,
+            dangerous: false
         }
     ]
 }
