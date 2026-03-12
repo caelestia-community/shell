@@ -6,18 +6,17 @@ import qs.components.live
 import qs.services
 import qs.config
 
-// Responsive grid layout for PageSection content
-// More flexible than KeybindingSection - works with any content
 GridLayout {
     id: root
 
-    // Grid configuration
     property int targetColumns: 2
     property int minColumns: 1
     property int maxColumns: 3
-    property real responsiveBreakpoint: 800
+    property real responsiveBreakpoint: 1000
     
-    // Responsive column calculation
+    property real customColumnSpacing: Appearance.spacing.large
+    property real customRowSpacing: Appearance.spacing.large
+    
     columns: {
         if (parent && parent.width < root.responsiveBreakpoint) {
             return root.minColumns
@@ -25,16 +24,13 @@ GridLayout {
         return Math.min(root.targetColumns, root.maxColumns)
     }
     
-    // Spacing
-    columnSpacing: Appearance.spacing.large
-    rowSpacing: Appearance.spacing.large
+    columnSpacing: root.customColumnSpacing
+    rowSpacing: root.customRowSpacing
     
-    // Make all cells in a row match the height of the tallest cell
     property bool uniformCellHeight: true
     
     Layout.fillWidth: true
     
-    // Apply fillHeight to all children if uniformCellHeight is enabled
     Component.onCompleted: {
         if (uniformCellHeight) {
             for (let i = 0; i < children.length; i++) {

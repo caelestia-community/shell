@@ -6,6 +6,7 @@ import Quickshell
 import qs.components
 import qs.components.containers
 import qs.components.controls
+import qs.components.live
 import qs.config
 import qs.services
 import "pages"
@@ -15,8 +16,58 @@ StyledRect {
 
     property string currentPage: "welcome"
     property bool welcomeAnimationHasRun: false
+    property bool navigationLocked: false
+    property string currentSection: ""
+    property var currentPageSubsections: []
+    property var displayedSubsections: []
+    property var targetPageSubsections: []
 
     function close(): void {
+    }
+
+    color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
+    border.width: 1
+    border.color: Colours.palette.m3outlineVariant
+    radius: Appearance.rounding.normal
+
+    focus: true
+    Keys.onLeftPressed: {
+        if (root.navigationLocked) return
+        const currentIndex = root.pages.findIndex(p => p.id === root.currentPage)
+        if (currentIndex > 0) {
+            root.navigationLocked = true
+            root.currentPage = root.pages[currentIndex - 1].id
+            navigationDebounceTimer.restart()
+        }
+    }
+    Keys.onRightPressed: {
+        if (root.navigationLocked) return
+        const currentIndex = root.pages.findIndex(p => p.id === root.currentPage)
+        if (currentIndex >= 0 && currentIndex < root.pages.length - 1) {
+            root.navigationLocked = true
+            root.currentPage = root.pages[currentIndex + 1].id
+            navigationDebounceTimer.restart()
+        }
+    }
+    Keys.onUpPressed: {
+        if (root.currentPageSubsections.length === 0) return
+        const currentIndex = root.currentPageSubsections.findIndex(s => s.id === root.currentSection)
+        if (currentIndex > 0) {
+            root.currentSection = root.currentPageSubsections[currentIndex - 1].id
+        }
+    }
+    Keys.onDownPressed: {
+        if (root.currentPageSubsections.length === 0) return
+        const currentIndex = root.currentPageSubsections.findIndex(s => s.id === root.currentSection)
+        if (currentIndex >= 0 && currentIndex < root.currentPageSubsections.length - 1) {
+            root.currentSection = root.currentPageSubsections[currentIndex + 1].id
+        }
+    }
+
+    Timer {
+        id: navigationDebounceTimer
+        interval: 400
+        onTriggered: root.navigationLocked = false
     }
 
     readonly property list<var> pages: [
@@ -54,8 +105,6 @@ StyledRect {
 
     readonly property var currentPageData: pages.find(p => p.id === currentPage) ?? pages[0]
 
-    color: Colours.palette.m3background
-
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
@@ -66,7 +115,7 @@ StyledRect {
             Layout.fillWidth: true
             Layout.preferredHeight: navContent.implicitHeight + Appearance.padding.normal * 2
 
-            color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
+            color: "transparent"
             radius: 0
 
             RowLayout {
@@ -262,16 +311,128 @@ StyledRect {
 
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.topMargin: Appearance.padding.large
-            Layout.leftMargin: Appearance.padding.large
-            Layout.rightMargin: Appearance.padding.large
-            Layout.bottomMargin: Appearance.padding.large
             clip: true
+
+            StyledRect {
+                anchors.fill: parent
+                anchors.topMargin: 0
+                anchors.leftMargin: Appearance.padding.normal
+                anchors.rightMargin: Appearance.padding.normal
+                anchors.bottomMargin: Appearance.padding.normal
+                color: Colours.palette.m3background
+                radius: Appearance.rounding.normal
+                z: -1
+            }
+
+            VerticalNav {
+                id: globalVerticalNav
+                property real targetX: root.currentPageSubsections.length > 0 ? Appearance.padding.normal : Appearance.padding.normal - Appearance.rounding.normal
+                x: targetX
+                y: Appearance.padding.normal + Appearance.padding.larger * 2
+                implicitWidth: 200
+                width: root.currentPageSubsections.length > 0 ? implicitWidth : 0
+                z: 10
+                visible: width > 0
+                opacity: 1
+                clip: false
+
+                sections: root.displayedSubsections
+                activeSection: root.currentSection
+                onSectionChanged: sectionId => root.currentSection = sectionId
+
+                Behavior on x {
+                    NumberAnimation {
+                        duration: Appearance.anim.durations.normal
+                        easing.type: Easing.OutCubic
+                    }
+                }
+
+                Behavior on width {
+                    NumberAnimation {
+                        duration: Appearance.anim.durations.normal
+                        easing.type: Easing.OutCubic
+                    }
+                }
+
+                Behavior on implicitHeight {
+                    NumberAnimation {
+                        duration: Appearance.anim.durations.normal
+                        easing.type: Easing.OutCubic
+                    }
+                }
+
+            }
+
+            SequentialAnimation {
+                id: sidebarContentAnimation
+                running: false
+
+                ScriptAction {
+                    script: {
+                        if (root.currentPageSubsections.length === 0) {
+                            delayedClearTimer.start()
+                        }
+                    }
+                }
+
+                NumberAnimation {
+                    target: globalVerticalNav
+                    property: "contentOpacity"
+                    to: 0
+                    duration: 100
+                }
+
+                ScriptAction {
+                    script: {
+                        if (root.currentPageSubsections.length > 0) {
+                            root.displayedSubsections = root.currentPageSubsections
+                        }
+                    }
+                }
+
+                NumberAnimation {
+                    target: globalVerticalNav
+                    property: "contentOpacity"
+                    to: 1
+                    duration: 100
+                }
+            }
+
+            Timer {
+                id: delayedClearTimer
+                interval: Appearance.anim.durations.normal
+                onTriggered: {
+                    root.displayedSubsections = []
+                }
+            }
+
+            Connections {
+                target: root
+                function onCurrentPageSubsectionsChanged() {
+                    const oldCount = root.displayedSubsections.length
+                    const newCount = root.currentPageSubsections.length
+                    
+                    if (oldCount !== newCount && (oldCount > 0 || newCount > 0)) {
+                        sidebarContentAnimation.restart()
+                    } else if (newCount > 0) {
+                        root.displayedSubsections = root.currentPageSubsections
+                    }
+                    
+                    // Set to first item only if we don't have a current section or it's not in the new list
+                    if (newCount > 0) {
+                        const hasCurrentSection = root.currentPageSubsections.some(s => s.id === root.currentSection)
+                        if (!hasCurrentSection) {
+                            root.currentSection = root.currentPageSubsections[0].id
+                        }
+                    }
+                }
+            }
 
             property string activePage: ""
             property string targetPage: ""
             property bool transitioning: false
             property int direction: 0
+            readonly property real pageY: Appearance.padding.normal
 
             Component.onCompleted: {
                 activePage = root.currentPage;
@@ -286,9 +447,24 @@ StyledRect {
                     direction = targetIndex > currentIndex ? 1 : -1;
 
                     nextPageContainer.anchors.left = undefined;
-                    nextPageContainer.x = contentArea.width * direction;
+                    if (direction > 0) {
+                        nextPageContainer.x = contentArea.width;
+                    } else {
+                        nextPageContainer.x = -(nextPageContainer.width);
+                    }
                     nextPageLoader.sourceComponent = root.pages.find(p => p.id === targetPage)?.component;
                     transitioning = true;
+                }
+            }
+
+            Connections {
+                target: nextPageLoader
+                function onItemChanged() {
+                    if (nextPageLoader.item && nextPageLoader.item.subsections !== undefined) {
+                        root.targetPageSubsections = nextPageLoader.item.subsections
+                    } else {
+                        root.targetPageSubsections = []
+                    }
                 }
             }
 
@@ -301,41 +477,85 @@ StyledRect {
 
             Item {
                 id: currentPageContainer
-                x: 0
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                width: parent.width
-                z: 1
+                property real navOffset: root.currentPageSubsections.length > 0 ? globalVerticalNav.implicitWidth + Appearance.padding.normal : 0
+                x: Appearance.padding.normal + navOffset
+                y: contentArea.pageY
+                width: parent.width - Appearance.padding.normal * 3 - navOffset
+                height: parent.height - Appearance.padding.normal * 2 - Appearance.padding.normal
+                z: contentArea.transitioning ? (contentArea.direction > 0 ? 2 : 1) : 2
+                clip: true
 
-                Rectangle {
-                    anchors.fill: parent
-                    color: Colours.palette.m3background
-                    z: -1
+                Behavior on x {
+                    enabled: !contentArea.transitioning
+                    NumberAnimation {
+                        duration: Appearance.anim.durations.normal
+                        easing.type: Easing.OutCubic
+                    }
+                }
+
+                Behavior on width {
+                    enabled: !contentArea.transitioning
+                    NumberAnimation {
+                        duration: Appearance.anim.durations.normal
+                        easing.type: Easing.OutCubic
+                    }
                 }
 
                 Loader {
                     id: currentPageLoader
-                    anchors.fill: parent
+                    asynchronous: false
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    
+                    onItemChanged: {
+                        if (item && item.subsections !== undefined) {
+                            root.currentPageSubsections = item.subsections
+                            root.targetPageSubsections = item.subsections
+                        } else {
+                            root.currentPageSubsections = []
+                            root.targetPageSubsections = []
+                            root.currentSection = ""
+                        }
+                    }
+                }
+                
+                Connections {
+                    target: root
+                    function onCurrentSectionChanged() {
+                        if (currentPageLoader.item && currentPageLoader.item.scrollToSection) {
+                            currentPageLoader.item.scrollToSection(root.currentSection)
+                        }
+                    }
                 }
             }
 
             Item {
                 id: nextPageContainer
-                anchors.left: parent.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                width: parent.width
-                z: 0
+                property real navOffset: root.targetPageSubsections.length > 0 ? globalVerticalNav.implicitWidth + Appearance.padding.normal : 0
+                x: parent.width
+                y: contentArea.pageY
+                width: parent.width - Appearance.padding.normal * 3 - navOffset
+                height: parent.height - Appearance.padding.normal * 2 - Appearance.padding.normal
+                z: contentArea.transitioning ? (contentArea.direction > 0 ? 1 : 2) : 1
+                clip: true
 
-                Rectangle {
-                    anchors.fill: parent
-                    color: Colours.palette.m3background
-                    z: -1
+                Behavior on width {
+                    enabled: !contentArea.transitioning
+                    NumberAnimation {
+                        duration: Appearance.anim.durations.normal
+                        easing.type: Easing.OutCubic
+                    }
                 }
 
                 Loader {
                     id: nextPageLoader
-                    anchors.fill: parent
+                    asynchronous: false
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
                 }
             }
 
@@ -347,7 +567,7 @@ StyledRect {
                     NumberAnimation {
                         target: currentPageContainer
                         property: "x"
-                        to: -contentArea.width * contentArea.direction
+                        to: contentArea.direction > 0 ? -(currentPageContainer.width) : contentArea.width
                         duration: 350
                         easing.type: Easing.OutCubic
                     }
@@ -355,7 +575,7 @@ StyledRect {
                     NumberAnimation {
                         target: nextPageContainer
                         property: "x"
-                        to: 0
+                        to: nextPageContainer.navOffset + Appearance.padding.normal
                         duration: 350
                         easing.type: Easing.OutCubic
                     }
@@ -364,8 +584,8 @@ StyledRect {
                 ScriptAction {
                     script: {
                         currentPageLoader.sourceComponent = nextPageLoader.sourceComponent;
-                        currentPageContainer.x = 0;
-                        nextPageContainer.anchors.left = currentPageContainer.right;
+                        currentPageContainer.x = Appearance.padding.normal + currentPageContainer.navOffset;
+                        nextPageContainer.x = contentArea.width;
                         contentArea.activePage = contentArea.targetPage;
                         contentArea.transitioning = false;
                     }

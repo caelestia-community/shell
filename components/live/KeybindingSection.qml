@@ -10,15 +10,24 @@ SectionContentArea {
     id: root
 
     property int targetColumns: 2
-    property real responsiveBreakpoint: 800
+    property real responsiveBreakpoint: 1000
 
     property list<var> groups: []
+    
+    property real groupColumnSpacing: Appearance.spacing.large
+    property real groupRowSpacing: Appearance.spacing.large * 2
+    property real bindingSpacing: Appearance.spacing.normal
+    
+    // Container styling (inherited from SectionContentArea)
+    customPadding: Appearance.padding.large * 2
+    enablePadding: true
+    enableBackground: true
 
     content: Component {
         GridLayout {
             columns: parent.width > root.responsiveBreakpoint ? root.targetColumns : 1
-            columnSpacing: Appearance.spacing.large
-            rowSpacing: Appearance.spacing.large
+            columnSpacing: root.groupColumnSpacing
+            rowSpacing: root.groupRowSpacing
 
             Repeater {
                 model: root.groups
@@ -32,10 +41,13 @@ SectionContentArea {
                     Layout.fillHeight: true
                     Layout.alignment: Qt.AlignTop
                     title: modelData.title
+                    
+                    enablePadding: false
+                    enableBackground: false
 
                     content: Component {
                         ColumnLayout {
-                            spacing: Appearance.spacing.normal
+                            spacing: root.bindingSpacing
 
                             Repeater {
                                 model: keybindingContentArea.modelData.bindings

@@ -118,47 +118,57 @@ ScrollablePage {
             }
         }
 
-        SectionContentArea {
-            title: qsTr("The Linux Philosophy")
-
+        GridLayout {
+            Layout.fillWidth: true
             Layout.topMargin: Appearance.padding.large
+            columns: parent.width > 1000 ? 2 : 1
+            columnSpacing: Appearance.spacing.normal
+            rowSpacing: Appearance.spacing.normal
 
-            content: Component {
-                ColumnLayout {
-                    StyledText {
-                        Layout.fillWidth: true
-                        text: qsTr("Linux is an ecosystem built on the idea that \"small is beautiful\". Unlike other operating systems that rely on massive, all-in-one applications, Linux is a collection of specialized tools designed to do one thing and do it well. Linux gives you the power to combine these tools, building complex solutions from simple building blocks. It's a transparent, community driven world where you have total control over your machine.")
-                        font.pointSize: Appearance.font.size.normal
-                        color: Colours.palette.m3onSurface
-                        wrapMode: Text.WordWrap
+            SectionContentArea {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.alignment: Qt.AlignTop
+                title: qsTr("The Linux Philosophy")
+
+                content: Component {
+                    ColumnLayout {
+                        StyledText {
+                            Layout.fillWidth: true
+                            text: qsTr("Linux is an ecosystem built on the idea that \"small is beautiful\". Unlike other operating systems that rely on massive, all-in-one applications, Linux is a collection of specialized tools designed to do one thing and do it well. Linux gives you the power to combine these tools, building complex solutions from simple building blocks. It's a transparent, community driven world where you have total control over your machine.")
+                            font.pointSize: Appearance.font.size.normal
+                            color: Colours.palette.m3onSurface
+                            wrapMode: Text.WordWrap
+                        }
                     }
                 }
             }
-        }
 
-        SectionContentArea {
-            title: qsTr("An Aptitude for Learning")
+            SectionContentArea {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.alignment: Qt.AlignTop
+                title: qsTr("An Aptitude for Learning")
 
-            Layout.topMargin: Appearance.padding.large
+                content: Component {
+                    ColumnLayout {
+                        StyledText {
+                            Layout.fillWidth: true
+                            text: qsTr("While our community is here to help, Caelestia is about your personal journey. Everyone has their own unique needs and tastes, and every install of Caelestia is tailored to its user. We do our best to support our users, but it's always possible that you'll come up with a question we don't have an immediate answer to. Our hope is that you continually learn and eventually share your knowledge with the community, improving the community as a whole in the process.")
+                            font.pointSize: Appearance.font.size.normal
+                            color: Colours.palette.m3onSurface
+                            wrapMode: Text.WordWrap
+                        }
 
-            content: Component {
-                ColumnLayout {
-                    StyledText {
-                        Layout.fillWidth: true
-                        text: qsTr("While our community is here to help, Caelestia is about your personal journey. Everyone has their own unique needs and tastes, and every install of Caelestia is tailored to its user. We do our best to support our users, but it's always possible that you'll come up with a question we don't have an immediate answer to. Our hope is that you continually learn and eventually share your knowledge with the community, improving the community as a whole in the process.")
-                        font.pointSize: Appearance.font.size.normal
-                        color: Colours.palette.m3onSurface
-                        wrapMode: Text.WordWrap
-                    }
-
-                    StyledText {
-                        Layout.fillWidth: true
-                        text: qsTr("\"I am always doing that which I cannot do, in order that I may learn how to do it.\" — Pablo Picasso")
-                        font.pointSize: Appearance.font.size.small
-                        color: Colours.palette.m3onSurfaceVariant
-                        horizontalAlignment: Text.AlignRight
-                        wrapMode: Text.WordWrap
-                        opacity: 0.8
+                        StyledText {
+                            Layout.fillWidth: true
+                            text: qsTr("\"I am always doing that which I cannot do, in order that I may learn how to do it.\" — Pablo Picasso")
+                            font.pointSize: Appearance.font.size.small
+                            color: Colours.palette.m3onSurfaceVariant
+                            horizontalAlignment: Text.AlignRight
+                            wrapMode: Text.WordWrap
+                            opacity: 0.8
+                        }
                     }
                 }
             }
@@ -288,15 +298,17 @@ ScrollablePage {
             }
 
             SectionContentArea {
-                Layout.topMargin: Appearance.padding.large
+                Layout.topMargin: Appearance.spacing.normal
                 Layout.columnSpan: 2
                 title: qsTr("Other Useful Keybindings")
+                
+                customPadding: Appearance.padding.large * 2
 
                 content: Component {
                     GridLayout {
-                        columns: parent.width > 900 ? 2 : 1
+                        columns: parent.width > 1000 ? 2 : 1
                         columnSpacing: Appearance.spacing.large
-                        rowSpacing: Appearance.spacing.normal
+                        rowSpacing: Appearance.spacing.large
 
                         KeybindingRow {
                             Layout.fillWidth: true

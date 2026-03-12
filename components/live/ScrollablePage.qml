@@ -81,69 +81,46 @@ Item {
         root.currentSection = currentSectionId
     }
 
-    RowLayout {
+    StyledFlickable {
+        id: contentFlickable
+
         anchors.fill: parent
-        spacing: Appearance.spacing.large
+        contentHeight: contentWrapper.implicitHeight
+        flickableDirection: Flickable.VerticalFlick
+        boundsBehavior: Flickable.StopAtBounds
+        clip: true
 
-        ColumnLayout {
-            VerticalNav {
-                id: verticalNav
+        onContentYChanged: root.updateCurrentSection()
 
-                Layout.alignment: Qt.AlignTop
-
-                sections: root.subsections
-                activeSection: root.currentSection
-                disableAnimations: root.initializing
-                onSectionChanged: sectionId => root.scrollToSection(sectionId)
-            }
-
-            Item {
-                Layout.fillHeight: true
+        Behavior on contentY {
+            enabled: root.programmaticScroll && !root.initializing
+            Anim {
+                duration: Appearance.anim.durations.normal
+                easing.bezierCurve: Appearance.anim.curves.emphasized
             }
         }
 
-        StyledFlickable {
-            id: contentFlickable
+        Item {
+            id: contentWrapper
+            
+            width: parent.width
+            implicitHeight: contentColumn.implicitHeight + bottomPadding.height
+            
+            ColumnLayout {
+                id: contentColumn
 
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            contentHeight: contentWrapper.implicitHeight
-            flickableDirection: Flickable.VerticalFlick
-            boundsBehavior: Flickable.StopAtBounds
-            clip: true
-
-            onContentYChanged: root.updateCurrentSection()
-
-            Behavior on contentY {
-                enabled: root.programmaticScroll && !root.initializing
-                Anim {
-                    duration: Appearance.anim.durations.normal
-                    easing.bezierCurve: Appearance.anim.curves.emphasized
-                }
-            }
-
-            Item {
-                id: contentWrapper
-                
                 width: parent.width
-                implicitHeight: contentColumn.implicitHeight + bottomPadding.height
-                
-                ColumnLayout {
-                    id: contentColumn
+                spacing: 0
 
-                    width: parent.width
-                    spacing: 0
-
-                    // PageSection children added via default property alias
-                }
+                // PageSection children added via default property alias
+            }
+            
+            Item {
+                id: bottomPadding
                 
-                Item {
-                    id: bottomPadding
-                    
-                    anchors.top: contentColumn.bottom
-                    width: parent.width
-                    height: contentFlickable.height * root.bottomPaddingViewportRatio + root.bottomPaddingExtra
-                }
+                anchors.top: contentColumn.bottom
+                width: parent.width
+                height: contentFlickable.height * root.bottomPaddingViewportRatio + root.bottomPaddingExtra
             }
         }
     }
