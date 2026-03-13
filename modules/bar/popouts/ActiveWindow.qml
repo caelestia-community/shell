@@ -14,7 +14,8 @@ Item {
 
     readonly property list<string> internalApps: [
         qsTr("Caelestia Settings"),
-        qsTr("Welcome to Caelestia")
+        qsTr("Welcome to Caelestia"),
+        qsTr("Caelestia Help")
     ]
 
     implicitWidth: Hypr.activeToplevel ? child.implicitWidth : -Appearance.padding.large * 2
