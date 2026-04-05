@@ -59,7 +59,6 @@ Item {
         }
     ]
 
-    // --- MOCK BACKEND TIMER ---
     Timer {
         id: dryRunTimer
         interval: 1500
@@ -86,13 +85,11 @@ Item {
         anchors.margins: 48
         spacing: 24
 
-        // --- Center Display ---
         ColumnLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
             spacing: 16
 
-            // THE FIX: Using your official Caelestia animated logo
             LogoIntro {
                 id: installLogo
                 Layout.alignment: Qt.AlignHCenter
@@ -100,10 +97,8 @@ Item {
                 Layout.preferredHeight: 80
                 skipIntroAnimation: false
 
-                // Ensure it rests at normal scale when finished
                 scale: root.isFinished ? 1.0 : 1.0
 
-                // Smoothly snap to 1.0 scale when isFinished becomes true
                 Behavior on scale {
                     NumberAnimation {
                         duration: 400
@@ -111,7 +106,6 @@ Item {
                     }
                 }
 
-                // Breathing animation while working
                 SequentialAnimation on scale {
                     running: !root.isFinished
                     loops: Animation.Infinite
@@ -173,7 +167,6 @@ Item {
             }
         }
 
-        // --- Terminal Output Log ---
         StyledRect {
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -207,7 +200,6 @@ Item {
             }
         }
 
-        // --- Post-Install Reboot Button ---
         StyledRect {
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: 160

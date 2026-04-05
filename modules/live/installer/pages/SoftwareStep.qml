@@ -64,7 +64,7 @@ Item {
                 {
                     appId: "gimp",
                     name: "GIMP",
-                    desc: "GNU Image Manipulation Program for professional editing.",
+                    desc: "GNU Image Manipulation Program for image editing.",
                     iconName: "palette"
                 },
                 {
@@ -81,13 +81,13 @@ Item {
                 {
                     appId: "steam",
                     name: "Steam",
-                    desc: "The ultimate destination for playing and discussing games.",
+                    desc: "The ultimate destination for gaming.",
                     iconName: "sports_esports"
                 },
                 {
                     appId: "obs",
                     name: "OBS Studio",
-                    desc: "Free and open source software for video recording and streaming.",
+                    desc: "Software for video recording and streaming.",
                     iconName: "videocam"
                 }
             ]
@@ -98,7 +98,6 @@ Item {
         if (!root.config)
             return;
 
-        // THE FIX: Clone the array so QML recognizes it as entirely "new" data
         let currentList = root.config.software ? [...root.config.software] : [];
         let index = currentList.indexOf(appId);
 
@@ -114,8 +113,8 @@ Item {
 
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: 24
-        spacing: 24
+        anchors.margins: 16
+        spacing: 12
 
         ColumnLayout {
             spacing: 0
@@ -145,7 +144,7 @@ Item {
 
             ScrollBar.vertical: ScrollBar {
                 id: vbar
-                policy: ScrollBar.AlwaysOn
+                policy: ScrollBar.AsNeeded
                 contentItem: Rectangle {
                     implicitWidth: 6
                     implicitHeight: 40
@@ -156,15 +155,15 @@ Item {
 
             ColumnLayout {
                 id: scrollContent
-                width: parent.width - 16
-                spacing: 24
+                width: parent.width - (vbar.visible ? 16 : 0)
+                spacing: 16
 
                 Repeater {
                     model: root.softwareGroups
 
                     delegate: ColumnLayout {
                         Layout.fillWidth: true
-                        spacing: 12
+                        spacing: 8
 
                         required property int index
                         required property var modelData
@@ -174,15 +173,14 @@ Item {
                             font.bold: true
                             font.pointSize: 14
                             color: Colours.palette.m3primary
-                            Layout.topMargin: index === 0 ? 0 : 8
+                            Layout.topMargin: index === 0 ? 0 : 4
                         }
 
                         GridLayout {
                             Layout.fillWidth: true
                             columns: 2
                             columnSpacing: 16
-                            rowSpacing: 16
-
+                            rowSpacing: 12
                             Repeater {
                                 model: modelData.apps
 
@@ -191,7 +189,7 @@ Item {
                                     required property var modelData
 
                                     Layout.fillWidth: true
-                                    Layout.preferredHeight: 80
+                                    Layout.preferredHeight: 72
                                     hoverEnabled: true
 
                                     property bool selected: {
@@ -210,23 +208,25 @@ Item {
 
                                         RowLayout {
                                             anchors.fill: parent
-                                            anchors.margins: 16
-                                            spacing: 16
+                                            anchors.margins: 12
+                                            spacing: 12
 
                                             MaterialIcon {
                                                 text: modelData.iconName
-                                                font.pointSize: 28
+                                                font.pointSize: 24
                                                 color: cardRoot.selected ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
+                                                Layout.alignment: Qt.AlignVCenter
                                             }
 
                                             ColumnLayout {
                                                 Layout.fillWidth: true
-                                                spacing: 2
+                                                Layout.alignment: Qt.AlignVCenter
+                                                spacing: 0
 
                                                 StyledText {
                                                     text: modelData.name
                                                     font.bold: true
-                                                    font.pointSize: 14
+                                                    font.pointSize: 13
                                                     color: cardRoot.selected ? Colours.palette.m3onSurface : Colours.palette.m3onSurface
                                                 }
                                                 StyledText {
@@ -237,13 +237,15 @@ Item {
                                                     wrapMode: Text.WordWrap
                                                     maximumLineCount: 2
                                                     elide: Text.ElideRight
+                                                    lineHeight: 1.1
                                                 }
                                             }
 
                                             MaterialIcon {
                                                 text: cardRoot.selected ? "check_circle" : "radio_button_unchecked"
-                                                font.pointSize: 24
+                                                font.pointSize: 22
                                                 color: cardRoot.selected ? Colours.palette.m3primary : Colours.palette.m3outline
+                                                Layout.alignment: Qt.AlignVCenter
                                                 Behavior on color {
                                                     ColorAnimation {
                                                         duration: 150

@@ -17,24 +17,35 @@ StyledRect {
     property string currentPage: "welcome"
     property bool navigationLocked: false
 
-    // Tracks our numerical position in the wizard
     readonly property int currentStepIndex: pages.findIndex(p => p.id === currentPage)
 
-    // The global QtObject as the single source of truth
     InstallerConfig {
         id: sharedConfig
     }
 
     width: 1000
-    height: 700 // Taller height for breathing room!
+    height: 700
     color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
-    border.width: 1
-    border.color: Colours.palette.m3outlineVariant
     radius: Appearance.rounding.normal
 
     focus: true
 
-    // Keyboard Navigation (Arrow Keys)
+    function triggerNextStep() {
+        if (root.navigationLocked || contentArea.transitioning)
+            return;
+        if (currentPageLoader.item && !currentPageLoader.item.isReady)
+            return;
+
+        if (root.currentStepIndex >= 0 && root.currentStepIndex < root.pages.length - 2) {
+            root.navigationLocked = true;
+            root.currentPage = root.pages[root.currentStepIndex + 1].id;
+            navigationDebounceTimer.restart();
+        } else if (root.currentStepIndex === root.pages.length - 2) {
+            console.log("--- INSTALLATION TRIGGERED ---");
+            root.currentPage = "progress";
+        }
+    }
+
     Keys.onLeftPressed: {
         if (root.navigationLocked)
             return;
@@ -44,19 +55,10 @@ StyledRect {
             navigationDebounceTimer.restart();
         }
     }
-    Keys.onRightPressed: {
-        if (root.navigationLocked)
-            return;
-        // Prevent using the right arrow key if the page isn't ready
-        if (currentPageLoader.item && !currentPageLoader.item.isReady)
-            return;
 
-        if (root.currentStepIndex >= 0 && root.currentStepIndex < root.pages.length - 2) {
-            root.navigationLocked = true;
-            root.currentPage = root.pages[root.currentStepIndex + 1].id;
-            navigationDebounceTimer.restart();
-        }
-    }
+    Keys.onRightPressed: root.triggerNextStep()
+    Keys.onReturnPressed: root.triggerNextStep()
+    Keys.onEnterPressed: root.triggerNextStep()
 
     Timer {
         id: navigationDebounceTimer
@@ -106,7 +108,7 @@ StyledRect {
             name: qsTr("Installing"),
             icon: "download",
             source: "pages/ProgressStep.qml",
-            hidden: true // Keeps it off the top nav!
+            hidden: true
         }
     ]
 
@@ -116,17 +118,16 @@ StyledRect {
         anchors.fill: parent
         spacing: 0
 
-        // --- TOP NAVIGATION BAR ---
         StyledRect {
             id: topNav
             Layout.fillWidth: true
-            Layout.preferredHeight: 60
+            Layout.preferredHeight: 80
             color: "transparent"
 
             RowLayout {
                 anchors.fill: parent
-                anchors.leftMargin: Appearance.padding.large
-                anchors.rightMargin: Appearance.padding.large
+                anchors.leftMargin: 32
+                anchors.rightMargin: 32
                 spacing: Appearance.spacing.normal
 
                 StyledText {
@@ -137,7 +138,6 @@ StyledRect {
                     color: Colours.palette.m3onSurface
                 }
 
-                // Tabs Area
                 StyledFlickable {
                     id: tabsFlickable
                     Layout.fillWidth: true
@@ -160,7 +160,6 @@ StyledRect {
 
                         StyledRect {
                             id: activeIndicator
-
                             property Item activeTab: {
                                 if (typeof tabsRepeater === "undefined")
                                     return null;
@@ -171,16 +170,13 @@ StyledRect {
                                 }
                                 return null;
                             }
-
                             visible: activeTab !== null
                             color: Colours.palette.m3primary
                             radius: Appearance.rounding.small
-
                             x: activeTab ? activeTab.x : 0
                             width: activeTab ? activeTab.width : 0
                             height: 32
                             anchors.verticalCenter: parent.verticalCenter
-
                             Behavior on x {
                                 Anim {
                                     duration: Appearance.anim.durations.normal
@@ -204,16 +200,12 @@ StyledRect {
                             Repeater {
                                 id: tabsRepeater
                                 model: root.pages
-
                                 delegate: Item {
                                     id: tabsItem
-
                                     required property var modelData
                                     required property int index
-
                                     property bool isActive: root.currentPage === modelData.id
 
-                                    // THE FIX: Hide this tab if the model dictates it
                                     visible: !modelData.hidden
                                     implicitWidth: visible ? tabContent.implicitWidth + (Appearance.padding.normal * 2) : 0
                                     implicitHeight: visible ? 32 : 0
@@ -221,10 +213,8 @@ StyledRect {
                                     StateLayer {
                                         anchors.fill: parent
                                         radius: Appearance.rounding.small
-
                                         onClicked: {
                                             root.currentPage = tabsItem.modelData.id;
-
                                             const targetX = tabsItem.x - (tabsFlickable.width - tabsItem.width) / 2;
                                             tabsFlickable.contentX = Math.max(0, Math.min(tabsFlickable.contentWidth - tabsFlickable.width, targetX));
                                         }
@@ -234,14 +224,12 @@ StyledRect {
                                         id: tabContent
                                         anchors.centerIn: parent
                                         spacing: Appearance.spacing.smaller
-
                                         MaterialIcon {
                                             anchors.verticalCenter: parent.verticalCenter
                                             text: tabsItem.modelData.icon
                                             font.pointSize: Appearance.font.size.small
                                             color: tabsItem.isActive ? Colours.palette.m3surface : Colours.palette.m3onSurfaceVariant
                                         }
-
                                         StyledText {
                                             anchors.verticalCenter: parent.verticalCenter
                                             text: tabsItem.modelData.name
@@ -265,7 +253,6 @@ StyledRect {
             }
         }
 
-        // --- CONTENT AREA WITH SLIDE TRANSITIONS ---
         Item {
             id: contentArea
             Layout.fillWidth: true
@@ -274,7 +261,10 @@ StyledRect {
 
             StyledRect {
                 anchors.fill: parent
-                anchors.margins: 16
+                anchors.leftMargin: 32
+                anchors.rightMargin: 32
+                anchors.topMargin: 8
+                anchors.bottomMargin: 8
                 color: Colours.palette.m3background
                 radius: 12
                 z: -1
@@ -287,27 +277,20 @@ StyledRect {
             function triggerTransition(targetId) {
                 if (transitioning || targetId === activePage)
                     return;
-
-                // THE FIX: Added "progress" to the valid routing array
                 const pages = ["welcome", "timezone", "user", "software", "disk", "summary", "progress"];
                 const oldIdx = pages.indexOf(activePage);
                 const newIdx = pages.indexOf(targetId);
-
                 direction = newIdx > oldIdx ? 1 : -1;
-
                 nextPageLoader.source = root.pages.find(p => p.id === targetId).source;
                 nextPageContainer.x = direction > 0 ? contentArea.width : -contentArea.width;
-
                 nextPageContainer.z = 2;
                 currentPageContainer.z = 1;
-
                 transitioning = true;
                 slideAnimation.start();
             }
 
             SequentialAnimation {
                 id: slideAnimation
-
                 ParallelAnimation {
                     NumberAnimation {
                         target: currentPageContainer
@@ -322,7 +305,6 @@ StyledRect {
                         to: 0
                         duration: 300
                     }
-
                     NumberAnimation {
                         target: nextPageContainer
                         property: "x"
@@ -337,23 +319,19 @@ StyledRect {
                         duration: 300
                     }
                 }
-
                 ScriptAction {
                     script: {
                         currentPageLoader.source = nextPageLoader.source;
                         currentPageContainer.x = 0;
                         currentPageContainer.opacity = 1;
-
                         nextPageLoader.source = "";
                         nextPageContainer.opacity = 0;
-
                         contentArea.activePage = root.currentPage;
                         contentArea.transitioning = false;
                     }
                 }
             }
 
-            // Current Page
             Item {
                 id: currentPageContainer
                 anchors.fill: parent
@@ -365,10 +343,17 @@ StyledRect {
                     source: "pages/WelcomeStep.qml"
                     onLoaded: if (item && item.hasOwnProperty("config"))
                         item.config = sharedConfig
+
+                    Connections {
+                        target: currentPageLoader.item
+                        ignoreUnknownSignals: true
+                        function onRequestNext() {
+                            root.triggerNextStep();
+                        }
+                    }
                 }
             }
 
-            // Next Page (The Buffer)
             Item {
                 id: nextPageContainer
                 width: parent.width
@@ -392,22 +377,19 @@ StyledRect {
             }
         }
 
-        // --- BOTTOM NAVIGATION BAR ---
         StyledRect {
             id: bottomNav
-            visible: root.currentPage !== "progress" // THE FIX: Hides during install
+            visible: root.currentPage !== "progress"
             Layout.fillWidth: true
-            Layout.preferredHeight: 72
+            Layout.preferredHeight: 80
             color: "transparent"
-            border.width: 1
-            border.color: Colours.palette.m3outlineVariant
 
             RowLayout {
                 anchors.fill: parent
-                anchors.margins: Appearance.padding.large
+                anchors.leftMargin: 32
+                anchors.rightMargin: 32
                 spacing: Appearance.spacing.normal
 
-                // Back Button
                 StyledRect {
                     Layout.preferredWidth: 120
                     Layout.preferredHeight: 40
@@ -416,7 +398,6 @@ StyledRect {
                     border.color: Colours.palette.m3outlineVariant
                     radius: Appearance.rounding.small
                     visible: root.currentStepIndex > 0
-
                     property bool parentContainsMouse: backMouseArea.containsMouse
 
                     StyledText {
@@ -425,7 +406,6 @@ StyledRect {
                         font.bold: true
                         color: Colours.palette.m3onSurface
                     }
-
                     MouseArea {
                         id: backMouseArea
                         anchors.fill: parent
@@ -438,19 +418,15 @@ StyledRect {
                     }
                 }
 
-                // Spacer
                 Item {
                     Layout.fillWidth: true
                 }
 
-                // Next / Install Button
                 StyledRect {
                     Layout.preferredWidth: 120
                     Layout.preferredHeight: 40
                     radius: Appearance.rounding.small
-
                     property bool isEnabled: currentPageLoader.item ? currentPageLoader.item.isReady : false
-
                     color: isEnabled ? Colours.palette.m3primary : Colours.palette.m3surfaceVariant
                     opacity: isEnabled ? 1.0 : 0.6
 
@@ -460,23 +436,10 @@ StyledRect {
                         font.bold: true
                         color: parent.isEnabled ? Colours.palette.m3onPrimary : Colours.palette.m3onSurfaceVariant
                     }
-
                     MouseArea {
                         anchors.fill: parent
                         enabled: parent.isEnabled
-                        onClicked: {
-                            if (contentArea.transitioning)
-                                return;
-
-                            if (root.currentStepIndex < root.pages.length - 2) {
-                                // Move forward
-                                root.currentPage = root.pages[root.currentStepIndex + 1].id;
-                            } else {
-                                // TRIGGER THE INSTALLATION PROGRESS SCREEN
-                                console.log("--- INSTALLATION TRIGGERED ---");
-                                root.currentPage = "progress";
-                            }
-                        }
+                        onClicked: root.triggerNextStep()
                     }
                 }
             }

@@ -2,10 +2,10 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 import qs.services
 import qs.components
 import qs.components.live
-import qs.components.controls
 import qs.components.containers
 import qs.config
 
@@ -14,9 +14,7 @@ Item {
     property var config: ({})
     readonly property bool isReady: config && config.timezone && config.timezone !== ""
 
-    // 1. Expanded Offline Database of Timezones
     readonly property var tzDatabase: [
-        // North America
         {
             id: "America/Anchorage",
             name: "Anchorage",
@@ -65,8 +63,6 @@ Item {
             lat: 19.43,
             lon: -99.13
         },
-
-        // South America
         {
             id: "America/Bogota",
             name: "Bogotá",
@@ -97,8 +93,6 @@ Item {
             lat: -23.55,
             lon: -46.63
         },
-
-        // Europe
         {
             id: "Europe/London",
             name: "London",
@@ -135,8 +129,6 @@ Item {
             lat: 55.75,
             lon: 37.61
         },
-
-        // Africa
         {
             id: "Africa/Cairo",
             name: "Cairo",
@@ -161,8 +153,6 @@ Item {
             lat: -26.20,
             lon: 28.04
         },
-
-        // Asia
         {
             id: "Asia/Riyadh",
             name: "Riyadh",
@@ -217,8 +207,6 @@ Item {
             lat: 35.67,
             lon: 139.65
         },
-
-        // Oceania & Pacific
         {
             id: "Australia/Perth",
             name: "Perth",
@@ -245,6 +233,7 @@ Item {
         }
     ]
 
+    property var tzOptions: tzDatabase.map(tz => tz.name + " (" + tz.id + ")")
     property var selectedCity: null
 
     Component.onCompleted: {
@@ -252,9 +241,12 @@ Item {
             for (let i = 0; i < tzDatabase.length; i++) {
                 if (tzDatabase[i].id === root.config.timezone) {
                     selectedCity = tzDatabase[i];
+                    timeZoneBox.currentIndex = i;
                     break;
                 }
             }
+        } else {
+            timeZoneBox.currentIndex = -1;
         }
     }
 
@@ -289,6 +281,11 @@ Item {
             selectedCity = nearest;
             if (root.config)
                 root.config.timezone = nearest.id;
+
+            let newIdx = tzDatabase.indexOf(nearest);
+            if (newIdx !== -1 && !timeZoneBox._updating) {
+                timeZoneBox.currentIndex = newIdx;
+            }
         }
     }
 
@@ -301,115 +298,188 @@ Item {
 
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: Appearance.padding.large
-        spacing: Appearance.padding.large
+        anchors.margins: 24
+        spacing: 0
 
-        // 1. Header
         ColumnLayout {
+            Layout.fillWidth: true
             spacing: 0
             StyledText {
                 text: qsTr("Where are you?")
-                font.pointSize: Appearance.font.size.large
+                font.family: "Nunito"
+                font.pointSize: 18
                 font.bold: true
                 color: Colours.palette.m3onSurface
             }
             StyledText {
-                text: qsTr("Click your location on the map to set the system clock.")
-                font.pointSize: Appearance.font.size.small
+                text: qsTr("Click your location on the map or select from the menu to set the system clock.")
+                font.pointSize: 12
                 color: Colours.palette.m3onSurfaceVariant
             }
         }
 
-        // 2. Map Container (Strict layout settings)
-        StyledRect {
-            // THE FIX: Stop filling the width, and center the box horizontally
-            Layout.alignment: Qt.AlignHCenter
-
-            // Mathematically perfect 2:1 ratio container (accommodating 16px margins)
-            Layout.preferredWidth: 608
-            Layout.preferredHeight: 320
-
-            color: Colours.palette.m3surfaceContainerHigh
-            radius: Appearance.rounding.normal
-            clip: true
-
-            Image {
-                id: worldMap
-                anchors.fill: parent
-                anchors.margins: 16
-                fillMode: Image.PreserveAspectFit
-                source: "../../assets/world_map.png"
-                smooth: true
-                mipmap: true
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: mouse => selectTimezoneByCoords(mouse.x, mouse.y)
-                }
-
-                MaterialIcon {
-                    visible: selectedCity !== null
-                    text: "location_on"
-                    color: Colours.palette.m3primary
-                    font.pointSize: 24
-
-                    property real pWidth: worldMap.status === Image.Ready ? worldMap.paintedWidth : worldMap.width
-                    property real pHeight: worldMap.status === Image.Ready ? worldMap.paintedHeight : worldMap.height
-
-                    x: selectedCity ? ((worldMap.width - pWidth) / 2) + root.getPinX(selectedCity.lon, pWidth) - width / 2 : 0
-                    y: selectedCity ? ((worldMap.height - pHeight) / 2) + root.getPinY(selectedCity.lat, pHeight) - height : 0
-
-                    Behavior on x {
-                        Anim {
-                            duration: Appearance.anim.durations.normal
-                            easing.bezierCurve: Appearance.anim.curves.emphasized
-                        }
-                    }
-                    Behavior on y {
-                        Anim {
-                            duration: Appearance.anim.durations.normal
-                            easing.bezierCurve: Appearance.anim.curves.emphasized
-                        }
-                    }
-                }
-            }
-        }
-
-        // 3. Selection Feedback Bar
-        StyledRect {
-            Layout.fillWidth: true
-            Layout.preferredHeight: 60
-            color: Colours.palette.m3surfaceContainerHigh
-            radius: Appearance.rounding.small
-            border.width: 1
-            border.color: selectedCity ? Colours.palette.m3primary : Colours.palette.m3outlineVariant
-
-            RowLayout {
-                anchors.fill: parent
-                anchors.leftMargin: Appearance.padding.normal
-                anchors.rightMargin: Appearance.padding.normal
-                spacing: Appearance.spacing.normal
-
-                MaterialIcon {
-                    text: "schedule"
-                    font.pointSize: 16
-                    color: selectedCity ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
-                }
-
-                StyledText {
-                    Layout.fillWidth: true
-                    text: selectedCity ? selectedCity.name + " (" + selectedCity.id + ")" : qsTr("Awaiting selection...")
-                    font.pointSize: Appearance.font.size.medium
-                    font.bold: selectedCity !== null
-                    color: selectedCity ? Colours.palette.m3onSurface : Colours.palette.m3onSurfaceVariant
-                }
-            }
-        }
-
-        // 4. Spacer
         Item {
             Layout.fillHeight: true
-            Layout.fillWidth: true
+        }
+
+        ColumnLayout {
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: 608
+            spacing: 24
+
+            Item {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 320
+
+                Image {
+                    id: worldMap
+                    anchors.fill: parent
+                    fillMode: Image.PreserveAspectFit
+                    source: "../../assets/world_map.png"
+                    smooth: true
+                    mipmap: true
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: mouse => selectTimezoneByCoords(mouse.x, mouse.y)
+                    }
+
+                    MaterialIcon {
+                        visible: selectedCity !== null
+                        text: "location_on"
+                        color: Colours.palette.m3primary
+                        font.pointSize: 24
+
+                        property real pWidth: worldMap.status === Image.Ready ? worldMap.paintedWidth : worldMap.width
+                        property real pHeight: worldMap.status === Image.Ready ? worldMap.paintedHeight : worldMap.height
+
+                        x: selectedCity ? ((worldMap.width - pWidth) / 2) + root.getPinX(selectedCity.lon, pWidth) - width / 2 : 0
+                        y: selectedCity ? ((worldMap.height - pHeight) / 2) + root.getPinY(selectedCity.lat, pHeight) - height : 0
+
+                        Behavior on x {
+                            NumberAnimation {
+                                duration: 400
+                                easing.type: Easing.OutCubic
+                            }
+                        }
+                        Behavior on y {
+                            NumberAnimation {
+                                duration: 400
+                                easing.type: Easing.OutCubic
+                            }
+                        }
+                    }
+                }
+            }
+
+            ComboBox {
+                id: timeZoneBox
+                Layout.fillWidth: true
+                Layout.preferredHeight: 56
+
+                model: root.tzOptions
+
+                property bool _updating: false
+
+                onActivated: index => {
+                    if (index >= 0 && index < tzDatabase.length) {
+                        _updating = true;
+                        selectedCity = tzDatabase[index];
+                        if (root.config)
+                            root.config.timezone = selectedCity.id;
+                        _updating = false;
+                    }
+                }
+
+                background: StyledRect {
+                    color: Colours.palette.m3surfaceContainerHigh
+                    radius: 8
+                    border.width: 1
+                    border.color: timeZoneBox.pressed || timeZoneBox.popup.visible ? Colours.palette.m3primary : Colours.palette.m3outlineVariant
+                }
+
+                contentItem: RowLayout {
+                    anchors.fill: parent
+                    anchors.leftMargin: 16
+                    anchors.rightMargin: 16
+                    spacing: 12
+
+                    MaterialIcon {
+                        text: "schedule"
+                        font.pointSize: 20
+                        color: selectedCity ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
+                    }
+
+                    StyledText {
+                        Layout.fillWidth: true
+                        text: timeZoneBox.currentIndex !== -1 ? timeZoneBox.currentText : qsTr("Select a Timezone...")
+                        font.pointSize: 14
+                        color: selectedCity ? Colours.palette.m3onSurface : Colours.palette.m3onSurfaceVariant
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                }
+
+                indicator: MaterialIcon {
+                    x: timeZoneBox.width - width - 16
+                    y: (timeZoneBox.height - height) / 2
+                    text: timeZoneBox.popup.visible ? "expand_less" : "expand_more"
+                    font.pointSize: 24
+                    color: Colours.palette.m3onSurfaceVariant
+                }
+
+                popup: Popup {
+                    y: timeZoneBox.height + 4
+                    width: timeZoneBox.width
+                    height: Math.min(200, contentItem.implicitHeight + 8)
+                    padding: 4
+
+                    contentItem: ListView {
+                        clip: true
+                        implicitHeight: contentHeight
+                        model: timeZoneBox.delegateModel
+                        currentIndex: timeZoneBox.highlightedIndex
+                        boundsBehavior: Flickable.StopAtBounds
+                        ScrollBar.vertical: ScrollBar {
+                            policy: ScrollBar.AsNeeded
+                        }
+                    }
+
+                    background: StyledRect {
+                        color: Colours.palette.m3surfaceContainerHigh
+                        border.width: 1
+                        border.color: Colours.palette.m3outlineVariant
+                        radius: 8
+                    }
+                }
+
+                delegate: ItemDelegate {
+                    id: delegateItem
+
+                    required property string modelData
+                    required property int index
+
+                    width: timeZoneBox.popup.width - 8
+                    height: 48
+                    highlighted: timeZoneBox.highlightedIndex === delegateItem.index
+
+                    background: Rectangle {
+                        radius: 6
+                        color: delegateItem.highlighted ? Colours.palette.m3surfaceVariant : "transparent"
+                    }
+
+                    contentItem: StyledText {
+                        text: delegateItem.modelData
+                        color: delegateItem.highlighted ? Colours.palette.m3primary : Colours.palette.m3onSurface
+                        font.pointSize: 12
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                }
+            }
+        }
+
+        // --- Bottom Flexible Spacer ---
+        Item {
+            Layout.fillHeight: true
         }
     }
 }

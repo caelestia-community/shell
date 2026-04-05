@@ -33,19 +33,16 @@ Singleton {
             id: win
 
             visible: true
-            // Set specific dimensions for the installer
             implicitWidth: 1100
             implicitHeight: 700
             minimumSize: Qt.size(900, 700)
             color: "transparent"
             title: qsTr("Caelestia Installer")
 
-            // This is the wrapper we discussed earlier
             InstallerWindow {
                 id: installerWindow
                 anchors.fill: parent
 
-                // Function to handle closing the window after install or cancel
                 function close(): void {
                     win.destroy();
                 }

@@ -2,7 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import Quickshell.Io // THE FIX: Gives us access to native terminal processes
+import Quickshell.Io
 import qs.services
 import qs.components
 import qs.components.live
@@ -23,7 +23,6 @@ Item {
         }
     }
 
-    // Drive Probe
     Process {
         id: diskProbe
         command: ["lsblk", "-J", "-d", "-o", "NAME,MODEL,SIZE,TRAN,TYPE"]
@@ -41,7 +40,6 @@ Item {
                     for (let i = 0; i < devices.length; i++) {
                         let d = devices[i];
 
-                        // THE FIX: Exclude loopbacks and volatile RAM disks
                         if (d.type === "disk" && !d.name.startsWith("loop") && !d.name.startsWith("zram") && !d.name.startsWith("ram")) {
                             let icon = "storage";
                             let tran = d.tran ? d.tran.toLowerCase() : "";
@@ -111,7 +109,6 @@ Item {
         anchors.margins: 24
         spacing: 24
 
-        // Header
         ColumnLayout {
             spacing: 0
             StyledText {
@@ -128,7 +125,6 @@ Item {
             }
         }
 
-        // Disk List
         Flickable {
             Layout.fillWidth: true
             Layout.fillHeight: true

@@ -2,6 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 import qs.services
 import qs.components
 import qs.components.live
@@ -14,12 +15,13 @@ Item {
 
     readonly property bool isReady: true
 
+    property bool showPassword: false
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 24
-        spacing: 24
+        spacing: 16
 
-        // Header
         ColumnLayout {
             spacing: 0
             StyledText {
@@ -30,13 +32,12 @@ Item {
                 color: Colours.palette.m3onSurface
             }
             StyledText {
-                text: qsTr("Please review your selections before writing to disk.")
+                text: qsTr("Please review your final configuration before writing to disk.")
                 font.pointSize: 12
                 color: Colours.palette.m3onSurfaceVariant
             }
         }
 
-        // Summary
         StyledRect {
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -44,84 +45,308 @@ Item {
             radius: 12
             border.width: 1
             border.color: Colours.palette.m3outlineVariant
+            clip: true
 
-            ColumnLayout {
+            Flickable {
                 anchors.fill: parent
-                anchors.margins: 32
-                spacing: 24
+                anchors.margins: 16
+                contentWidth: width
+                contentHeight: summaryGrid.implicitHeight
+                boundsBehavior: Flickable.StopAtBounds
 
-                SummaryRow {
-                    icon: "public"
-                    title: "Timezone"
-                    value: root.config && root.config.timezone !== "" ? root.config.timezone : "Not Selected"
-                }
+                GridLayout {
+                    id: summaryGrid
+                    width: parent.width
+                    columns: 2
+                    columnSpacing: 32
+                    rowSpacing: 16
 
-                SummaryRow {
-                    icon: "person"
-                    title: "Primary User"
-                    value: root.config && root.config.fullname !== "" ? root.config.fullname + " (" + root.config.username + ")" : "Not Selected"
-                }
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                        spacing: 12
+                        MaterialIcon {
+                            text: "badge"
+                            font.pointSize: 24
+                            color: Colours.palette.m3primary
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: 2
+                            StyledText {
+                                text: qsTr("Full Name")
+                                font.pointSize: 11
+                                color: Colours.palette.m3onSurfaceVariant
+                            }
+                            StyledText {
+                                text: root.config && root.config.fullname ? root.config.fullname : qsTr("Not provided")
+                                font.pointSize: 14
+                                font.bold: true
+                                color: Colours.palette.m3onSurface
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
+                        }
+                    }
 
-                SummaryRow {
-                    icon: "computer"
-                    title: "Device Name"
-                    value: root.config && root.config.hostname !== "" ? root.config.hostname : "Not Selected"
-                }
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                        spacing: 12
+                        MaterialIcon {
+                            text: "computer"
+                            font.pointSize: 24
+                            color: Colours.palette.m3primary
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: 2
+                            StyledText {
+                                text: qsTr("Device Name (Hostname)")
+                                font.pointSize: 11
+                                color: Colours.palette.m3onSurfaceVariant
+                            }
+                            StyledText {
+                                text: root.config && root.config.hostname ? root.config.hostname : qsTr("Not provided")
+                                font.pointSize: 14
+                                font.bold: true
+                                color: Colours.palette.m3onSurface
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
+                        }
+                    }
 
-                SummaryRow {
-                    icon: "apps"
-                    title: "Additional Software"
-                    value: root.config && root.config.software && root.config.software.length > 0 ? root.config.software.length + " applications selected" : "Base System Only"
-                }
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                        spacing: 12
+                        MaterialIcon {
+                            text: "person"
+                            font.pointSize: 24
+                            color: Colours.palette.m3primary
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: 2
+                            StyledText {
+                                text: qsTr("Username")
+                                font.pointSize: 11
+                                color: Colours.palette.m3onSurfaceVariant
+                            }
+                            StyledText {
+                                text: root.config && root.config.username ? root.config.username : qsTr("Not provided")
+                                font.pointSize: 14
+                                font.bold: true
+                                color: Colours.palette.m3onSurface
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
+                        }
+                    }
 
-                SummaryRow {
-                    icon: "save"
-                    title: "Target Disk"
-                    value: root.config && root.config.targetDisk !== "" ? root.config.targetDisk : "Not Selected"
-                    valueColor: Colours.palette.m3error
-                }
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                        spacing: 12
+                        MaterialIcon {
+                            text: "schedule"
+                            font.pointSize: 24
+                            color: Colours.palette.m3primary
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: 2
+                            StyledText {
+                                text: qsTr("Timezone")
+                                font.pointSize: 11
+                                color: Colours.palette.m3onSurfaceVariant
+                            }
+                            StyledText {
+                                text: root.config && root.config.timezone ? root.config.timezone : qsTr("Not selected")
+                                font.pointSize: 14
+                                font.bold: true
+                                color: Colours.palette.m3onSurface
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
+                        }
+                    }
 
-                Item {
-                    Layout.fillHeight: true
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                        spacing: 12
+                        MaterialIcon {
+                            text: "vpn_key"
+                            font.pointSize: 24
+                            color: Colours.palette.m3primary
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: 2
+                            StyledText {
+                                text: qsTr("Password")
+                                font.pointSize: 11
+                                color: Colours.palette.m3onSurfaceVariant
+                            }
+                            RowLayout {
+                                Layout.fillWidth: true
+                                spacing: 8
+                                StyledText {
+                                    Layout.fillWidth: true
+                                    text: {
+                                        if (!root.config || !root.config.password)
+                                            return qsTr("Not provided");
+                                        return root.showPassword ? root.config.password : "•".repeat(root.config.password.length);
+                                    }
+                                    font.pointSize: 14
+                                    font.bold: true
+                                    color: Colours.palette.m3onSurface
+                                    wrapMode: Text.WrapAnywhere
+                                }
+                                MaterialIcon {
+                                    text: root.showPassword ? "visibility_off" : "visibility"
+                                    font.pointSize: 18
+                                    color: Colours.palette.m3onSurfaceVariant
+                                    Layout.alignment: Qt.AlignVCenter
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        anchors.margins: -8
+                                        cursorShape: Qt.PointingHandCursor
+                                        onClicked: root.showPassword = !root.showPassword
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                        spacing: 12
+                        MaterialIcon {
+                            text: "storage"
+                            font.pointSize: 24
+                            color: Colours.palette.m3primary
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: 2
+                            StyledText {
+                                text: qsTr("Target Disk")
+                                font.pointSize: 11
+                                color: Colours.palette.m3onSurfaceVariant
+                            }
+                            StyledText {
+                                text: root.config && root.config.targetDisk ? root.config.targetDisk : qsTr("Not selected")
+                                font.pointSize: 14
+                                font.bold: true
+                                color: Colours.palette.m3onSurface
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                        spacing: 12
+                        MaterialIcon {
+                            text: "cake"
+                            font.pointSize: 24
+                            color: Colours.palette.m3primary
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: 2
+                            StyledText {
+                                text: qsTr("Birthday")
+                                font.pointSize: 11
+                                color: Colours.palette.m3onSurfaceVariant
+                            }
+                            StyledText {
+                                text: root.config && root.config.birthday ? root.config.birthday : qsTr("Opted out")
+                                font.pointSize: 14
+                                font.bold: true
+                                color: Colours.palette.m3onSurface
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                        spacing: 12
+                        MaterialIcon {
+                            text: "apps"
+                            font.pointSize: 24
+                            color: Colours.palette.m3primary
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: 2
+                            StyledText {
+                                text: qsTr("Additional Software")
+                                font.pointSize: 11
+                                color: Colours.palette.m3onSurfaceVariant
+                            }
+                            StyledText {
+                                text: root.config && root.config.software && root.config.software.length > 0 ? (root.config.software.length + qsTr(" Packages Selected")) : qsTr("Base System Only")
+                                font.pointSize: 14
+                                font.bold: true
+                                color: Colours.palette.m3onSurface
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                            }
+                        }
+                    }
                 }
             }
         }
-    }
 
-    component SummaryRow: RowLayout {
-        id: rowRoot // THE FIX: Explicit ID to prevent scope trapping
-        property string icon: ""
-        property string title: ""
-        property string value: ""
-        property color valueColor: Colours.palette.m3onSurface
-
-        Layout.fillWidth: true
-        spacing: 24
-
-        MaterialIcon {
-            text: rowRoot.icon
-            font.pointSize: 28
-            color: Colours.palette.m3primary
-            Layout.alignment: Qt.AlignTop
-        }
-
-        ColumnLayout {
+        StyledRect {
             Layout.fillWidth: true
-            spacing: 2
+            implicitHeight: warningRow.implicitHeight + 24
+            color: Colours.palette.m3surfaceContainerHighest
+            radius: 12
+            border.width: 1
+            border.color: Colours.palette.m3error
 
-            StyledText {
-                text: rowRoot.title
-                font.pointSize: 12
-                color: Colours.palette.m3onSurfaceVariant
-            }
+            RowLayout {
+                id: warningRow
+                anchors.fill: parent
+                anchors.margins: 12
+                spacing: 16
 
-            StyledText {
-                Layout.fillWidth: true
-                text: rowRoot.value
-                font.bold: true
-                font.pointSize: 16
-                color: rowRoot.valueColor
-                wrapMode: Text.WordWrap
+                MaterialIcon {
+                    text: "warning"
+                    font.pointSize: 24
+                    color: Colours.palette.m3error
+                    Layout.alignment: Qt.AlignVCenter
+                }
+
+                StyledText {
+                    Layout.fillWidth: true
+                    text: qsTr("Warning: Proceeding will permanently erase all data on the disk (") + (root.config && root.config.targetDisk ? root.config.targetDisk : qsTr("No disk selected")) + qsTr("). This action cannot be undone.")
+                    font.pointSize: 12
+                    font.bold: true
+                    color: Colours.palette.m3error
+                    wrapMode: Text.WordWrap
+                    Layout.alignment: Qt.AlignVCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
             }
         }
     }
