@@ -7,6 +7,7 @@ import qs.services
 import qs.modules.controlcenter
 import qs.modules.live.help
 import qs.modules.live.welcome
+import qs.modules.live.installer
 
 Scope {
     id: root
@@ -28,6 +29,14 @@ Scope {
         name: "welcome"
         description: "Open Welcome"
         onPressed: WelcomeWindowFactory.create()
+    }
+
+    // qmllint disable unresolved-type
+    CustomShortcut {
+        // qmllint enable unresolved-type
+        name: "installer"
+        description: "Install Caelestia OS"
+        onPressed: InstallerWindowFactory.create()
     }
 
     // qmllint disable unresolved-type
@@ -177,6 +186,14 @@ Scope {
 
         function open(): void {
             WelcomeWindowFactory.create();
+        }
+    }
+
+    IpcHandler {
+        target: "installer"
+
+        function open(): void {
+            InstallerWindowFactory.create();
         }
     }
 
