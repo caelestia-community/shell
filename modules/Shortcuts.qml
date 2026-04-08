@@ -118,11 +118,11 @@ Scope {
         }
     }
 
-    CustomShortcut {
-        name: "help"
-        description: "Open Help"
-        onPressed: HelpWindowFactory.create()
-    }
+    // CustomShortcut {
+    //     name: "help"
+    //     description: "Open Help"
+    //     onPressed: HelpWindowFactory.create()
+    // }
 
     IpcHandler {
         function toggle(drawer: string): void {
@@ -180,13 +180,13 @@ Scope {
         }
     }
 
-    IpcHandler {
-        target: "help"
+    // IpcHandler {
+    //     target: "help"
 
-        function open(): void {
-            HelpWindowFactory.create();
-        }
-    }
+    //     function open(): void {
+    //         HelpWindowFactory.create();
+    //     }
+    // }
 
     IpcHandler {
         target: "toaster"
