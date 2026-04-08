@@ -301,7 +301,7 @@ ScrollablePage {
                 Layout.topMargin: Appearance.spacing.normal
                 Layout.columnSpan: 2
                 title: qsTr("Other Useful Keybindings")
-                
+
                 customPadding: Appearance.padding.large * 2
 
                 content: Component {
@@ -411,22 +411,6 @@ ScrollablePage {
                                 {
                                     title: qsTr("Codeberg"),
                                     url: "https://codeberg.org/dnkl/foot"
-                                }
-                            ]
-                        },
-                        {
-                            cat: qsTr("Music Player"),
-                            title: qsTr("Spotify"),
-                            icon: Qt.resolvedUrl(`${root.shellDir}/modules/live/assets/icons/spotify.svg`),
-                            desc: qsTr("Spotify is a digital music streaming service which supports both an online player through their website, and a semi-official Linux client. Spotify operates on a freemium business model."),
-                            links: [
-                                {
-                                    title: qsTr("Arch Wiki"),
-                                    url: "https://wiki.archlinux.org/title/Spotify"
-                                },
-                                {
-                                    title: qsTr("Website"),
-                                    url: "https://spotify.com"
                                 }
                             ]
                         },
