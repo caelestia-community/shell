@@ -89,12 +89,12 @@ StyledRect {
             icon: "rocket_launch",
             component: gettingStartedComponent
         },
-        {
-            id: "configuration",
-            name: qsTr("Configuration"),
-            icon: "settings",
-            component: configurationComponent
-        },
+        // {
+        //     id: "configuration",
+        //     name: qsTr("Configuration"),
+        //     icon: "settings",
+        //     component: configurationComponent
+        // },
         {
             id: "community",
             name: qsTr("Community"),
@@ -411,13 +411,13 @@ StyledRect {
                 function onCurrentPageSubsectionsChanged() {
                     const oldCount = root.displayedSubsections.length
                     const newCount = root.currentPageSubsections.length
-                    
+
                     if (oldCount !== newCount && (oldCount > 0 || newCount > 0)) {
                         sidebarContentAnimation.restart()
                     } else if (newCount > 0) {
                         root.displayedSubsections = root.currentPageSubsections
                     }
-                    
+
                     // Set to first item only if we don't have a current section or it's not in the new list
                     if (newCount > 0) {
                         const hasCurrentSection = root.currentPageSubsections.some(s => s.id === root.currentSection)
@@ -508,7 +508,7 @@ StyledRect {
                     anchors.right: parent.right
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
-                    
+
                     onItemChanged: {
                         if (item && item.subsections !== undefined) {
                             root.currentPageSubsections = item.subsections
@@ -520,7 +520,7 @@ StyledRect {
                         }
                     }
                 }
-                
+
                 Connections {
                     target: root
                     function onCurrentSectionChanged() {

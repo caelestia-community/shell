@@ -253,27 +253,27 @@ ScrollablePage {
     }
 
     // Dashboard
-    PageSection {
-        id: dashboardSection
+    // PageSection {
+    //     id: dashboardSection
 
-        sectionId: "dashboard"
-        sectionName: qsTr("Dashboard")
-        sectionIcon: "dashboard"
+    //     sectionId: "dashboard"
+    //     sectionName: qsTr("Dashboard")
+    //     sectionIcon: "dashboard"
 
-        sectionHeader.title: qsTr("Dashboard")
-        sectionHeader.subtitle: qsTr("An overview of system performance, media, and local environment.")
+    //     sectionHeader.title: qsTr("Dashboard")
+    //     sectionHeader.subtitle: qsTr("An overview of system performance, media, and local environment.")
 
-        SectionContentArea {
-            content: Component {
-                SectionList {
-                    items: [
-                        {
-                            title: qsTr("System Info"),
-                            desc: qsTr("A quick snapshot of your hardware and session details.")
-                        }
-                    ]
-                }
-            }
-        }
-    }
+    //     SectionContentArea {
+    //         content: Component {
+    //             SectionList {
+    //                 items: [
+    //                     {
+    //                         title: qsTr("System Info"),
+    //                         desc: qsTr("A quick snapshot of your hardware and session details.")
+    //                     }
+    //                 ]
+    //             }
+    //         }
+    //     }
+    // }
 }
