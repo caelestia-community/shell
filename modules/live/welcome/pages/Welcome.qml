@@ -1,10 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
+import Caelestia.Config
 import qs.services
 import qs.components
 import qs.components.live
 import qs.components.containers
-import qs.config
 
 Item {
     id: root
@@ -22,7 +22,7 @@ Item {
             id: contentColumn
             width: parent.width
             height: Math.max(implicitHeight, flickable.height)
-            spacing: Appearance.padding.large
+            spacing: Tokens.padding.large
 
             Item { Layout.fillHeight: true }
 
@@ -43,7 +43,7 @@ Item {
 
                     Layout.alignment: Qt.AlignHCenter
                     text: qsTr("Welcome to Caelestia")
-                    font.pointSize: Appearance.font.size.extraLarge
+                    font.pointSize: Tokens.font.size.extraLarge
                     font.bold: true
                     color: Colours.palette.m3onBackground
                     opacity: root.animationHasRun ? 1.0 : 0.0
@@ -54,7 +54,7 @@ Item {
 
                     Layout.alignment: Qt.AlignHCenter
                     text: qsTr("A modern, beautiful desktop shell for Wayland")
-                    font.pointSize: Appearance.font.size.larger
+                    font.pointSize: Tokens.font.size.larger
                     color: Colours.palette.m3onSurfaceVariant
                     opacity: root.animationHasRun ? 1.0 : 0.0
                 }

@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
+import Caelestia.Config
 import qs.components
-import qs.config
 import qs.services
 
 Item {
@@ -9,7 +9,7 @@ Item {
 
     property string title: ""
     property string subtitle: ""
-    property int fontSize: Appearance.font.size.extraLarge
+    property int fontSize: Tokens.font.size.extraLarge
 
     Layout.fillWidth: true
     implicitHeight: sectionHeader.implicitHeight
@@ -20,7 +20,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
-        spacing: Appearance.spacing.small
+        spacing: Tokens.spacing.small
 
         StyledText {
             text: root.title
@@ -32,7 +32,7 @@ Item {
         StyledText {
             Layout.fillWidth: true
             text: root.subtitle
-            font.pointSize: Appearance.font.size.normal
+            font.pointSize: Tokens.font.size.normal
             color: Colours.palette.m3onSurfaceVariant
             wrapMode: Text.WordWrap
         }

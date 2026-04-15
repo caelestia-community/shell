@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Layouts
+import Caelestia.Config
 import qs.services
 import qs.components
 import qs.components.containers
-import qs.config
 
 Item {
     id: root
@@ -18,7 +18,7 @@ Item {
             id: contentColumn
             width: parent.width
             height: Math.max(implicitHeight, flickable.height)
-            spacing: Appearance.padding.large
+            spacing: Tokens.padding.large
 
             Item { Layout.fillHeight: true }
 
@@ -29,7 +29,7 @@ Item {
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     text: "Coming Soon"
-                    font.pointSize: Appearance.font.size.extraLarge
+                    font.pointSize: Tokens.font.size.extraLarge
                     font.bold: true
                     color: Colours.palette.m3onBackground
                 }
@@ -37,7 +37,7 @@ Item {
                 StyledText {
                     Layout.alignment: Qt.AlignHCenter
                     text: "Please stand by"
-                    font.pointSize: Appearance.font.size.larger
+                    font.pointSize: Tokens.font.size.larger
                     color: Colours.palette.m3onSurfaceVariant
                 }
             }

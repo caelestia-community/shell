@@ -2,11 +2,11 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import Caelestia.Config
 import qs.services
 import qs.components
 import qs.components.live
 import qs.components.controls
-import qs.config
 
 ScrollablePage {
     id: root
@@ -25,12 +25,12 @@ ScrollablePage {
         SectionContentArea {
             content: Component {
                 ColumnLayout {
-                    spacing: Appearance.spacing.large
+                    spacing: Tokens.spacing.large
 
                     StyledText {
                         Layout.fillWidth: true
                         text: qsTr("Start a guided tour to learn about specific features. Each tour will highlight elements and guide you through their functionality.")
-                        font.pointSize: Appearance.font.size.normal
+                        font.pointSize: Tokens.font.size.normal
                         color: Colours.palette.m3onSurface
                         wrapMode: Text.WordWrap
                         opacity: 0.9
@@ -38,23 +38,23 @@ ScrollablePage {
 
                     Flow {
                         Layout.fillWidth: true
-                        spacing: Appearance.spacing.normal
+                        spacing: Tokens.spacing.normal
 
                         TextButton {
                             text: qsTr("Taskbar Tour")
-                            radius: Appearance.rounding.small
+                            radius: Tokens.rounding.small
                             onClicked: Tour.startTour("taskbar-tour")
                         }
 
                         TextButton {
                             text: qsTr("Launcher Tour")
-                            radius: Appearance.rounding.small
+                            radius: Tokens.rounding.small
                             onClicked: Tour.startTour("launcher-tour")
                         }
 
                         TextButton {
                             text: qsTr("Sidebar Tour")
-                            radius: Appearance.rounding.small
+                            radius: Tokens.rounding.small
                             onClicked: Tour.startTour("sidebar-tour")
                         }
                     }

@@ -3,10 +3,10 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Caelestia.Config
 import qs.services
 import qs.components
 import qs.components.live
-import qs.config
 
 ScrollablePage {
     id: root
@@ -34,7 +34,7 @@ ScrollablePage {
 
                     Flow {
                         Layout.fillWidth: true
-                        spacing: Appearance.spacing.smaller
+                        spacing: Tokens.spacing.smaller
 
                         Repeater {
                             model: [
@@ -65,9 +65,9 @@ ScrollablePage {
 
                                 required property var modelData
 
-                                width: requirements.implicitWidth + Appearance.padding.larger * 2
-                                height: requirements.implicitHeight + Appearance.padding.larger * 2
-                                radius: Appearance.rounding.normal
+                                width: requirements.implicitWidth + Tokens.padding.larger * 2
+                                height: requirements.implicitHeight + Tokens.padding.larger * 2
+                                radius: Tokens.rounding.normal
                                 color: Colours.palette.m3surfaceContainerHigh
                                 border.color: Colours.palette.m3outlineVariant
 
@@ -75,18 +75,18 @@ ScrollablePage {
                                     id: requirements
 
                                     anchors.centerIn: parent
-                                    spacing: Appearance.spacing.small
+                                    spacing: Tokens.spacing.small
 
                                     StyledText {
                                         text: requirementsWrapper.modelData.label + ":"
                                         font.bold: true
-                                        font.pointSize: Appearance.font.size.small
+                                        font.pointSize: Tokens.font.size.small
                                         color: Colours.palette.m3primary
                                     }
 
                                     StyledText {
                                         text: requirementsWrapper.modelData.val
-                                        font.pointSize: Appearance.font.size.small
+                                        font.pointSize: Tokens.font.size.small
                                         color: Colours.palette.m3onSurface
                                     }
                                 }
@@ -96,10 +96,10 @@ ScrollablePage {
 
                     StyledRect {
                         Layout.fillWidth: true
-                        Layout.preferredHeight: requirementsNote.implicitHeight + Appearance.padding.larger * 2
+                        Layout.preferredHeight: requirementsNote.implicitHeight + Tokens.padding.larger * 2
                         color: Colours.layer(Colours.palette.m3surfaceContainerHigh, 1)
-                        radius: Appearance.rounding.small
-                        Layout.topMargin: Appearance.padding.small
+                        radius: Tokens.rounding.small
+                        Layout.topMargin: Tokens.padding.small
 
                         StyledText {
                             id: requirementsNote
@@ -107,7 +107,7 @@ ScrollablePage {
                             anchors.centerIn: parent
                             width: parent.width - 24
                             text: qsTr("Note: ARM processors (SnapDragon) are not officially supported.")
-                            font.pointSize: Appearance.font.size.small
+                            font.pointSize: Tokens.font.size.small
                             font.italic: true
                             color: Colours.palette.m3error
                             horizontalAlignment: Text.AlignHCenter
@@ -120,10 +120,10 @@ ScrollablePage {
 
         GridLayout {
             Layout.fillWidth: true
-            Layout.topMargin: Appearance.padding.large
+            Layout.topMargin: Tokens.padding.large
             columns: parent.width > 1000 ? 2 : 1
-            columnSpacing: Appearance.spacing.normal
-            rowSpacing: Appearance.spacing.normal
+            columnSpacing: Tokens.spacing.normal
+            rowSpacing: Tokens.spacing.normal
 
             SectionContentArea {
                 Layout.fillWidth: true
@@ -136,7 +136,7 @@ ScrollablePage {
                         StyledText {
                             Layout.fillWidth: true
                             text: qsTr("Linux is an ecosystem built on the idea that \"small is beautiful\". Unlike other operating systems that rely on massive, all-in-one applications, Linux is a collection of specialized tools designed to do one thing and do it well. Linux gives you the power to combine these tools, building complex solutions from simple building blocks. It's a transparent, community driven world where you have total control over your machine.")
-                            font.pointSize: Appearance.font.size.normal
+                            font.pointSize: Tokens.font.size.normal
                             color: Colours.palette.m3onSurface
                             wrapMode: Text.WordWrap
                         }
@@ -155,7 +155,7 @@ ScrollablePage {
                         StyledText {
                             Layout.fillWidth: true
                             text: qsTr("While our community is here to help, Caelestia is about your personal journey. Everyone has their own unique needs and tastes, and every install of Caelestia is tailored to its user. We do our best to support our users, but it's always possible that you'll come up with a question we don't have an immediate answer to. Our hope is that you continually learn and eventually share your knowledge with the community, improving the community as a whole in the process.")
-                            font.pointSize: Appearance.font.size.normal
+                            font.pointSize: Tokens.font.size.normal
                             color: Colours.palette.m3onSurface
                             wrapMode: Text.WordWrap
                         }
@@ -163,7 +163,7 @@ ScrollablePage {
                         StyledText {
                             Layout.fillWidth: true
                             text: qsTr("\"I am always doing that which I cannot do, in order that I may learn how to do it.\" — Pablo Picasso")
-                            font.pointSize: Appearance.font.size.small
+                            font.pointSize: Tokens.font.size.small
                             color: Colours.palette.m3onSurfaceVariant
                             horizontalAlignment: Text.AlignRight
                             wrapMode: Text.WordWrap
@@ -298,17 +298,17 @@ ScrollablePage {
             }
 
             SectionContentArea {
-                Layout.topMargin: Appearance.spacing.normal
+                Layout.topMargin: Tokens.spacing.normal
                 Layout.columnSpan: 2
                 title: qsTr("Other Useful Keybindings")
 
-                customPadding: Appearance.padding.large * 2
+                customPadding: Tokens.padding.large * 2
 
                 content: Component {
                     GridLayout {
                         columns: parent.width > 1000 ? 2 : 1
-                        columnSpacing: Appearance.spacing.large
-                        rowSpacing: Appearance.spacing.large
+                        columnSpacing: Tokens.spacing.large
+                        rowSpacing: Tokens.spacing.large
 
                         KeybindingRow {
                             Layout.fillWidth: true
@@ -522,7 +522,7 @@ ScrollablePage {
     //             ColumnLayout {
     //                 StyledText {
     //                     Layout.fillWidth: true
-    //                     font.pointSize: Appearance.font.size.normal
+    //                     font.pointSize: Tokens.font.size.normal
     //                     color: Colours.palette.m3onSurfaceVariant
     //                     wrapMode: Text.WordWrap
     //                     text: qsTr("Content coming soon.")

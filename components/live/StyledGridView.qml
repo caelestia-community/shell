@@ -1,16 +1,16 @@
 pragma ComponentBehavior: Bound
 import ".."
+import Caelestia.Config
 import QtQuick
-import qs.config
 
 Item {
     id: root
 
     property var model
     property int cellHeight: 40
-    property int spacing: Appearance.spacing.small
-    property int paddingX: Appearance.padding.larger
-    property int paddingY: Appearance.padding.larger
+    property int spacing: Tokens.spacing.small
+    property int paddingX: Tokens.padding.larger
+    property int paddingY: Tokens.padding.larger
     property int minCellWidth: 0
     property int maxCellWidth: 0
     property int minCellHeight: 0

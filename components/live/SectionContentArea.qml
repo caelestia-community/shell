@@ -2,8 +2,8 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import Caelestia.Config
 import qs.components
-import qs.config
 import qs.services
 
 StyledRect {
@@ -12,24 +12,24 @@ StyledRect {
     property string title
     property string subtitle
     required property var content
-    
+
     property bool enablePadding: true
-    property real customPadding: Appearance.padding.large * 2
+    property real customPadding: Tokens.padding.large * 2
     readonly property real effectivePadding: enablePadding ? customPadding : 0
-    
+
     property bool enableBackground: true
     property color customColor: Colours.palette.m3surfaceContainer
-    
-    property real titleFontSize: Appearance.font.size.larger
-    property real subtitleFontSize: Appearance.font.size.normal
-    
-    property real titleSubtitleSpacing: Appearance.spacing.small
-    property real contentTopMargin: Appearance.padding.large
+
+    property real titleFontSize: Tokens.font.size.larger
+    property real subtitleFontSize: Tokens.font.size.normal
+
+    property real titleSubtitleSpacing: Tokens.spacing.small
+    property real contentTopMargin: Tokens.padding.large
 
     Layout.fillWidth: true
     implicitHeight: contentColumn.implicitHeight + root.effectivePadding * 2
     color: enableBackground ? customColor : "transparent"
-    radius: enableBackground ? Appearance.rounding.normal : 0
+    radius: enableBackground ? Tokens.rounding.normal : 0
 
     ColumnLayout {
         id: contentColumn

@@ -2,10 +2,10 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import Caelestia.Config
 import qs.services
 import qs.components
 import qs.components.live
-import qs.config
 
 ScrollablePage {
     id: root
@@ -74,7 +74,7 @@ ScrollablePage {
                 ColumnLayout {
                     StyledText {
                         Layout.fillWidth: true
-                        font.pointSize: Appearance.font.size.normal
+                        font.pointSize: Tokens.font.size.normal
                         color: Colours.palette.m3onSurfaceVariant
                         wrapMode: Text.WordWrap
                         text: qsTr("Content coming soon.")
@@ -100,7 +100,7 @@ ScrollablePage {
                 ColumnLayout {
                     StyledText {
                         Layout.fillWidth: true
-                        font.pointSize: Appearance.font.size.normal
+                        font.pointSize: Tokens.font.size.normal
                         color: Colours.palette.m3onSurfaceVariant
                         wrapMode: Text.WordWrap
                         text: qsTr("Content coming soon.")
@@ -126,7 +126,7 @@ ScrollablePage {
                 ColumnLayout {
                     StyledText {
                         Layout.fillWidth: true
-                        font.pointSize: Appearance.font.size.normal
+                        font.pointSize: Tokens.font.size.normal
                         color: Colours.palette.m3onSurfaceVariant
                         wrapMode: Text.WordWrap
                         text: qsTr("Content coming soon.")

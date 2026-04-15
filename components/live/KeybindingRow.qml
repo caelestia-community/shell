@@ -2,9 +2,9 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import Caelestia.Config
 import qs.components
 import qs.services
-import qs.config
 
 StyledRect {
     id: root
@@ -14,8 +14,8 @@ StyledRect {
     property string desc
 
     Layout.fillWidth: true
-    implicitHeight: desc ? row.implicitHeight + Appearance.padding.large * 2 : row.implicitHeight + Appearance.padding.large * 2 + Appearance.font.size.small
-    radius: Appearance.rounding.normal
+    implicitHeight: desc ? row.implicitHeight + Tokens.padding.large * 2 : row.implicitHeight + Tokens.padding.large * 2 + Tokens.font.size.small
+    radius: Tokens.rounding.normal
     color: Colours.palette.m3surfaceContainerLow
 
     Behavior on implicitHeight {
@@ -26,11 +26,11 @@ StyledRect {
         id: row
 
         anchors.fill: parent
-        anchors.margins: Appearance.padding.large
-        spacing: Appearance.spacing.normal
+        anchors.margins: Tokens.padding.large
+        spacing: Tokens.spacing.normal
 
         RowLayout {
-            spacing: Appearance.spacing.small
+            spacing: Tokens.spacing.small
 
             Repeater {
                 model: root.keys
@@ -41,7 +41,7 @@ StyledRect {
                     required property var modelData
                     required property int index
 
-                    spacing: Appearance.spacing.small
+                    spacing: Tokens.spacing.small
 
                     KeyChip {
                         keyText: keysItem.modelData
@@ -50,7 +50,7 @@ StyledRect {
                     StyledText {
                         visible: keysItem.index < root.keys.length - 1
                         text: "+"
-                        font.pointSize: Appearance.font.size.small
+                        font.pointSize: Tokens.font.size.small
                         color: Colours.palette.m3onSurfaceVariant
                         opacity: 0.5
                     }
@@ -69,7 +69,7 @@ StyledRect {
             StyledText {
                 Layout.alignment: Qt.AlignRight
                 text: root.label
-                font.pointSize: Appearance.font.size.normal
+                font.pointSize: Tokens.font.size.normal
                 color: Colours.palette.m3onSurface
             }
 
@@ -77,7 +77,7 @@ StyledRect {
                 Layout.alignment: Qt.AlignRight
                 text: root.desc
                 visible: root.desc
-                font.pointSize: Appearance.font.size.small
+                font.pointSize: Tokens.font.size.small
                 color: Colours.palette.m3onSurfaceVariant
                 opacity: 0.7
             }

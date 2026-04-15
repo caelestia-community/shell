@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Layouts
+import Caelestia.Config
 import qs.components
 import qs.components.controls
 import qs.components.live
-import qs.config
 import qs.services
 
 ScrollablePage {
@@ -30,9 +30,9 @@ ScrollablePage {
                             id: joinUsContent
 
                             Layout.fillWidth: true
-                            Layout.rightMargin: Appearance.padding.large
+                            Layout.rightMargin: Tokens.padding.large
                             text: qsTr("The official Caelestia Discord community is an active community that is growing daily! Why not stop in and say hi?")
-                            font.pointSize: Appearance.font.size.normal
+                            font.pointSize: Tokens.font.size.normal
                             color: Colours.palette.m3onSurfaceVariant
                             wrapMode: Text.WordWrap
                         }
@@ -41,8 +41,8 @@ ScrollablePage {
                             Layout.alignment: Qt.AlignVCenter
                             text: qsTr("Join Discord")
                             icon: "open_in_new"
-                            radius: Appearance.rounding.small
-                            verticalPadding: Appearance.padding.small
+                            radius: Tokens.rounding.small
+                            verticalPadding: Tokens.padding.small
                             inactiveColour: Colours.palette.m3primary
                             inactiveOnColour: Colours.palette.m3onPrimary
                             onClicked: Qt.openUrlExternally("https://discord.gg/BGDCFCmMBk")
@@ -75,7 +75,7 @@ ScrollablePage {
                     StyledText {
                         Layout.fillWidth: true
                         text: qsTr("Caelestia might have had humble beginnings, but today we have a growing number of contributors. Whether you have a bug to report, a bugfix you want to contribute, or a feature request, we'd love to hear from you!")
-                        font.pointSize: Appearance.font.size.normal
+                        font.pointSize: Tokens.font.size.normal
                         color: Colours.palette.m3onSurfaceVariant
                         wrapMode: Text.WordWrap
                     }
@@ -88,7 +88,7 @@ ScrollablePage {
 
         SectionContentArea {
             title: qsTr("Caelestia CLI")
-            Layout.topMargin: Appearance.padding.large
+            Layout.topMargin: Tokens.padding.large
 
             content: Component {
                 ColumnLayout {
@@ -96,7 +96,7 @@ ScrollablePage {
                         StyledText {
                             Layout.fillWidth: true
                             text: qsTr("Caelestia CLI is the main control script for Caelestia. Written in Python, CLI is responsible for the caelestia command, which acts as a handler for functionality such as schemes, wallpaper management, and screen capture and recording.")
-                            font.pointSize: Appearance.font.size.normal
+                            font.pointSize: Tokens.font.size.normal
                             color: Colours.palette.m3onSurfaceVariant
                             wrapMode: Text.WordWrap
                         }
@@ -104,8 +104,8 @@ ScrollablePage {
                         IconTextButton {
                             text: qsTr("Caelestia CLI")
                             icon: "open_in_new"
-                            radius: Appearance.rounding.small
-                            verticalPadding: Appearance.padding.small
+                            radius: Tokens.rounding.small
+                            verticalPadding: Tokens.padding.small
                             inactiveColour: Colours.palette.m3primary
                             inactiveOnColour: Colours.palette.m3onPrimary
                             onClicked: Qt.openUrlExternally("https://github.com/caelestia-dots/cli")
@@ -121,7 +121,7 @@ ScrollablePage {
 
         SectionContentArea {
             title: qsTr("Caelestia Shell")
-            Layout.topMargin: Appearance.padding.large
+            Layout.topMargin: Tokens.padding.large
 
             content: Component {
                 ColumnLayout {
@@ -129,7 +129,7 @@ ScrollablePage {
                         StyledText {
                             Layout.fillWidth: true
                             text: qsTr("Caelestia Shell provides the actual UI elements and much of the underlying functionality of Caelestia. It is primarily written in QML, and built around Quickshell.")
-                            font.pointSize: Appearance.font.size.normal
+                            font.pointSize: Tokens.font.size.normal
                             color: Colours.palette.m3onSurfaceVariant
                             wrapMode: Text.WordWrap
                         }
@@ -137,8 +137,8 @@ ScrollablePage {
                         IconTextButton {
                             text: qsTr("Caelestia Shell")
                             icon: "open_in_new"
-                            radius: Appearance.rounding.small
-                            verticalPadding: Appearance.padding.small
+                            radius: Tokens.rounding.small
+                            verticalPadding: Tokens.padding.small
                             inactiveColour: Colours.palette.m3primary
                             inactiveOnColour: Colours.palette.m3onPrimary
                             onClicked: Qt.openUrlExternally("https://github.com/caelestia-dots/shell")
@@ -154,7 +154,7 @@ ScrollablePage {
 
         SectionContentArea {
             title: qsTr("Caelestia Dots")
-            Layout.topMargin: Appearance.padding.large
+            Layout.topMargin: Tokens.padding.large
 
             content: Component {
                 ColumnLayout {
@@ -162,7 +162,7 @@ ScrollablePage {
                         StyledText {
                             Layout.fillWidth: true
                             text: qsTr("Caelestia Dots is the main repo for Caelestia, and handles all of the application configs, as well as the Caelestia install script. This is the primary point of entry for most users, and serves as the primary installation guide for Caelestia.")
-                            font.pointSize: Appearance.font.size.normal
+                            font.pointSize: Tokens.font.size.normal
                             color: Colours.palette.m3onSurfaceVariant
                             wrapMode: Text.WordWrap
                         }
@@ -170,8 +170,8 @@ ScrollablePage {
                         IconTextButton {
                             text: qsTr("Caelestia Dots")
                             icon: "open_in_new"
-                            radius: Appearance.rounding.small
-                            verticalPadding: Appearance.padding.small
+                            radius: Tokens.rounding.small
+                            verticalPadding: Tokens.padding.small
                             inactiveColour: Colours.palette.m3primary
                             inactiveOnColour: Colours.palette.m3onPrimary
                             onClicked: Qt.openUrlExternally("https://github.com/caelestia-dots/caelestia")
@@ -187,7 +187,7 @@ ScrollablePage {
 
         SectionContentArea {
             title: qsTr("CaelestiaLive")
-            Layout.topMargin: Appearance.padding.large
+            Layout.topMargin: Tokens.padding.large
 
             content: Component {
                 ColumnLayout {
@@ -195,7 +195,7 @@ ScrollablePage {
                         StyledText {
                             Layout.fillWidth: true
                             text: qsTr("CaelestiaLive is the unofficial community project to build a Caelestia-based live image. If you're reading this, congratulations! You're running CaelestiaLive! CaelestiaLive was built by Evertiro, and at this time, he provides all live-image specific support.")
-                            font.pointSize: Appearance.font.size.normal
+                            font.pointSize: Tokens.font.size.normal
                             color: Colours.palette.m3onSurfaceVariant
                             wrapMode: Text.WordWrap
                         }
@@ -203,8 +203,8 @@ ScrollablePage {
                         IconTextButton {
                             text: qsTr("CaelestiaLive")
                             icon: "open_in_new"
-                            radius: Appearance.rounding.small
-                            verticalPadding: Appearance.padding.small
+                            radius: Tokens.rounding.small
+                            verticalPadding: Tokens.padding.small
                             inactiveColour: Colours.palette.m3primary
                             inactiveOnColour: Colours.palette.m3onPrimary
                             onClicked: Qt.openUrlExternally("https://github.com/caelestia-community/live")
@@ -232,7 +232,7 @@ ScrollablePage {
 
         SectionContentArea {
             title: qsTr("On the shoulders of Giants.")
-            Layout.topMargin: Appearance.padding.large
+            Layout.topMargin: Tokens.padding.large
 
             content: Component {
                 ColumnLayout {
@@ -240,7 +240,7 @@ ScrollablePage {
                         StyledText {
                             Layout.fillWidth: true
                             text: qsTr("The world of Linux is full of storybook heroes come to life. There is no way we can thank everybody from Bell Labs all the way to the smallest contributors, but we have a few special people to note.")
-                            font.pointSize: Appearance.font.size.normal
+                            font.pointSize: Tokens.font.size.normal
                             color: Colours.palette.m3onSurfaceVariant
                             wrapMode: Text.WordWrap
                         }
@@ -258,9 +258,9 @@ ScrollablePage {
             minColumns: 1
             maxColumns: 2
             responsiveBreakpoint: 900
-            columnSpacing: Appearance.padding.large
-            rowSpacing: Appearance.padding.large
-            Layout.topMargin: Appearance.padding.large
+            columnSpacing: Tokens.padding.large
+            rowSpacing: Tokens.padding.large
+            Layout.topMargin: Tokens.padding.large
 
             SectionContentArea {
                 Layout.fillWidth: true
@@ -269,7 +269,7 @@ ScrollablePage {
 
                 content: Component {
                     ColumnLayout {
-                        spacing: Appearance.spacing.normal
+                        spacing: Tokens.spacing.normal
 
                         StyledRect {
                             Layout.fillWidth: true
@@ -280,19 +280,19 @@ ScrollablePage {
                         StyledText {
                             Layout.fillWidth: true
                             text: qsTr("A huge thanks to Outfoxxed, who developed the foundation that Caelestia Shell is built on.")
-                            font.pointSize: Appearance.font.size.normal
+                            font.pointSize: Tokens.font.size.normal
                             color: Colours.palette.m3onSurfaceVariant
                             wrapMode: Text.WordWrap
                         }
 
                         RowLayout {
-                            spacing: Appearance.spacing.normal
+                            spacing: Tokens.spacing.normal
 
                             IconTextButton {
                                 text: qsTr("Website")
                                 icon: "language"
-                                radius: Appearance.rounding.small
-                                verticalPadding: Appearance.padding.small
+                                radius: Tokens.rounding.small
+                                verticalPadding: Tokens.padding.small
                                 inactiveColour: Colours.palette.m3primary
                                 inactiveOnColour: Colours.palette.m3onPrimary
                                 onClicked: Qt.openUrlExternally("https://outfoxxed.me/")
@@ -301,8 +301,8 @@ ScrollablePage {
                             IconTextButton {
                                 text: qsTr("GitHub")
                                 icon: "code"
-                                radius: Appearance.rounding.small
-                                verticalPadding: Appearance.padding.small
+                                radius: Tokens.rounding.small
+                                verticalPadding: Tokens.padding.small
                                 inactiveColour: Colours.palette.m3primary
                                 inactiveOnColour: Colours.palette.m3onPrimary
                                 onClicked: Qt.openUrlExternally("https://github.com/outfoxxed")
@@ -323,24 +323,24 @@ ScrollablePage {
 
                 content: Component {
                     ColumnLayout {
-                        spacing: Appearance.spacing.normal
+                        spacing: Tokens.spacing.normal
 
                         StyledText {
                             Layout.fillWidth: true
                             text: qsTr("Soramane (Soramanew) is the Developer behind Caelestia. Every drawer, popout, bar, etc. He was directly involved with all of it!")
-                            font.pointSize: Appearance.font.size.normal
+                            font.pointSize: Tokens.font.size.normal
                             color: Colours.palette.m3onSurfaceVariant
                             wrapMode: Text.WordWrap
                         }
 
                         RowLayout {
-                            spacing: Appearance.spacing.normal
+                            spacing: Tokens.spacing.normal
 
                             IconTextButton {
                                 text: qsTr("Buy Soramane a Coffee")
                                 icon: "local_cafe"
-                                radius: Appearance.rounding.small
-                                verticalPadding: Appearance.padding.small
+                                radius: Tokens.rounding.small
+                                verticalPadding: Tokens.padding.small
                                 inactiveColour: Colours.palette.m3primary
                                 inactiveOnColour: Colours.palette.m3onPrimary
                                 onClicked: Qt.openUrlExternally("https://buymeacoffee.com/soramane")
@@ -349,8 +349,8 @@ ScrollablePage {
                             IconTextButton {
                                 text: qsTr("GitHub")
                                 icon: "code"
-                                radius: Appearance.rounding.small
-                                verticalPadding: Appearance.padding.small
+                                radius: Tokens.rounding.small
+                                verticalPadding: Tokens.padding.small
                                 inactiveColour: Colours.palette.m3primary
                                 inactiveOnColour: Colours.palette.m3onPrimary
                                 onClicked: Qt.openUrlExternally("https://github.com/soramanew")
@@ -371,24 +371,24 @@ ScrollablePage {
 
                 content: Component {
                     ColumnLayout {
-                        spacing: Appearance.spacing.normal
+                        spacing: Tokens.spacing.normal
 
                         StyledText {
                             Layout.fillWidth: true
                             text: qsTr("Evertiro is the man directly responsible for you seeing this page at all! Relentlessly dedicated to making dreams come true!")
-                            font.pointSize: Appearance.font.size.normal
+                            font.pointSize: Tokens.font.size.normal
                             color: Colours.palette.m3onSurfaceVariant
                             wrapMode: Text.WordWrap
                         }
 
                         RowLayout {
-                            spacing: Appearance.spacing.normal
+                            spacing: Tokens.spacing.normal
 
                             IconTextButton {
                                 text: qsTr("Website")
                                 icon: "language"
-                                radius: Appearance.rounding.small
-                                verticalPadding: Appearance.padding.small
+                                radius: Tokens.rounding.small
+                                verticalPadding: Tokens.padding.small
                                 inactiveColour: Colours.palette.m3primary
                                 inactiveOnColour: Colours.palette.m3onPrimary
                                 onClicked: Qt.openUrlExternally("https://evertiro.com")
@@ -397,8 +397,8 @@ ScrollablePage {
                             IconTextButton {
                                 text: qsTr("GitHub")
                                 icon: "code"
-                                radius: Appearance.rounding.small
-                                verticalPadding: Appearance.padding.small
+                                radius: Tokens.rounding.small
+                                verticalPadding: Tokens.padding.small
                                 inactiveColour: Colours.palette.m3primary
                                 inactiveOnColour: Colours.palette.m3onPrimary
                                 onClicked: Qt.openUrlExternally("https://github.com/evertiro")
@@ -422,7 +422,7 @@ ScrollablePage {
                         StyledText {
                             Layout.fillWidth: true
                             text: qsTr("So many people in so many places! Making pull requests on GitHub, brainstorming ideas on Discord, teaching one another and thriving in a pretty small community. Too many to name, but too few to forget. Thank you to every last one of you who will give CaelestiaLive a shot!")
-                            font.pointSize: Appearance.font.size.normal
+                            font.pointSize: Tokens.font.size.normal
                             color: Colours.palette.m3onSurfaceVariant
                             wrapMode: Text.WordWrap
                         }

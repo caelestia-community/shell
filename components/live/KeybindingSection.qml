@@ -2,9 +2,9 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import Caelestia.Config
 import qs.components.live
 import qs.services
-import qs.config
 
 SectionContentArea {
     id: root
@@ -13,13 +13,13 @@ SectionContentArea {
     property real responsiveBreakpoint: 1000
 
     property list<var> groups: []
-    
-    property real groupColumnSpacing: Appearance.spacing.large
-    property real groupRowSpacing: Appearance.spacing.large * 2
-    property real bindingSpacing: Appearance.spacing.normal
-    
+
+    property real groupColumnSpacing: Tokens.spacing.large
+    property real groupRowSpacing: Tokens.spacing.large * 2
+    property real bindingSpacing: Tokens.spacing.normal
+
     // Container styling (inherited from SectionContentArea)
-    customPadding: Appearance.padding.large * 2
+    customPadding: Tokens.padding.large * 2
     enablePadding: true
     enableBackground: true
 
@@ -41,7 +41,7 @@ SectionContentArea {
                     Layout.fillHeight: true
                     Layout.alignment: Qt.AlignTop
                     title: modelData.title
-                    
+
                     enablePadding: false
                     enableBackground: false
 

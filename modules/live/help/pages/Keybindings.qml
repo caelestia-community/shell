@@ -1,22 +1,22 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import Caelestia.Config
 import qs.components
 import qs.components.controls
-import qs.config
 import qs.services
 
 Item {
     id: root
 
-    readonly property int padding: Appearance.padding.large
-    readonly property int rounding: Appearance.rounding.large
+    readonly property int padding: Tokens.padding.large
+    readonly property int rounding: Tokens.rounding.large
 
     StyledRect {
         id: searchWrapper
 
         color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
-        radius: Appearance.rounding.full
+        radius: Tokens.rounding.full
 
         anchors.left: parent.left
         anchors.right: parent.right
@@ -41,11 +41,11 @@ Item {
 
             anchors.left: searchIcon.right
             anchors.right: clearIcon.left
-            anchors.leftMargin: Appearance.spacing.small
-            anchors.rightMargin: Appearance.spacing.small
+            anchors.leftMargin: Tokens.spacing.small
+            anchors.rightMargin: Tokens.spacing.small
 
-            topPadding: Appearance.padding.larger
-            bottomPadding: Appearance.padding.larger
+            topPadding: Tokens.padding.larger
+            bottomPadding: Tokens.padding.larger
 
             placeholderText: qsTr("Filter keybindings").arg(Config.launcher.actionPrefix)
 
@@ -85,13 +85,13 @@ Item {
 
             Behavior on width {
                 Anim {
-                    duration: Appearance.anim.durations.small
+                    duration: Tokens.anim.durations.small
                 }
             }
 
             Behavior on opacity {
                 Anim {
-                    duration: Appearance.anim.durations.small
+                    duration: Tokens.anim.durations.small
                 }
             }
         }

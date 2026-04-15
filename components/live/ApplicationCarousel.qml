@@ -3,17 +3,17 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.VectorImage
+import Caelestia.Config
 import qs.services
 import qs.components
 import qs.components.controls
-import qs.config
 
 RowLayout {
     id: root
 
     required property var sourceModel
 
-    spacing: Appearance.spacing.larger
+    spacing: Tokens.spacing.larger
 
     ColumnLayout {
         IconButton {
@@ -42,8 +42,7 @@ RowLayout {
 
         Behavior on implicitHeight {
             Anim {
-                duration: Appearance.anim.durations.normal
-                easing.bezierCurve: Appearance.anim.curves.emphasized
+                type: Anim.Emphasized
             }
         }
 
@@ -127,8 +126,7 @@ RowLayout {
         Behavior on contentX {
             enabled: !applicationsCarousel.isTeleporting
             Anim {
-                duration: Appearance.anim.durations.normal
-                easing.bezierCurve: Appearance.anim.curves.emphasized
+                type: Anim.Emphasized
                 onRunningChanged: {
                     if (!running) {
                         applicationsCarousel.isAnimating = false;
@@ -173,14 +171,14 @@ RowLayout {
             required property int index
 
             width: applicationsCarousel.width
-            implicitHeight: applicationRow.implicitHeight + Appearance.padding.large * 2
+            implicitHeight: applicationRow.implicitHeight + Tokens.padding.large * 2
 
             RowLayout {
                 id: applicationRow
 
                 anchors.fill: parent
-                anchors.margins: Appearance.padding.large
-                spacing: Appearance.spacing.larger
+                anchors.margins: Tokens.padding.large
+                spacing: Tokens.spacing.larger
 
                 VectorImage {
                     Layout.preferredWidth: 64
@@ -198,23 +196,23 @@ RowLayout {
 
                     Text {
                         font.bold: true
-                        font.pointSize: Appearance.font.size.larger
+                        font.pointSize: Tokens.font.size.larger
                         color: Colours.palette.m3onSurface
                         text: application.modelData.cat + " - " + application.modelData.title
                     }
 
                     Text {
                         Layout.preferredWidth: parent.width
-                        font.pointSize: Appearance.font.size.normal
+                        font.pointSize: Tokens.font.size.normal
                         color: Colours.palette.m3onSurface
                         wrapMode: Text.WordWrap
                         text: application.modelData.desc
                     }
 
                     RowLayout {
-                        Layout.topMargin: Appearance.padding.normal
+                        Layout.topMargin: Tokens.padding.normal
 
-                        spacing: Appearance.spacing.normal
+                        spacing: Tokens.spacing.normal
                         visible: application.modelData.links
 
                         Repeater {
@@ -226,7 +224,7 @@ RowLayout {
                                 required property var modelData
 
                                 text: applicationLink.modelData.title
-                                radius: Appearance.rounding.small
+                                radius: Tokens.rounding.small
 
                                 onClicked: Qt.openUrlExternally(applicationLink.modelData.url)
                             }

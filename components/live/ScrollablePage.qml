@@ -2,25 +2,25 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import Caelestia.Config
 import qs.components
 import qs.components.containers
 import qs.components.live
 import qs.services
-import qs.config
 
 Item {
     id: root
 
     default property alias pageSections: contentColumn.data
-    
+
     property var sectionsList: []
     property string currentSection: ""
     property bool programmaticScroll: false
     property bool initializing: true
-    
+
     property real bottomPaddingViewportRatio: 0.66
-    property real bottomPaddingExtra: Appearance.padding.larger * 4
-    
+    property real bottomPaddingExtra: Tokens.padding.larger * 4
+
     readonly property var subsections: sectionsList.map(section => ({
         id: section.sectionId,
         name: section.sectionName,
@@ -29,20 +29,20 @@ Item {
 
     Timer {
         id: scrollTimer
-        interval: Appearance.anim.durations.normal + 50
+        interval: Tokens.anim.durations.normal + 50
         onTriggered: root.programmaticScroll = false
     }
 
     Component.onCompleted: {
-        sectionsList = contentColumn.children.filter(child => 
+        sectionsList = contentColumn.children.filter(child =>
             child.sectionId !== undefined && child.sectionName !== undefined
         )
-        
+
         // Set initial section without animation
         if (sectionsList.length > 0) {
             currentSection = sectionsList[0].sectionId
         }
-        
+
         initializing = false
     }
 
@@ -95,17 +95,16 @@ Item {
         Behavior on contentY {
             enabled: root.programmaticScroll && !root.initializing
             Anim {
-                duration: Appearance.anim.durations.normal
-                easing.bezierCurve: Appearance.anim.curves.emphasized
+                type: Anim.Emphasized
             }
         }
 
         Item {
             id: contentWrapper
-            
+
             width: parent.width
             implicitHeight: contentColumn.implicitHeight + bottomPadding.height
-            
+
             ColumnLayout {
                 id: contentColumn
 
@@ -114,10 +113,10 @@ Item {
 
                 // PageSection children added via default property alias
             }
-            
+
             Item {
                 id: bottomPadding
-                
+
                 anchors.top: contentColumn.bottom
                 width: parent.width
                 height: contentFlickable.height * root.bottomPaddingViewportRatio + root.bottomPaddingExtra

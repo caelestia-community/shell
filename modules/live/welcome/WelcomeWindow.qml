@@ -3,11 +3,11 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Caelestia.Config
 import qs.components
 import qs.components.containers
 import qs.components.controls
 import qs.components.live
-import qs.config
 import qs.services
 import "pages"
 
@@ -28,7 +28,7 @@ StyledRect {
     color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
     border.width: 1
     border.color: Colours.palette.m3outlineVariant
-    radius: Appearance.rounding.normal
+    radius: Tokens.rounding.normal
 
     focus: true
     Keys.onLeftPressed: {
@@ -113,7 +113,7 @@ StyledRect {
             id: topNav
 
             Layout.fillWidth: true
-            Layout.preferredHeight: navContent.implicitHeight + Appearance.padding.normal * 2
+            Layout.preferredHeight: navContent.implicitHeight + Tokens.padding.normal * 2
 
             color: "transparent"
             radius: 0
@@ -122,20 +122,20 @@ StyledRect {
                 id: navContent
 
                 anchors.fill: parent
-                anchors.leftMargin: Appearance.padding.large
-                anchors.rightMargin: Appearance.padding.large
-                anchors.topMargin: Appearance.padding.normal
-                anchors.bottomMargin: Appearance.padding.normal
-                spacing: Appearance.spacing.normal
+                anchors.leftMargin: Tokens.padding.large
+                anchors.rightMargin: Tokens.padding.large
+                anchors.topMargin: Tokens.padding.normal
+                anchors.bottomMargin: Tokens.padding.normal
+                spacing: Tokens.spacing.normal
 
                 RowLayout {
                     id: logo
-                    spacing: Appearance.spacing.small
+                    spacing: Tokens.spacing.small
 
                     StyledText {
                         text: "Caelestia"
                         font.family: "Nunito"
-                        font.pointSize: Appearance.font.size.large
+                        font.pointSize: Tokens.font.size.large
                         font.bold: true
                         color: Colours.palette.m3onSurface
                     }
@@ -145,8 +145,8 @@ StyledRect {
                     icon: "chevron_left"
                     visible: tabsFlickable.contentWidth > tabsFlickable.width
                     type: IconButton.Text
-                    radius: Appearance.rounding.small
-                    padding: Appearance.padding.small
+                    radius: Tokens.rounding.small
+                    padding: Tokens.padding.small
                     onClicked: {
                         tabsFlickable.contentX = Math.max(0, tabsFlickable.contentX - 100);
                     }
@@ -162,8 +162,7 @@ StyledRect {
 
                     Behavior on contentX {
                         Anim {
-                            duration: Appearance.anim.durations.normal
-                            easing.bezierCurve: Appearance.anim.curves.emphasized
+                            type: Anim.Emphasized
                         }
                     }
 
@@ -201,7 +200,7 @@ StyledRect {
 
                             visible: activeTab !== null
                             color: Colours.palette.m3primary
-                            radius: Appearance.rounding.small
+                            radius: Tokens.rounding.small
 
                             x: activeTab ? activeTab.x : 0
                             y: activeTab ? activeTab.y : 0
@@ -210,22 +209,20 @@ StyledRect {
 
                             Behavior on x {
                                 Anim {
-                                    duration: Appearance.anim.durations.normal
-                                    easing.bezierCurve: Appearance.anim.curves.emphasized
+                                    type: Anim.Emphasized
                                 }
                             }
 
                             Behavior on width {
                                 Anim {
-                                    duration: Appearance.anim.durations.normal
-                                    easing.bezierCurve: Appearance.anim.curves.emphasized
+                                    type: Anim.Emphasized
                                 }
                             }
                         }
 
                         Row {
                             id: tabsRow
-                            spacing: Appearance.spacing.small
+                            spacing: Tokens.spacing.small
 
                             Repeater {
                                 id: tabsRepeater
@@ -239,12 +236,12 @@ StyledRect {
 
                                     property bool isActive: root.currentPage === modelData.id
 
-                                    implicitWidth: tabContent.width + Appearance.padding.normal * 2
-                                    implicitHeight: tabContent.height + Appearance.padding.smaller * 2
+                                    implicitWidth: tabContent.width + Tokens.padding.normal * 2
+                                    implicitHeight: tabContent.height + Tokens.padding.smaller * 2
 
                                     StateLayer {
                                         anchors.fill: parent
-                                        radius: Appearance.rounding.small
+                                        radius: Tokens.rounding.small
                                         function onClicked(): void {
                                             root.currentPage = tabsItem.modelData.id;
 
@@ -262,12 +259,12 @@ StyledRect {
                                     Row {
                                         id: tabContent
                                         anchors.centerIn: parent
-                                        spacing: Appearance.spacing.smaller
+                                        spacing: Tokens.spacing.smaller
 
                                         MaterialIcon {
                                             anchors.verticalCenter: parent.verticalCenter
                                             text: tabsItem.modelData.icon
-                                            font.pointSize: Appearance.font.size.small
+                                            font.pointSize: Tokens.font.size.small
                                             fill: 1
                                             color: tabsItem.isActive ? Colours.palette.m3surface : Colours.palette.m3onSurfaceVariant
                                         }
@@ -275,7 +272,7 @@ StyledRect {
                                         StyledText {
                                             anchors.verticalCenter: parent.verticalCenter
                                             text: tabsItem.modelData.name
-                                            font.pointSize: Appearance.font.size.small
+                                            font.pointSize: Tokens.font.size.small
                                             color: tabsItem.isActive ? Colours.palette.m3surface : Colours.palette.m3onSurfaceVariant
                                         }
                                     }
@@ -289,8 +286,8 @@ StyledRect {
                     icon: "chevron_right"
                     visible: tabsFlickable.contentWidth > tabsFlickable.width
                     type: IconButton.Text
-                    radius: Appearance.rounding.small
-                    padding: Appearance.padding.small
+                    radius: Tokens.rounding.small
+                    padding: Tokens.padding.small
                     onClicked: {
                         tabsFlickable.contentX = Math.min(tabsFlickable.contentWidth - tabsFlickable.width, tabsFlickable.contentX + 100);
                     }
@@ -299,8 +296,8 @@ StyledRect {
                 IconButton {
                     icon: "close"
                     type: IconButton.Text
-                    radius: Appearance.rounding.small
-                    padding: Appearance.padding.small
+                    radius: Tokens.rounding.small
+                    padding: Tokens.padding.small
                     onClicked: QsWindow.window.destroy()
                 }
             }
@@ -316,19 +313,19 @@ StyledRect {
             StyledRect {
                 anchors.fill: parent
                 anchors.topMargin: 0
-                anchors.leftMargin: Appearance.padding.normal
-                anchors.rightMargin: Appearance.padding.normal
-                anchors.bottomMargin: Appearance.padding.normal
+                anchors.leftMargin: Tokens.padding.normal
+                anchors.rightMargin: Tokens.padding.normal
+                anchors.bottomMargin: Tokens.padding.normal
                 color: Colours.palette.m3background
-                radius: Appearance.rounding.normal
+                radius: Tokens.rounding.normal
                 z: -1
             }
 
             VerticalNav {
                 id: globalVerticalNav
-                property real targetX: root.currentPageSubsections.length > 0 ? Appearance.padding.normal : Appearance.padding.normal - Appearance.rounding.normal
+                property real targetX: root.currentPageSubsections.length > 0 ? Tokens.padding.normal : Tokens.padding.normal - Tokens.rounding.normal
                 x: targetX
-                y: Appearance.padding.normal + Appearance.padding.larger * 2
+                y: Tokens.padding.normal + Tokens.padding.larger * 2
                 implicitWidth: 200
                 width: root.currentPageSubsections.length > 0 ? implicitWidth : 0
                 z: 10
@@ -342,21 +339,21 @@ StyledRect {
 
                 Behavior on x {
                     NumberAnimation {
-                        duration: Appearance.anim.durations.normal
+                        duration: Tokens.anim.durations.normal
                         easing.type: Easing.OutCubic
                     }
                 }
 
                 Behavior on width {
                     NumberAnimation {
-                        duration: Appearance.anim.durations.normal
+                        duration: Tokens.anim.durations.normal
                         easing.type: Easing.OutCubic
                     }
                 }
 
                 Behavior on implicitHeight {
                     NumberAnimation {
-                        duration: Appearance.anim.durations.normal
+                        duration: Tokens.anim.durations.normal
                         easing.type: Easing.OutCubic
                     }
                 }
@@ -400,7 +397,7 @@ StyledRect {
 
             Timer {
                 id: delayedClearTimer
-                interval: Appearance.anim.durations.normal
+                interval: Tokens.anim.durations.normal
                 onTriggered: {
                     root.displayedSubsections = []
                 }
@@ -432,7 +429,7 @@ StyledRect {
             property string targetPage: ""
             property bool transitioning: false
             property int direction: 0
-            readonly property real pageY: Appearance.padding.normal
+            readonly property real pageY: Tokens.padding.normal
 
             Component.onCompleted: {
                 activePage = root.currentPage;
@@ -477,18 +474,18 @@ StyledRect {
 
             Item {
                 id: currentPageContainer
-                property real navOffset: root.currentPageSubsections.length > 0 ? globalVerticalNav.implicitWidth + Appearance.padding.normal : 0
-                x: Appearance.padding.normal + navOffset
+                property real navOffset: root.currentPageSubsections.length > 0 ? globalVerticalNav.implicitWidth + Tokens.padding.normal : 0
+                x: Tokens.padding.normal + navOffset
                 y: contentArea.pageY
-                width: parent.width - Appearance.padding.normal * 3 - navOffset
-                height: parent.height - Appearance.padding.normal * 2 - Appearance.padding.normal
+                width: parent.width - Tokens.padding.normal * 3 - navOffset
+                height: parent.height - Tokens.padding.normal * 2 - Tokens.padding.normal
                 z: contentArea.transitioning ? (contentArea.direction > 0 ? 2 : 1) : 2
                 clip: true
 
                 Behavior on x {
                     enabled: !contentArea.transitioning
                     NumberAnimation {
-                        duration: Appearance.anim.durations.normal
+                        duration: Tokens.anim.durations.normal
                         easing.type: Easing.OutCubic
                     }
                 }
@@ -496,7 +493,7 @@ StyledRect {
                 Behavior on width {
                     enabled: !contentArea.transitioning
                     NumberAnimation {
-                        duration: Appearance.anim.durations.normal
+                        duration: Tokens.anim.durations.normal
                         easing.type: Easing.OutCubic
                     }
                 }
@@ -533,18 +530,18 @@ StyledRect {
 
             Item {
                 id: nextPageContainer
-                property real navOffset: root.targetPageSubsections.length > 0 ? globalVerticalNav.implicitWidth + Appearance.padding.normal : 0
+                property real navOffset: root.targetPageSubsections.length > 0 ? globalVerticalNav.implicitWidth + Tokens.padding.normal : 0
                 x: parent.width
                 y: contentArea.pageY
-                width: parent.width - Appearance.padding.normal * 3 - navOffset
-                height: parent.height - Appearance.padding.normal * 2 - Appearance.padding.normal
+                width: parent.width - Tokens.padding.normal * 3 - navOffset
+                height: parent.height - Tokens.padding.normal * 2 - Tokens.padding.normal
                 z: contentArea.transitioning ? (contentArea.direction > 0 ? 1 : 2) : 1
                 clip: true
 
                 Behavior on width {
                     enabled: !contentArea.transitioning
                     NumberAnimation {
-                        duration: Appearance.anim.durations.normal
+                        duration: Tokens.anim.durations.normal
                         easing.type: Easing.OutCubic
                     }
                 }
@@ -575,7 +572,7 @@ StyledRect {
                     NumberAnimation {
                         target: nextPageContainer
                         property: "x"
-                        to: nextPageContainer.navOffset + Appearance.padding.normal
+                        to: nextPageContainer.navOffset + Tokens.padding.normal
                         duration: 350
                         easing.type: Easing.OutCubic
                     }
@@ -584,7 +581,7 @@ StyledRect {
                 ScriptAction {
                     script: {
                         currentPageLoader.sourceComponent = nextPageLoader.sourceComponent;
-                        currentPageContainer.x = Appearance.padding.normal + currentPageContainer.navOffset;
+                        currentPageContainer.x = Tokens.padding.normal + currentPageContainer.navOffset;
                         nextPageContainer.x = contentArea.width;
                         contentArea.activePage = contentArea.targetPage;
                         contentArea.transitioning = false;

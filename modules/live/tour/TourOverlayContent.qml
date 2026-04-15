@@ -1,7 +1,7 @@
 import qs.components
 import qs.components.controls
-import qs.config
 import qs.services
+import Caelestia.Config
 import QtQuick
 import QtQuick.Shapes
 import QtQuick.Layouts
@@ -55,7 +55,7 @@ Item {
     Behavior on opacity {
         enabled: !root.initialAppearance
         NumberAnimation {
-            duration: Appearance.anim.durations.normal
+            duration: Tokens.anim.durations.normal
             easing.type: Easing.InOutQuad
         }
     }
@@ -72,11 +72,11 @@ Item {
                 path: {
                     const w = dimShape.width;
                     const h = dimShape.height;
-                    const x = root.targetRect.x - Appearance.padding.large;
-                    const y = root.targetRect.y - Appearance.padding.large;
-                    const rw = root.targetRect.width + Appearance.padding.large * 2;
-                    const rh = root.targetRect.height + Appearance.padding.large * 2;
-                    const r = Appearance.rounding.normal;
+                    const x = root.targetRect.x - Tokens.padding.large;
+                    const y = root.targetRect.y - Tokens.padding.large;
+                    const rw = root.targetRect.width + Tokens.padding.large * 2;
+                    const rh = root.targetRect.height + Tokens.padding.large * 2;
+                    const r = Tokens.rounding.normal;
 
                     if (root.targetRect.width <= 0 || root.targetRect.height <= 0) {
                         return `M 0,0 L ${w},0 L ${w},${h} L 0,${h} Z`;
@@ -99,20 +99,20 @@ Item {
 
     Rectangle {
         id: highlightBorder
-        x: root.targetRect.x - Appearance.padding.large
-        y: root.targetRect.y - Appearance.padding.large
-        width: root.targetRect.width + Appearance.padding.large * 2
-        height: root.targetRect.height + Appearance.padding.large * 2
+        x: root.targetRect.x - Tokens.padding.large
+        y: root.targetRect.y - Tokens.padding.large
+        width: root.targetRect.width + Tokens.padding.large * 2
+        height: root.targetRect.height + Tokens.padding.large * 2
         color: "transparent"
         border.color: Colours.palette.m3error
         border.width: 3
-        radius: Appearance.rounding.normal
+        radius: Tokens.rounding.normal
         visible: root.targetRect.width > 0
 
-        Behavior on x { enabled: !root.initialAppearance; Anim { duration: Appearance.anim.durations.normal; easing.bezierCurve: Appearance.anim.curves.emphasized } }
-        Behavior on y { enabled: !root.initialAppearance; Anim { duration: Appearance.anim.durations.normal; easing.bezierCurve: Appearance.anim.curves.emphasized } }
-        Behavior on width { enabled: !root.initialAppearance; Anim { duration: Appearance.anim.durations.normal; easing.bezierCurve: Appearance.anim.curves.emphasized } }
-        Behavior on height { enabled: !root.initialAppearance; Anim { duration: Appearance.anim.durations.normal; easing.bezierCurve: Appearance.anim.curves.emphasized } }
+        Behavior on x { enabled: !root.initialAppearance; Anim { duration: Tokens.anim.durations.normal; easing.bezierCurve: Tokens.anim.emphasized } }
+        Behavior on y { enabled: !root.initialAppearance; Anim { duration: Tokens.anim.durations.normal; easing.bezierCurve: Tokens.anim.emphasized } }
+        Behavior on width { enabled: !root.initialAppearance; Anim { duration: Tokens.anim.durations.normal; easing.bezierCurve: Tokens.anim.emphasized } }
+        Behavior on height { enabled: !root.initialAppearance; Anim { duration: Tokens.anim.durations.normal; easing.bezierCurve: Tokens.anim.emphasized } }
 
         SequentialAnimation on opacity {
             running: highlightBorder.visible
@@ -153,9 +153,9 @@ Item {
 
         property real targetX: {
             if (position === "left") {
-                return root.targetRect.x - width - Appearance.padding.large * 2;
+                return root.targetRect.x - width - Tokens.padding.large * 2;
             } else if (position === "right") {
-                return root.targetRect.x + root.targetRect.width + Appearance.padding.large * 2;
+                return root.targetRect.x + root.targetRect.width + Tokens.padding.large * 2;
             } else {
                 return root.targetRect.x;
             }
@@ -163,46 +163,46 @@ Item {
 
         property real targetY: {
             if (position === "top") {
-                return root.targetRect.y - height - Appearance.padding.large * 2;
+                return root.targetRect.y - height - Tokens.padding.large * 2;
             } else if (position === "bottom") {
-                return root.targetRect.y + root.targetRect.height + Appearance.padding.large * 2;
+                return root.targetRect.y + root.targetRect.height + Tokens.padding.large * 2;
             } else {
                 return root.targetRect.y;
             }
         }
 
-        x: Math.max(Appearance.padding.normal, Math.min(targetX, parent.width - width - Appearance.padding.normal))
-        y: Math.max(Appearance.padding.normal, Math.min(targetY, parent.height - height - Appearance.padding.normal))
+        x: Math.max(Tokens.padding.normal, Math.min(targetX, parent.width - width - Tokens.padding.normal))
+        y: Math.max(Tokens.padding.normal, Math.min(targetY, parent.height - height - Tokens.padding.normal))
 
-        width: Math.min(400, parent.width - Appearance.padding.normal * 2)
-        height: tooltipContent.implicitHeight + Appearance.padding.large * 2
+        width: Math.min(400, parent.width - Tokens.padding.normal * 2)
+        height: tooltipContent.implicitHeight + Tokens.padding.large * 2
 
         color: Colours.palette.m3surfaceContainer
-        radius: Appearance.rounding.normal
+        radius: Tokens.rounding.normal
         border.color: Colours.palette.m3primary
         border.width: 2
         z: 3
 
-        Behavior on x { Anim { duration: Appearance.anim.durations.normal; easing.bezierCurve: Appearance.anim.curves.emphasized } }
-        Behavior on y { Anim { duration: Appearance.anim.durations.normal; easing.bezierCurve: Appearance.anim.curves.emphasized } }
+        Behavior on x { Anim { duration: Tokens.anim.durations.normal; easing.bezierCurve: Tokens.anim.emphasized } }
+        Behavior on y { Anim { duration: Tokens.anim.durations.normal; easing.bezierCurve: Tokens.anim.emphasized } }
 
         ColumnLayout {
             id: tooltipContent
             anchors.fill: parent
-            anchors.margins: Appearance.padding.large
-            spacing: Appearance.spacing.normal
+            anchors.margins: Tokens.padding.large
+            spacing: Tokens.spacing.normal
 
             StyledText {
                 visible: root.totalSteps > 1
                 text: qsTr("Step %1 of %2").arg(root.stepIndex + 1).arg(root.totalSteps)
-                font.pointSize: Appearance.font.size.small
+                font.pointSize: Tokens.font.size.small
                 color: Colours.palette.m3onSurface
                 opacity: 0.7
             }
 
             StyledText {
                 text: root.currentStep?.title ?? ""
-                font.pointSize: Appearance.font.size.large
+                font.pointSize: Tokens.font.size.large
                 font.bold: true
                 color: Colours.palette.m3primary
             }
@@ -210,7 +210,7 @@ Item {
             StyledText {
                 Layout.fillWidth: true
                 text: root.currentStep?.tooltip ?? ""
-                font.pointSize: Appearance.font.size.normal
+                font.pointSize: Tokens.font.size.normal
                 color: Colours.palette.m3onSurface
                 wrapMode: Text.WordWrap
             }
@@ -221,19 +221,19 @@ Item {
 
                 TextButton {
                     text: qsTr("Close")
-                    radius: Appearance.rounding.small
+                    radius: Tokens.rounding.small
                     onClicked: Tour.nextStep()
                 }
             }
 
             Row {
                 Layout.fillWidth: true
-                spacing: Appearance.spacing.normal
+                spacing: Tokens.spacing.normal
                 visible: root.totalSteps > 1
 
                 TextButton {
                     text: qsTr("Previous")
-                    radius: Appearance.rounding.small
+                    radius: Tokens.rounding.small
                     visible: root.stepIndex > 0
                     enabled: root.stepIndex > 0
                     onClicked: Tour.previousStep()
@@ -241,7 +241,7 @@ Item {
 
                 TextButton {
                     text: root.stepIndex < root.totalSteps - 1 ? qsTr("Next") : qsTr("Complete")
-                    radius: Appearance.rounding.small
+                    radius: Tokens.rounding.small
                     onClicked: Tour.nextStep()
                 }
 
@@ -249,7 +249,7 @@ Item {
 
                 TextButton {
                     text: qsTr("Skip Tour")
-                    radius: Appearance.rounding.small
+                    radius: Tokens.rounding.small
                     inactiveColour: Colours.palette.m3errorContainer
                     inactiveOnColour: Colours.palette.m3onErrorContainer
                     onClicked: Tour.skipTour()

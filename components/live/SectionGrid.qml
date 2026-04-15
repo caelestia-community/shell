@@ -2,9 +2,9 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import Caelestia.Config
 import qs.components.live
 import qs.services
-import qs.config
 
 GridLayout {
     id: root
@@ -13,24 +13,24 @@ GridLayout {
     property int minColumns: 1
     property int maxColumns: 3
     property real responsiveBreakpoint: 1000
-    
-    property real customColumnSpacing: Appearance.spacing.large
-    property real customRowSpacing: Appearance.spacing.large
-    
+
+    property real customColumnSpacing: Tokens.spacing.large
+    property real customRowSpacing: Tokens.spacing.large
+
     columns: {
         if (parent && parent.width < root.responsiveBreakpoint) {
             return root.minColumns
         }
         return Math.min(root.targetColumns, root.maxColumns)
     }
-    
+
     columnSpacing: root.customColumnSpacing
     rowSpacing: root.customRowSpacing
-    
+
     property bool uniformCellHeight: true
-    
+
     Layout.fillWidth: true
-    
+
     Component.onCompleted: {
         if (uniformCellHeight) {
             for (let i = 0; i < children.length; i++) {
