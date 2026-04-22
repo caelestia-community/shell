@@ -183,7 +183,7 @@ Item {
                         StateLayer {
                             anchors.fill: parent
                             radius: root.roundingSmall
-                            function onClicked(): void {
+                            onClicked: {
                                 root.sectionChanged(modelData.id);
                             }
                         }

@@ -242,7 +242,7 @@ StyledRect {
                                     StateLayer {
                                         anchors.fill: parent
                                         radius: Tokens.rounding.small
-                                        function onClicked(): void {
+                                        onClicked: {
                                             root.currentPage = tabsItem.modelData.id;
 
                                             const tabLeft = parent.x;
