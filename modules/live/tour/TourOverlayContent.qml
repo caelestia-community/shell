@@ -21,6 +21,9 @@ Item {
     property bool hasValidRect: false
     property bool tourJustStarted: false
 
+    readonly property real paddingLarge: Tokens.padding.large
+    readonly property real roundingNormal: Tokens.rounding.normal
+
     onIsTourActiveChanged: {
         if (isTourActive && stepIndex === 0) {
             tourJustStarted = true;
@@ -72,11 +75,11 @@ Item {
                 path: {
                     const w = dimShape.width;
                     const h = dimShape.height;
-                    const x = root.targetRect.x - Tokens.padding.large;
-                    const y = root.targetRect.y - Tokens.padding.large;
-                    const rw = root.targetRect.width + Tokens.padding.large * 2;
-                    const rh = root.targetRect.height + Tokens.padding.large * 2;
-                    const r = Tokens.rounding.normal;
+                    const x = root.targetRect.x - root.paddingLarge;
+                    const y = root.targetRect.y - root.paddingLarge;
+                    const rw = root.targetRect.width + root.paddingLarge * 2;
+                    const rh = root.targetRect.height + root.paddingLarge * 2;
+                    const r = root.roundingNormal;
 
                     if (root.targetRect.width <= 0 || root.targetRect.height <= 0) {
                         return `M 0,0 L ${w},0 L ${w},${h} L 0,${h} Z`;
@@ -183,8 +186,17 @@ Item {
         border.width: 2
         z: 3
 
-        Behavior on x { Anim { duration: Tokens.anim.durations.normal; easing.bezierCurve: Tokens.anim.emphasized } }
-        Behavior on y { Anim { duration: Tokens.anim.durations.normal; easing.bezierCurve: Tokens.anim.emphasized } }
+        Behavior on x {
+            Anim {
+                type: Anim.Emphasized
+            }
+        }
+
+        Behavior on y {
+            Anim {
+                type: Anim.Emphasized
+            }
+        }
 
         ColumnLayout {
             id: tooltipContent

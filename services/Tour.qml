@@ -85,7 +85,7 @@ Singleton {
     function openLauncherWithText(text: string): void {
         const visibilities = Visibilities.getForActive();
         visibilities.launcher = true;
-        
+
         const launcher = LauncherIpc.getForActive();
         if (launcher) {
             launcher.search.text = text;
