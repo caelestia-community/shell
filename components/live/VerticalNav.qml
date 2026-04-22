@@ -15,6 +15,8 @@ Item {
     required property string activeSection
     property bool disableAnimations: false
     property real contentOpacity: 1
+    readonly property real roundingNormal: Tokens.rounding.normal
+    readonly property real roundingSmall: Tokens.rounding.small
 
     signal sectionChanged(string sectionId)
 
@@ -48,60 +50,60 @@ Item {
 
             // Top-left inverted corner
             PathArc {
-                relativeX: Tokens.rounding.normal
-                relativeY: Tokens.rounding.normal
-                radiusX: Tokens.rounding.normal
-                radiusY: Tokens.rounding.normal
+                relativeX: root.roundingNormal
+                relativeY: root.roundingNormal
+                radiusX: root.roundingNormal
+                radiusY: root.roundingNormal
                 direction: PathArc.Counterclockwise
             }
 
             // Top edge
             PathLine {
-                relativeX: root.width - Tokens.rounding.normal * 2
+                relativeX: root.width - root.roundingNormal * 2
                 relativeY: 0
             }
 
             // Top-right corner
             PathArc {
-                relativeX: Tokens.rounding.normal
-                relativeY: Tokens.rounding.normal
-                radiusX: Tokens.rounding.normal
-                radiusY: Tokens.rounding.normal
+                relativeX: root.roundingNormal
+                relativeY: root.roundingNormal
+                radiusX: root.roundingNormal
+                radiusY: root.roundingNormal
             }
 
             // Right edge
             PathLine {
                 relativeX: 0
-                relativeY: root.height - Tokens.rounding.normal * 2
+                relativeY: root.height - root.roundingNormal * 2
             }
 
             // Bottom-right corner
             PathArc {
-                relativeX: -Tokens.rounding.normal
-                relativeY: Tokens.rounding.normal
-                radiusX: Tokens.rounding.normal
-                radiusY: Tokens.rounding.normal
+                relativeX: -root.roundingNormal
+                relativeY: root.roundingNormal
+                radiusX: root.roundingNormal
+                radiusY: root.roundingNormal
             }
 
             // Bottom edge
             PathLine {
-                relativeX: -(root.width - Tokens.rounding.normal * 2)
+                relativeX: -(root.width - root.roundingNormal * 2)
                 relativeY: 0
             }
 
             // Bottom-left inverted corner
             PathArc {
-                relativeX: -Tokens.rounding.normal
-                relativeY: Tokens.rounding.normal
-                radiusX: Tokens.rounding.normal
-                radiusY: Tokens.rounding.normal
+                relativeX: -root.roundingNormal
+                relativeY: root.roundingNormal
+                radiusX: root.roundingNormal
+                radiusY: root.roundingNormal
                 direction: PathArc.Counterclockwise
             }
 
             // Left edge
             PathLine {
                 relativeX: 0
-                relativeY: -(root.height - Tokens.rounding.normal * 2)
+                relativeY: -(root.height - root.roundingNormal * 2)
             }
         }
     }
@@ -115,7 +117,7 @@ Item {
 
         Item {
             Layout.fillWidth: true
-            Layout.preferredHeight: Tokens.rounding.normal * 1.25
+            Layout.preferredHeight: root.roundingNormal * 1.25
         }
 
         Item {
@@ -137,7 +139,7 @@ Item {
 
                 visible: activeTab !== null
                 color: Colours.palette.m3primary
-                radius: Tokens.rounding.small
+                radius: root.roundingSmall
 
                 x: activeTab ? activeTab.x : 0
                 y: activeTab ? activeTab.y : 0
@@ -163,7 +165,7 @@ Item {
                 id: tabsColumn
                 width: parent.width
                 spacing: Tokens.spacing.small
-                bottomPadding: Tokens.rounding.normal * 1.25
+                bottomPadding: root.roundingNormal * 1.25
 
                 Repeater {
                     id: tabsRepeater
@@ -180,7 +182,7 @@ Item {
 
                         StateLayer {
                             anchors.fill: parent
-                            radius: Tokens.rounding.small
+                            radius: root.roundingSmall
                             function onClicked(): void {
                                 root.sectionChanged(modelData.id);
                             }

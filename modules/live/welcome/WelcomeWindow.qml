@@ -572,7 +572,7 @@ StyledRect {
                     NumberAnimation {
                         target: nextPageContainer
                         property: "x"
-                        to: nextPageContainer.navOffset + Tokens.padding.normal
+                        to: nextPageContainer.navOffset + contentArea.pageY
                         duration: 350
                         easing.type: Easing.OutCubic
                     }
@@ -581,7 +581,7 @@ StyledRect {
                 ScriptAction {
                     script: {
                         currentPageLoader.sourceComponent = nextPageLoader.sourceComponent;
-                        currentPageContainer.x = Tokens.padding.normal + currentPageContainer.navOffset;
+                        currentPageContainer.x = contentArea.pageY + currentPageContainer.navOffset;
                         nextPageContainer.x = contentArea.width;
                         contentArea.activePage = contentArea.targetPage;
                         contentArea.transitioning = false;
