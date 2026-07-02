@@ -44,6 +44,12 @@ class LauncherConfig : public ConfigObject {
     CONFIG_GLOBAL_PROPERTY(QVariantList, actions,
         {
             vmap({
+                { u"name"_s, u"Welcome"_s },
+                { u"icon"_s, u"waving_hand"_s },
+                { u"description"_s, u"Welcome to Caelestia!"_s },
+                { u"command"_s, QStringList{ u"caelestia"_s, u"shell"_s, u"welcome"_s, u"open"_s } },
+            }),
+            vmap({
                 { u"name"_s, u"Calculator"_s },
                 { u"icon"_s, u"calculate"_s },
                 { u"description"_s, u"Do simple math equations (powered by Qalc)"_s },
