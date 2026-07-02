@@ -43,7 +43,7 @@ Item {
 
                     Layout.alignment: Qt.AlignHCenter
                     text: qsTr("Welcome to Caelestia")
-                    font.pointSize: Tokens.font.size.extraLarge
+                    font.pointSize: Tokens.font.headline.medium
                     font.bold: true
                     color: Colours.palette.m3onBackground
                     opacity: root.animationHasRun ? 1.0 : 0.0
@@ -54,7 +54,7 @@ Item {
 
                     Layout.alignment: Qt.AlignHCenter
                     text: qsTr("A modern, beautiful desktop shell for Wayland")
-                    font.pointSize: Tokens.font.size.larger
+                    font.pointSize: Tokens.font.headline.medium
                     color: Colours.palette.m3onSurfaceVariant
                     opacity: root.animationHasRun ? 1.0 : 0.0
                 }

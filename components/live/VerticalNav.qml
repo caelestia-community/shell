@@ -15,7 +15,7 @@ Item {
     required property string activeSection
     property bool disableAnimations: false
     property real contentOpacity: 1
-    readonly property real roundingNormal: Tokens.rounding.normal
+    readonly property real roundingNormal: Tokens.rounding.medium
     readonly property real roundingSmall: Tokens.rounding.small
 
     signal sectionChanged(string sectionId)
@@ -110,7 +110,7 @@ Item {
 
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: Tokens.padding.normal
+        anchors.margins: Tokens.padding.medium
         spacing: 0
         opacity: root.contentOpacity
         clip: true

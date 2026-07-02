@@ -28,7 +28,7 @@ StyledRect {
     color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
     border.width: 1
     border.color: Colours.palette.m3outlineVariant
-    radius: Tokens.rounding.normal
+    radius: Tokens.rounding.medium
 
     focus: true
     Keys.onLeftPressed: {
@@ -126,7 +126,7 @@ StyledRect {
                 anchors.rightMargin: Tokens.padding.large
                 anchors.topMargin: Tokens.padding.normal
                 anchors.bottomMargin: Tokens.padding.normal
-                spacing: Tokens.spacing.normal
+                spacing: Tokens.spacing.medium
 
                 RowLayout {
                     id: logo
@@ -135,7 +135,7 @@ StyledRect {
                     StyledText {
                         text: "Caelestia"
                         font.family: "Nunito"
-                        font.pointSize: Tokens.font.size.large
+                        font.pointSize: Tokens.font.body.large
                         font.bold: true
                         color: Colours.palette.m3onSurface
                     }
@@ -259,12 +259,12 @@ StyledRect {
                                     Row {
                                         id: tabContent
                                         anchors.centerIn: parent
-                                        spacing: Tokens.spacing.smaller
+                                        spacing: Tokens.spacing.small
 
                                         MaterialIcon {
                                             anchors.verticalCenter: parent.verticalCenter
                                             text: tabsItem.modelData.icon
-                                            font.pointSize: Tokens.font.size.small
+                                            font.pointSize: Tokens.font.body.small
                                             fill: 1
                                             color: tabsItem.isActive ? Colours.palette.m3surface : Colours.palette.m3onSurfaceVariant
                                         }
@@ -272,7 +272,7 @@ StyledRect {
                                         StyledText {
                                             anchors.verticalCenter: parent.verticalCenter
                                             text: tabsItem.modelData.name
-                                            font.pointSize: Tokens.font.size.small
+                                            font.pointSize: Tokens.font.body.small
                                             color: tabsItem.isActive ? Colours.palette.m3surface : Colours.palette.m3onSurfaceVariant
                                         }
                                     }
@@ -317,7 +317,7 @@ StyledRect {
                 anchors.rightMargin: Tokens.padding.normal
                 anchors.bottomMargin: Tokens.padding.normal
                 color: Colours.palette.m3background
-                radius: Tokens.rounding.normal
+                radius: Tokens.rounding.medium
                 z: -1
             }
 
@@ -429,7 +429,7 @@ StyledRect {
             property string targetPage: ""
             property bool transitioning: false
             property int direction: 0
-            readonly property real pageY: Tokens.padding.normal
+            readonly property real pageY: Tokens.padding.medium
 
             Component.onCompleted: {
                 activePage = root.currentPage;
