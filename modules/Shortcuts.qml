@@ -5,7 +5,6 @@ import Caelestia
 import qs.components.misc
 import qs.services
 import qs.modules.nexus
-import qs.modules.controlcenter
 import qs.modules.live.help
 import qs.modules.live.welcome
 
