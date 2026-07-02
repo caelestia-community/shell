@@ -30,6 +30,7 @@ class GeneralIdle : public ConfigObject {
 
     CONFIG_GLOBAL_PROPERTY(bool, lockBeforeSleep, true)
     CONFIG_GLOBAL_PROPERTY(bool, inhibitWhenAudio, true)
+    CONFIG_GLOBAL_PROPERTY(bool, inhibitWhenCharging, false)
     CONFIG_GLOBAL_PROPERTY(QVariantList, timeouts,
         {
             vmap({
@@ -43,7 +44,7 @@ class GeneralIdle : public ConfigObject {
             }),
             vmap({
                 { u"timeout"_s, 600 },
-                { u"idleAction"_s, QStringList{ u"systemctl"_s, u"suspend-then-hibernate"_s } },
+                { u"idleAction"_s, QStringList{ u"suspendThenHibernate"_s } },
             }),
         })
 
@@ -90,6 +91,7 @@ class GeneralConfig : public ConfigObject {
     QML_ANONYMOUS
 
     CONFIG_GLOBAL_PROPERTY(QString, logo)
+    CONFIG_PROPERTY(bool, showOverFullscreen, false)
     CONFIG_PROPERTY(qreal, mediaGifSpeedAdjustment, 300)
     CONFIG_PROPERTY(qreal, sessionGifSpeed, 0.7)
     CONFIG_SUBOBJECT(GeneralApps, apps)

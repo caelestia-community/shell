@@ -13,7 +13,7 @@ import qs.modules.launcher.services
 StyledListView {
     id: root
 
-    required property StyledTextField search
+    required property SearchBar search
     required property DrawerVisibilities visibilities
 
     Component.onCompleted: Tour.register("launcher-apps", root)
@@ -35,7 +35,7 @@ StyledListView {
 
     highlightFollowsCurrentItem: false
     highlight: StyledRect {
-        radius: Tokens.rounding.normal
+        radius: Tokens.rounding.large
         color: Colours.palette.m3onSurface
         opacity: 0.08
 
@@ -44,9 +44,7 @@ StyledListView {
         implicitHeight: root.currentItem?.implicitHeight ?? 0
 
         Behavior on y {
-            Anim {
-                type: Anim.DefaultSpatial
-            }
+            Anim {}
         }
     }
 
@@ -170,7 +168,8 @@ StyledListView {
         enabled: !root.state
 
         Anim {
-            properties: "opacity,scale"
+            type: Anim.DefaultEffects
+            property: "opacity"
             from: 0
             to: 1
         }
@@ -180,7 +179,8 @@ StyledListView {
         enabled: !root.state
 
         Anim {
-            properties: "opacity,scale"
+            type: Anim.DefaultEffects
+            property: "opacity"
             from: 1
             to: 0
         }
@@ -191,7 +191,8 @@ StyledListView {
             property: "y"
         }
         Anim {
-            properties: "opacity,scale"
+            type: Anim.DefaultEffects
+            property: "opacity"
             to: 1
         }
     }
@@ -202,7 +203,8 @@ StyledListView {
             type: Anim.StandardSmall
         }
         Anim {
-            properties: "opacity,scale"
+            type: Anim.DefaultEffects
+            property: "opacity"
             to: 1
         }
     }
@@ -212,7 +214,8 @@ StyledListView {
             property: "y"
         }
         Anim {
-            properties: "opacity,scale"
+            type: Anim.DefaultEffects
+            property: "opacity"
             to: 1
         }
     }

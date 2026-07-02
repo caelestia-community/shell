@@ -4,6 +4,7 @@ import Quickshell.Io
 import Caelestia
 import qs.components.misc
 import qs.services
+import qs.modules.nexus
 import qs.modules.controlcenter
 import qs.modules.live.help
 import qs.modules.live.welcome
@@ -17,8 +18,8 @@ Scope {
     // qmllint disable unresolved-type
     CustomShortcut {
         // qmllint enable unresolved-type
-        name: "controlCenter"
-        description: "Open control center"
+        name: "nexus"
+        description: "Open nexus"
         onPressed: WindowFactory.create()
     }
 
@@ -161,6 +162,13 @@ Scope {
             return Object.keys(visibilities).filter(k => typeof visibilities[k] === "boolean").join("\n");
         }
 
+        function isOpen(drawer: string): string {
+            const visibilities = Visibilities.getForActive();
+            if (typeof visibilities[drawer] !== "boolean")
+                return "unknown";
+            return visibilities[drawer] ? "1" : "0";
+        }
+
         target: "drawers"
     }
 
@@ -169,7 +177,7 @@ Scope {
             WindowFactory.create();
         }
 
-        target: "controlCenter"
+        target: "nexus"
     }
 
     IpcHandler {

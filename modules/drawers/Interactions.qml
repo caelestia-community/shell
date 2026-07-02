@@ -62,7 +62,7 @@ CustomMouseArea {
 
     anchors.fill: parent
     acceptedButtons: fullscreen ? Qt.NoButton : Qt.AllButtons
-    hoverEnabled: !fullscreen
+    hoverEnabled: true
 
     onPressed: event => dragStart = Qt.point(event.x, event.y)
     onContainsMouseChanged: {
@@ -86,6 +86,9 @@ CustomMouseArea {
 
             if (Config.bar.showOnHover)
                 bar.isHovered = false;
+
+            if (Config.sidebar.showOnHover)
+                visibilities.sidebar = false;
         }
     }
 
@@ -97,6 +100,11 @@ CustomMouseArea {
         const y = event.y;
         const dragX = x - dragStart.x;
         const dragY = y - dragStart.y;
+
+        if (fullscreen) {
+            root.panels.osd.hovered = inRightPanel(panels.osdWrapper, x, y);
+            return;
+        }
 
         // Show bar in non-exclusive mode on hover
         if (!visibilities.bar && Config.bar.showOnHover && x < bar.clampedWidth)
@@ -125,6 +133,14 @@ CustomMouseArea {
             }
 
             const showSidebar = pressed && dragStart.x > Math.min(width - Config.border.minThickness, bar.implicitWidth + panels.sidebar.x);
+
+            // Show sidebar on hover (top-right corner, bounded by notification panel height)
+            if (Config.sidebar.showOnHover) {
+                const sidebarTriggerY = Math.max(Config.sidebar.minHoverThreshold, panels.notifications.y + panels.notifications.height + borderThickness);
+                const showSidebarHover = x > Math.min(width - Config.border.minThickness, bar.implicitWidth + panels.sidebar.x) && y <= sidebarTriggerY;
+                if (showSidebarHover && !visibilities.sidebar)
+                    visibilities.sidebar = true;
+            }
 
             // Show/hide session on drag
             if (pressed && inRightPanel(panels.sessionWrapper, dragStart.x, dragStart.y) && withinPanelHeight(panels.sessionWrapper, x, y)) {
@@ -161,6 +177,19 @@ CustomMouseArea {
                     visibilities.session = true;
                 else if (dragX > Config.session.dragThreshold)
                     visibilities.session = false;
+            }
+
+            // Show/hide sidebar on hover
+            if (Config.sidebar.showOnHover && !pressed) {
+                const sidebarTriggerY = Math.max(Config.sidebar.minHoverThreshold, panels.notifications.y + panels.notifications.height + borderThickness);
+                const showSidebarHover = x > Math.min(width - Config.border.minThickness, bar.implicitWidth + panels.sidebar.x) && y <= sidebarTriggerY;
+                if (showSidebarHover && !visibilities.sidebar) {
+                    visibilities.sidebar = true;
+                } else {
+                    const inSidebarArea = inRightPanel(panels.sidebar, x, y) || inRightPanel(panels.sessionWrapper, x, y);
+                    if (!inSidebarArea)
+                        visibilities.sidebar = false;
+                }
             }
 
             // Hide sidebar on drag

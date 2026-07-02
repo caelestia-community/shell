@@ -31,7 +31,7 @@ StyledClippingRect {
     property real blur: onSpecial ? 1 : 0
 
     implicitWidth: Tokens.sizes.bar.innerWidth
-    implicitHeight: layout.implicitHeight + Tokens.padding.small * 2
+    implicitHeight: layout.implicitHeight + Tokens.padding.small
 
     color: Colours.tPalette.m3surfaceContainer
     radius: Tokens.rounding.full
@@ -54,7 +54,7 @@ StyledClippingRect {
             active: Config.bar.workspaces.occupiedBg
 
             anchors.fill: parent
-            anchors.margins: Tokens.padding.small
+            anchors.margins: Tokens.padding.extraSmall
 
             sourceComponent: OccupiedBg {
                 workspaces: workspaces
@@ -67,7 +67,7 @@ StyledClippingRect {
             id: layout
 
             anchors.centerIn: parent
-            spacing: Math.floor(Tokens.spacing.small / 2)
+            spacing: Math.floor(Tokens.spacing.extraSmall)
 
             Repeater {
                 id: workspaces
@@ -99,10 +99,12 @@ StyledClippingRect {
             anchors.fill: layout
             onClicked: event => {
                 const ws = (layout.childAt(event.x, event.y) as Workspace)?.ws;
+                if (!ws)
+                    return;
                 if (Hypr.activeWsId !== ws)
-                    Hypr.dispatch(`workspace ${ws}`);
+                    Hypr.dispatch(Hypr.usingLua ? `hl.dsp.focus({ workspace = "${ws}" })` : `workspace ${ws}`);
                 else
-                    Hypr.dispatch("togglespecialworkspace special");
+                    Hypr.dispatch(Hypr.usingLua ? 'hl.dsp.workspace.toggle_special("special")' : "togglespecialworkspace special");
             }
         }
 
@@ -111,7 +113,9 @@ StyledClippingRect {
         }
 
         Behavior on opacity {
-            Anim {}
+            Anim {
+                type: Anim.DefaultEffects
+            }
         }
     }
 
@@ -121,7 +125,7 @@ StyledClippingRect {
         asynchronous: true
 
         anchors.fill: parent
-        anchors.margins: Tokens.padding.small
+        anchors.margins: Tokens.padding.extraSmall
 
         active: opacity > 0
 
@@ -137,7 +141,9 @@ StyledClippingRect {
         }
 
         Behavior on opacity {
-            Anim {}
+            Anim {
+                type: Anim.DefaultEffects
+            }
         }
     }
 
