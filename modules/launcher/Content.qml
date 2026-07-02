@@ -56,7 +56,10 @@ Item {
     SearchBar {
         id: search
 
-        Component.onCompleted: Tour.register("launcher-search", search)
+        Component.onCompleted: {
+            Tour.register("launcher-search", search)
+            forceActiveFocus()
+        }
         Component.onDestruction: Tour.unregister("launcher-search")
 
         anchors.left: parent.left
@@ -115,8 +118,6 @@ Item {
                 event.accepted = true;
             }
         }
-
-        Component.onCompleted: forceActiveFocus()
 
         Connections {
             function onLauncherChanged(): void {
