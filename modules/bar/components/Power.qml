@@ -9,7 +9,7 @@ Item {
     Component.onCompleted: Tour.register("taskbar-power-button", root)
     Component.onDestruction: Tour.unregister("taskbar-power-button")
 
-    required property DrawerVisibilities visibilities
+    required property ScreenState screenState
 
     implicitWidth: icon.implicitHeight + Tokens.padding.small
     implicitHeight: icon.implicitHeight
@@ -21,7 +21,7 @@ Item {
         implicitWidth: implicitHeight
         implicitHeight: icon.implicitHeight + Tokens.padding.small
         radius: Tokens.rounding.full
-        onClicked: root.visibilities.session = !root.visibilities.session
+        onClicked: root.screenState.session = !root.screenState.session
     }
 
     MaterialIcon {

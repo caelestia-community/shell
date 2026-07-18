@@ -12,7 +12,7 @@ StyledRect {
     id: root
 
     required property var props
-    required property DrawerVisibilities visibilities
+    required property ScreenState screenState
     readonly property real nonAnimHeight: btnLayout.implicitHeight + listOrControls.implicitHeight + layout.spacing + layout.anchors.margins * 2
 
     Component.onCompleted: Tour.register("sidebar-screen-recorder", layout)
@@ -174,7 +174,7 @@ StyledRect {
 
         RecordingList {
             props: root.props
-            visibilities: root.visibilities
+            screenState: root.screenState
         }
     }
 
